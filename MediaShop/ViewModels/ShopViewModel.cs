@@ -22,13 +22,16 @@ namespace MediaShop.ViewModels
             ShoppingCart.AddItem(ProductList.Products.ElementAt(3));
             ShoppingCart.AddItem(ProductList.Products.ElementAt(3));
             ShoppingCart.AddItem(ProductList.Products.ElementAt(4));
+            
+            Debug.WriteLine(ShoppingCart);
 
-            Debug.WriteLine(ProductList);
+            ShoppingCart.RemoveItem(productList.Products.ElementAt(1), false);
+            ShoppingCart.RemoveItem(ProductList.Products.ElementAt(2), true);
+            
             Debug.WriteLine(ShoppingCart);
 
             ShoppingCart.Checkout();
-
-            Debug.WriteLine(ProductList);
+            
             Debug.WriteLine(ShoppingCart);
         }
     }

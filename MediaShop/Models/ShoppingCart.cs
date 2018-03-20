@@ -40,7 +40,7 @@ namespace MediaShop.Models
                 if (cartItem != null)
                 {
                     cartItem.AddAnother();
-                    Debug.WriteLine("Added one more of the item \"" + cartItem.Product.Name + "\" to the cart, now a total of " + cartItem.NumItemsInCart);
+                    Debug.WriteLine("Added one more of the item \"" + cartItem.Product.Name + "\" to the cart, there's now a total of " + cartItem.NumItemsInCart);
                 }
                 else
                 {
@@ -63,39 +63,36 @@ namespace MediaShop.Models
         public void RemoveAllItems()
         {
             CartItems = new List<CartItem>();
+            Debug.WriteLine("Removed all items from the shopping cart");
         }
 
         public void RemoveItem(Product product, bool removeAll)
         {
-            CartItem cartProduct = AlreadyInCart(product);
-            if(cartProduct == null) return;
-            if (removeAll || cartProduct.NumItemsInCart < 2)
-                CartItems.Remove(cartProduct);
-            else 
-                cartProduct.RemoveOne();
+            CartItem cartItem = AlreadyInCart(product);
+            if(cartItem == null) return;
+            if (removeAll || cartItem.NumItemsInCart < 2)
+            {
+                CartItems.Remove(cartItem);
+                Debug.WriteLine("Removed all " + cartItem.NumItemsInCart + " \"" + cartItem.Product.Name + "\" items from the shopping cart");
+            } else 
+                cartItem.RemoveOne();
         }
 
         public override string ToString()
         {
             if (CartItems.Count == 0) return "Cart is empty \n";
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("-------------------------------------");
             stringBuilder.AppendLine();
-            stringBuilder.Append("Shopping cart");
-            stringBuilder.AppendLine();
-            stringBuilder.Append("-------------------------------------");
-            stringBuilder.AppendLine();
+            stringBuilder.Append("-------------------------------------").AppendLine();
+            stringBuilder.Append("Shopping cart").AppendLine();
+            stringBuilder.Append("-------------------------------------").AppendLine();
             foreach (var product in CartItems)
             {
-                stringBuilder.Append(product);
-                stringBuilder.AppendLine();
+                stringBuilder.Append(product).AppendLine();
             }
-            stringBuilder.Append("-------------------------------------");
-            stringBuilder.AppendLine();
-            stringBuilder.Append($"Total {TotalPrice(),31}");
-            stringBuilder.AppendLine();
-            stringBuilder.Append("-------------------------------------");
-            stringBuilder.AppendLine();
+            stringBuilder.Append("-------------------------------------").AppendLine();
+            stringBuilder.Append($"Total {TotalPrice(), 31}").AppendLine();
+            stringBuilder.Append("-------------------------------------").AppendLine();
 
             return stringBuilder.ToString();
         }

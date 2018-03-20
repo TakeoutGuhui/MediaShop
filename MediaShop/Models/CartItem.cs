@@ -1,4 +1,6 @@
-﻿namespace MediaShop.Models
+﻿using System.Diagnostics;
+
+namespace MediaShop.Models
 {
     class CartItem 
     {
@@ -33,7 +35,11 @@
 
         public void RemoveOne()
         {
-            
+            if (NumItemsInCart > 1)
+            {
+                NumItemsInCart -= 1;
+                Debug.WriteLine("Removed one of the item \"" + Product.Name + "\" from the cart, " + NumItemsInCart + " left");
+            }
         }
 
         public void Checkout()
@@ -43,7 +49,7 @@
 
         public decimal TotalPrice()
         {
-            return Product.Price* NumItemsInCart;
+            return Product.Price * NumItemsInCart;
         }
 
         public override string ToString()
