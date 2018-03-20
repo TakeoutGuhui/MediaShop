@@ -5,7 +5,17 @@
         public int ProductNumber { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public int Stock { get; set; }
+
+        private int _stock;
+        public int Stock
+        {
+            get => _stock;
+            set
+            {
+                if (value != _stock && value >= 0)
+                    _stock = value;
+            }
+        }
 
         public Product(int productNumber, string name, decimal price, int stock)
         {
@@ -22,7 +32,7 @@
 
         public override string ToString()
         {
-            return $"Id: {ProductNumber} \n Name: {Name} \n Price: {Price} \n Stock: {Stock} \n";
+            return $"{ProductNumber,-8} {Name,-15} {Price,10} {Stock,10}";
         }
     }
 }

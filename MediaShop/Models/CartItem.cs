@@ -55,7 +55,7 @@ namespace MediaShop.Models
         public override string ToString()
         {
             string products = NumItemsInCart + "st*" + Product.Price;
-            return $"{Product.Name,-15} {products, -10} {Product.Price * NumItemsInCart,10}";
+            return $"{Product.Name,-15} {products, -13} {Product.Price * NumItemsInCart,10}";
         }
     }
 }

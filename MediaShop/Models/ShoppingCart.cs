@@ -83,16 +83,16 @@ namespace MediaShop.Models
             if (CartItems.Count == 0) return "Cart is empty \n";
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine();
-            stringBuilder.Append("-------------------------------------").AppendLine();
-            stringBuilder.Append("Shopping cart").AppendLine();
-            stringBuilder.Append("-------------------------------------").AppendLine();
+            stringBuilder.AppendLine("----------------------------------------");
+            stringBuilder.AppendLine("Shopping cart");
+            stringBuilder.AppendLine("----------------------------------------");
             foreach (var product in CartItems)
             {
-                stringBuilder.Append(product).AppendLine();
+                stringBuilder.AppendLine(product.ToString());
             }
-            stringBuilder.Append("-------------------------------------").AppendLine();
-            stringBuilder.Append($"Total {TotalPrice(), 31}").AppendLine();
-            stringBuilder.Append("-------------------------------------").AppendLine();
+            stringBuilder.AppendLine("----------------------------------------");
+            stringBuilder.AppendLine($"Total {TotalPrice(), 34}");
+            stringBuilder.AppendLine("----------------------------------------");
 
             return stringBuilder.ToString();
         }

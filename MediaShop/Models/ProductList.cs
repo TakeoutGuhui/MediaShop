@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using MediaShop.Loaders;
 
@@ -32,12 +33,16 @@ namespace MediaShop.Models
         {   
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine();
-            stringBuilder.Append("Product list: ");
-            stringBuilder.AppendLine();
+            stringBuilder.AppendLine("----------------------------------------------");
+            stringBuilder.AppendLine("Product list");
+            stringBuilder.AppendLine("----------------------------------------------");
+            stringBuilder.AppendLine($"{"PNumber",-8} {"Name",-15} {"Price",10} {"Stock",10}");
+            stringBuilder.AppendLine("----------------------------------------------");
             foreach (var product in Products)
             {
                 stringBuilder.Append(product).AppendLine();
             }
+            stringBuilder.AppendLine("----------------------------------------------");
             return stringBuilder.ToString();
         }
     }

@@ -23,6 +23,7 @@ namespace MediaShop.ViewModels
             ShoppingCart.AddItem(ProductList.Products.ElementAt(3));
             ShoppingCart.AddItem(ProductList.Products.ElementAt(4));
             
+            Debug.WriteLine(ProductList);
             Debug.WriteLine(ShoppingCart);
 
             ShoppingCart.RemoveItem(productList.Products.ElementAt(1), false);
