@@ -31,6 +31,7 @@ namespace MediaShop.Models
         public override string ToString()
         {   
             StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine();
             stringBuilder.Append("Product list: ");
             stringBuilder.AppendLine();
             foreach (var product in Products)

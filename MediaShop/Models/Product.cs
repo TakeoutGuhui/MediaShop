@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MediaShop.Models
+﻿namespace MediaShop.Models
 {
     internal class Product
     {
@@ -24,12 +17,12 @@ namespace MediaShop.Models
 
         public bool InStock()
         {
-            return Stock > 0 ? true : false;
+            return Stock > 0;
         }
 
         public override string ToString()
         {
-            return $"Id: {ProductNumber} Name: {Name} Price: {Price} Stock: {Stock}";
+            return $"Id: {ProductNumber} \n Name: {Name} \n Price: {Price} \n Stock: {Stock} \n";
         }
     }
 }

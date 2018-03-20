@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MediaShop.Models
+﻿namespace MediaShop.Models
 {
     class CartItem 
     {
@@ -32,12 +25,15 @@ namespace MediaShop.Models
 
         public void AddAnother()
         {
-            Debug.WriteLine("Items before: " + NumItemsInCart);
             if (NumItemsInCart + 1 <= Product.Stock)
             {
                 NumItemsInCart += 1;
             }
-            Debug.WriteLine("Items after: " + NumItemsInCart);
+        }
+
+        public void RemoveOne()
+        {
+            
         }
 
         public void Checkout()
@@ -52,7 +48,6 @@ namespace MediaShop.Models
 
         public override string ToString()
         {
-            //return Product + " items in cart: " + NumItemsInCart;
             string products = NumItemsInCart + "st*" + Product.Price;
             return $"{Product.Name,-15} {products, -10} {Product.Price * NumItemsInCart,10}";
         }

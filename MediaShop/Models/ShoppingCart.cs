@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MediaShop.Models
 {
@@ -31,6 +29,7 @@ namespace MediaShop.Models
                 cartProduct.Checkout();
             }
             CartItems = new List<CartItem>();
+            Debug.WriteLine("Cart was checked out");
         }
 
         public void AddItem(Product product)
@@ -41,10 +40,12 @@ namespace MediaShop.Models
                 if (cartItem != null)
                 {
                     cartItem.AddAnother();
+                    Debug.WriteLine("Added one more of the item \"" + cartItem.Product.Name + "\" to the cart, now a total of " + cartItem.NumItemsInCart);
                 }
                 else
                 {
                     CartItems.Add(new CartItem(product));
+                    Debug.WriteLine(product.Name + " was added to the shopping cart");
                 }   
             }       
         }
@@ -59,21 +60,24 @@ namespace MediaShop.Models
             return totalPrice;
         }
 
-        public void RemoveAll()
+        public void RemoveAllItems()
         {
             CartItems = new List<CartItem>();
         }
 
-        public void RemoveItem(Product product)
+        public void RemoveItem(Product product, bool removeAll)
         {
             CartItem cartProduct = AlreadyInCart(product);
-            if (cartProduct != null)
+            if(cartProduct == null) return;
+            if (removeAll || cartProduct.NumItemsInCart < 2)
                 CartItems.Remove(cartProduct);
+            else 
+                cartProduct.RemoveOne();
         }
 
         public override string ToString()
         {
-            if (CartItems.Count == 0) return "Cart is empty";
+            if (CartItems.Count == 0) return "Cart is empty \n";
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("-------------------------------------");
             stringBuilder.AppendLine();
@@ -91,6 +95,7 @@ namespace MediaShop.Models
             stringBuilder.Append($"Total {TotalPrice(),31}");
             stringBuilder.AppendLine();
             stringBuilder.Append("-------------------------------------");
+            stringBuilder.AppendLine();
 
             return stringBuilder.ToString();
         }

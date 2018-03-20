@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MediaShop.Models;
 
 namespace MediaShop.ViewModels
@@ -27,19 +23,13 @@ namespace MediaShop.ViewModels
             ShoppingCart.AddItem(ProductList.Products.ElementAt(3));
             ShoppingCart.AddItem(ProductList.Products.ElementAt(4));
 
-
             Debug.WriteLine(ProductList);
             Debug.WriteLine(ShoppingCart);
 
             ShoppingCart.Checkout();
-            Debug.WriteLine("Cart checked out! \n");
 
             Debug.WriteLine(ProductList);
             Debug.WriteLine(ShoppingCart);
-
-
         }
-
-
     }
 }
