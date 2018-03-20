@@ -33,16 +33,16 @@ namespace MediaShop.Models
         {   
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine();
-            stringBuilder.AppendLine("----------------------------------------------");
+            stringBuilder.AppendLine("----------------------------------------");
             stringBuilder.AppendLine("Product list");
-            stringBuilder.AppendLine("----------------------------------------------");
-            stringBuilder.AppendLine($"{"PNumber",-8} {"Name",-15} {"Price",10} {"Stock",10}");
-            stringBuilder.AppendLine("----------------------------------------------");
+            stringBuilder.AppendLine("----------------------------------------");
+            stringBuilder.AppendLine($"{"ID",-4} {"Name",-15} {"Price",-10} {"Stock",-10}");
+            stringBuilder.AppendLine("----------------------------------------");
             foreach (var product in Products)
             {
                 stringBuilder.Append(product).AppendLine();
             }
-            stringBuilder.AppendLine("----------------------------------------------");
+            stringBuilder.AppendLine("----------------------------------------");
             return stringBuilder.ToString();
         }
     }

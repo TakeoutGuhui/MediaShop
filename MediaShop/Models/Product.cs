@@ -32,7 +32,7 @@
 
         public override string ToString()
         {
-            return $"{ProductNumber,-8} {Name,-15} {Price,10} {Stock,10}";
+            return $"{ProductNumber,-4} {Name,-15} {Price,-10} {Stock,-10}";
         }
     }
 }
