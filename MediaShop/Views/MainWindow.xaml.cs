@@ -4,7 +4,7 @@ using System.Windows;
 using MediaShop.Loaders;
 using MediaShop.ViewModels;
 
-namespace MediaShop
+namespace MediaShop.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -24,7 +24,7 @@ namespace MediaShop
             productList.RemoveItem(newProduct2);
             Debug.WriteLine(productList);
             */
-            ShopViewModel viewModel = new ShopViewModel(new ProductList(new ProductCsvLoader("../../Data/products.csv")));
+            //ShopViewModel viewModel = new ShopViewModel(new ProductList(new ProductCsvLoader("../../Data/products.csv")));
         }
     }
 }

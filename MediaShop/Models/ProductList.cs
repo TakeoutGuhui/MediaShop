@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using MediaShop.Loaders;
 
@@ -7,26 +8,24 @@ namespace MediaShop.Models
 {
     internal class ProductList
     {
-        public List<Product> Products { get; set; }
+        public ObservableCollection<Product> Products { get; set; }
         private readonly IProductLoader _productLoader;
 
         public ProductList(IProductLoader productLoader)
         {
-            Products = new List<Product>();
+            Products = new ObservableCollection<Product>();
             _productLoader = productLoader;
             Products = _productLoader.LoadProducts();
         }
 
-        public void AddProduct(Product product)
+        public void SaveProducts()
         {
-            Products.Add(product);
             _productLoader.SaveProducts(Products);
         }
 
-        public void RemoveProduct(Product product)
+        public void LoadProducts()
         {
-            Products.Remove(product);
-            _productLoader.SaveProducts(Products);
+            Products = _productLoader.LoadProducts();
         }
 
         public override string ToString()

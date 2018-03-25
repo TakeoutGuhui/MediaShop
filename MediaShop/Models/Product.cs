@@ -1,6 +1,8 @@
-﻿namespace MediaShop.Models
+﻿using MediaShop.ViewModels;
+
+namespace MediaShop.Models
 {
-    internal class Product
+    internal class Product : BaseViewModel
     {
         public int ProductNumber { get; set; }
         public string Name { get; set; }
@@ -13,7 +15,11 @@
             set
             {
                 if (value != _stock && value >= 0)
+                {
                     _stock = value;
+                    RaisePropertyChangedEvent("Stock");
+                }
+                    
             }
         }
 

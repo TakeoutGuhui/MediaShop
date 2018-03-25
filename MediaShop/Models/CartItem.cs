@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics;
+using MediaShop.ViewModels;
 
 namespace MediaShop.Models
 {
-    class CartItem 
+    class CartItem : BaseViewModel
     {
-        public Product Product;
+        public Product Product { get; set; }
 
         private int _numItemsInCart;
         public int NumItemsInCart
@@ -12,9 +13,25 @@ namespace MediaShop.Models
             get => _numItemsInCart;
             private set
             {
-                if (_numItemsInCart + value <= Product.Stock)
+                if (value != _numItemsInCart)
                 {
                     _numItemsInCart = value;
+                    TotalPrice = GetTotalPrice();
+                    RaisePropertyChangedEvent("NumItemsInCart");
+                }
+            }
+        }
+
+        private decimal _totalPrice;
+        public decimal TotalPrice
+        {
+            get => _totalPrice;
+            set
+            {
+                if (value != _totalPrice)
+                {
+                    _totalPrice = value;
+                    RaisePropertyChangedEvent("TotalPrice");
                 }
             }
         }
@@ -23,13 +40,15 @@ namespace MediaShop.Models
         {
             Product = product;
             NumItemsInCart = 1;
+            Product.Stock -= 1;
         }
 
         public void AddAnother()
         {
-            if (NumItemsInCart + 1 <= Product.Stock)
+            if (Product.InStock())
             {
                 NumItemsInCart += 1;
+                Product.Stock -= 1;
             }
         }
 
@@ -38,6 +57,7 @@ namespace MediaShop.Models
             if (NumItemsInCart > 1)
             {
                 NumItemsInCart -= 1;
+                Product.Stock += 1;
                 Debug.WriteLine("Removed one of the item \"" + Product.Name + "\" from the cart, " + NumItemsInCart + " left");
             }
         }
@@ -47,7 +67,12 @@ namespace MediaShop.Models
             Product.Stock -= NumItemsInCart;
         }
 
-        public decimal TotalPrice()
+        public void RestoreStock()
+        {
+            Product.Stock += NumItemsInCart;
+        }
+
+        public decimal GetTotalPrice()
         {
             return Product.Price * NumItemsInCart;
         }

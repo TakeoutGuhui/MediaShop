@@ -1,6 +1,7 @@
 ﻿using MediaShop.Models;
 using Microsoft.VisualBasic.FileIO;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -15,10 +16,10 @@ namespace MediaShop.Loaders
             _filePath = filePath;
         }
 
-        public List<Product> LoadProducts()
+        public ObservableCollection<Product> LoadProducts()
         {
             TextFieldParser parser = new TextFieldParser(_filePath);
-            List<Product> products = new List<Product>();
+            ObservableCollection<Product> products = new ObservableCollection<Product>();
             parser.TextFieldType = FieldType.Delimited;
             parser.SetDelimiters(",");
             while (!parser.EndOfData)
@@ -40,14 +41,13 @@ namespace MediaShop.Loaders
             return $"{product.ProductNumber},{product.Name},{price},{product.Stock}";
         }
 
-        public void SaveProducts(List<Product> products)
+        public void SaveProducts(ObservableCollection<Product> products)
         {
             StringBuilder stringBuilder = new StringBuilder();
             foreach (Product product in products)
             {
                 string productLine = ConvertToCsv(product);
-                stringBuilder.Append(productLine);
-                stringBuilder.AppendLine();
+                stringBuilder.AppendLine(productLine);
             }
             File.WriteAllText(_filePath, stringBuilder.ToString());
         }

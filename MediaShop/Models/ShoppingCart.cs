@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 
@@ -6,10 +8,10 @@ namespace MediaShop.Models
 {
     class ShoppingCart
     {
-        public List<CartItem> CartItems;
+        public ObservableCollection<CartItem> CartItems { get; set; }
         public ShoppingCart()
         {
-            CartItems = new List<CartItem>();
+            CartItems = new ObservableCollection<CartItem>();
         }
 
         public CartItem AlreadyInCart(Product product)
@@ -28,7 +30,7 @@ namespace MediaShop.Models
             {
                 cartProduct.Checkout();
             }
-            CartItems = new List<CartItem>();
+            CartItems = new ObservableCollection<CartItem>();
             Debug.WriteLine("Cart was checked out");
         }
 
@@ -37,7 +39,7 @@ namespace MediaShop.Models
             if (product.InStock())
             {
                 CartItem cartItem = AlreadyInCart(product);
-                if (cartItem != null)
+                if (cartItem != null && cartItem.Product.InStock())
                 {
                     cartItem.AddAnother();
                     Debug.WriteLine("Added one more of the item \"" + cartItem.Product.Name + "\" to the cart, there's now a total of " + cartItem.NumItemsInCart);
@@ -55,14 +57,14 @@ namespace MediaShop.Models
             decimal totalPrice = new decimal();
             foreach (CartItem cartItem in CartItems)
             {
-                totalPrice += cartItem.TotalPrice();
+                totalPrice += cartItem.GetTotalPrice();
             }
             return totalPrice;
         }
 
         public void RemoveAllItems()
         {
-            CartItems = new List<CartItem>();
+            CartItems = new ObservableCollection<CartItem>();
             Debug.WriteLine("Removed all items from the shopping cart");
         }
 
