@@ -1,4 +1,5 @@
-﻿using MediaShop.Models;
+﻿using System;
+using MediaShop.Models;
 using Microsoft.VisualBasic.FileIO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,13 +22,17 @@ namespace MediaShop.Loaders
             TextFieldParser parser = new TextFieldParser(_filePath);
             ObservableCollection<Product> products = new ObservableCollection<Product>();
             parser.TextFieldType = FieldType.Delimited;
-            parser.SetDelimiters(",");
+            parser.SetDelimiters(";");
             while (!parser.EndOfData)
             {
                 string[] fields = parser.ReadFields();
                 if (fields != null && fields.Length == 4)
                 {
-                    Product product = new Product(int.Parse(fields[0]), fields[1], decimal.Parse(fields[2], CultureInfo.InvariantCulture), int.Parse(fields[3]));
+                    int.TryParse(fields[0], out var productNumber);
+                    string name = fields[1];
+                    decimal.TryParse(fields[2], NumberStyles.Any, new CultureInfo("sv-SE"), out var price);
+                    int.TryParse(fields[3], out var stock);
+                    Product product = new Product() { ProductNumber = productNumber, Name = name, Price = price, Stock = stock};
                     products.Add(product);
                 }
                 
@@ -37,8 +42,8 @@ namespace MediaShop.Loaders
 
         private static string ConvertToCsv(Product product)
         {
-            string price = product.Price.ToString(CultureInfo.InvariantCulture).Replace(",",".");
-            return $"{product.ProductNumber},{product.Name},{price},{product.Stock}";
+            //string price = product.Price.ToString(CultureInfo.InvariantCulture).Replace(",",".");
+            return $"{product.ProductNumber};{product.Name};{product.Price};{product.Stock}";
         }
 
         public void SaveProducts(ObservableCollection<Product> products)

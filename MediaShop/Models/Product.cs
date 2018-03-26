@@ -22,7 +22,7 @@ namespace MediaShop.Models
                     
             }
         }
-
+        /*
         public Product(int productNumber, string name, decimal price, int stock)
         {
             ProductNumber = productNumber;
@@ -30,6 +30,7 @@ namespace MediaShop.Models
             Price = price;
             Stock = stock;
         }
+        */
 
         public bool InStock()
         {

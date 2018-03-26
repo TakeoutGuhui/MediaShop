@@ -3,12 +3,38 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using MediaShop.ViewModels;
 
 namespace MediaShop.Models
 {
-    class ShoppingCart
+    class ShoppingCart : BaseViewModel
     {
-        public ObservableCollection<CartItem> CartItems { get; set; }
+        private ObservableCollection<CartItem> _cartItems;
+
+        public ObservableCollection<CartItem> CartItems
+        {
+            get => _cartItems;
+            set
+            {
+                if(value == _cartItems) return;
+                _cartItems = value;
+                RaisePropertyChangedEvent("CartItems");
+            }
+        }
+
+        private decimal _totalPrice;
+
+        public decimal TotalPrice
+        {
+            get => _totalPrice;
+            set
+            {
+                if (value == _totalPrice) return;
+                _totalPrice = value;
+                RaisePropertyChangedEvent("TotalPrice");
+            }
+        }
+
         public ShoppingCart()
         {
             CartItems = new ObservableCollection<CartItem>();
@@ -31,6 +57,7 @@ namespace MediaShop.Models
                 cartProduct.Checkout();
             }
             CartItems = new ObservableCollection<CartItem>();
+            TotalPrice = GetTotalPrice();
             Debug.WriteLine("Cart was checked out");
         }
 
@@ -42,17 +69,19 @@ namespace MediaShop.Models
                 if (cartItem != null && cartItem.Product.InStock())
                 {
                     cartItem.AddAnother();
+                    TotalPrice = GetTotalPrice();
                     Debug.WriteLine("Added one more of the item \"" + cartItem.Product.Name + "\" to the cart, there's now a total of " + cartItem.NumItemsInCart);
                 }
                 else
                 {
                     CartItems.Add(new CartItem(product));
+                    TotalPrice = GetTotalPrice();
                     Debug.WriteLine(product.Name + " was added to the shopping cart");
                 }   
             }       
         }
 
-        public decimal TotalPrice()
+        public decimal GetTotalPrice()
         {
             decimal totalPrice = new decimal();
             foreach (CartItem cartItem in CartItems)
@@ -64,7 +93,12 @@ namespace MediaShop.Models
 
         public void RemoveAllItems()
         {
+            foreach (CartItem cartItem in CartItems)
+            {
+                cartItem.RestoreStock();
+            }
             CartItems = new ObservableCollection<CartItem>();
+            TotalPrice = GetTotalPrice();
             Debug.WriteLine("Removed all items from the shopping cart");
         }
 
@@ -74,10 +108,12 @@ namespace MediaShop.Models
             if(cartItem == null) return;
             if (removeAll || cartItem.NumItemsInCart < 2)
             {
+                cartItem.RestoreStock();
                 CartItems.Remove(cartItem);
                 Debug.WriteLine("Removed all " + cartItem.NumItemsInCart + " \"" + cartItem.Product.Name + "\" items from the shopping cart");
             } else 
                 cartItem.RemoveOne();
+            TotalPrice = GetTotalPrice();
         }
 
         public override string ToString()
@@ -93,7 +129,7 @@ namespace MediaShop.Models
                 stringBuilder.AppendLine(product.ToString());
             }
             stringBuilder.AppendLine("----------------------------------------");
-            stringBuilder.AppendLine($"Total {TotalPrice(), 34}");
+            stringBuilder.AppendLine($"Total {TotalPrice, 34}");
             stringBuilder.AppendLine("----------------------------------------");
 
             return stringBuilder.ToString();

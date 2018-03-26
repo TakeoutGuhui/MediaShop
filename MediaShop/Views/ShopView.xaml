@@ -9,47 +9,36 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=datacontext:ShopViewModel}">
-    <UserControl.Resources>
-        <converters:PriceLabelConverter x:Key="PriceLabelConverter" />
-    </UserControl.Resources>
-    
+
     <DockPanel LastChildFill="True">
-           <ListView Width="300" DockPanel.Dock="Right" ItemsSource="{Binding ShoppingCart.CartItems}">
+        <local:ShoppingCartView DockPanel.Dock="Right" />
+        <ListView ItemsSource="{Binding ProductList.Products}" SelectedItem="{Binding SelectedProduct}" Background="LightBlue" >
             <ListView.ItemTemplate>
                 <DataTemplate>
-                        <DockPanel LastChildFill="True">
-                            <Label DockPanel.Dock="Left" Content="{Binding Product.Name}"/>
-                            
-                            <Label DockPanel.Dock="Right" Content="{Binding TotalPrice}"/>
-                            <Label HorizontalContentAlignment="Center">
-                                <Label.Content>
-                                    <MultiBinding  Converter="{StaticResource PriceLabelConverter}">
-                                        <Binding Path="NumItemsInCart"/>
-                                        <Binding Path="Product.Price"/>
-                                    </MultiBinding>
-                                </Label.Content>
-                            </Label>
-                    </DockPanel>
-                </DataTemplate>
-                </ListView.ItemTemplate>
-               <ListView.ItemContainerStyle>
-                   <Style TargetType="ListViewItem">
-                       <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                   </Style>
-               </ListView.ItemContainerStyle>
-        </ListView> 
-           <ListView ItemsSource="{Binding ProductList.Products}" SelectedItem="{Binding SelectedProduct}" >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" >
-                        <StackPanel.InputBindings>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Grid.InputBindings>
                             <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.AddToCartCommand}" />
-                        </StackPanel.InputBindings>
-                        <Label Content="{Binding Name}"/>
-                        <Label Content="{Binding Stock}"/>
-                    </StackPanel>
+                        </Grid.InputBindings>
+                        <Label  Grid.Column="0" Content="{Binding ProductNumber}"/>
+                        <Label Grid.Column="1" Content="{Binding Name}"/>
+                        <Label Grid.Column="2" Content="{Binding Price}"/>
+                        <Label Grid.Column="3" Content="{Binding Stock}"/>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
     </DockPanel>
 </UserControl>

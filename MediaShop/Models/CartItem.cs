@@ -64,7 +64,7 @@ namespace MediaShop.Models
 
         public void Checkout()
         {
-            Product.Stock -= NumItemsInCart;
+            //Product.Stock -= NumItemsInCart;
         }
 
         public void RestoreStock()

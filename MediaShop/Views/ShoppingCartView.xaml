@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="MediaShop.Views.ShoppingCartView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:MediaShop.Converters"
+             xmlns:viewModels="clr-namespace:MediaShop.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance Type=viewModels:ShopViewModel}">
+    
+    <UserControl.Resources>
+        <converters:PriceLabelConverter x:Key="PriceLabelConverter" />
+        
+    </UserControl.Resources>
+
+
+    <DockPanel LastChildFill="True">
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" Background="Gray">
+            <Label Content="{Binding ShoppingCart.TotalPrice}" ContentStringFormat="Total: {0}" HorizontalAlignment="Right" FontSize="24" FontWeight="Bold"/>
+            <Button Height="50" Content="Checkout" Command="{Binding CheckoutCommand}" Background="GreenYellow" FontSize="24" FontWeight="Bold" />
+        </StackPanel>
+        
+        <ListView Width="300" ItemsSource="{Binding ShoppingCart.CartItems}" SelectedItem="{Binding SelectCartItem}" Background="LightGray">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.InputBindings>
+                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.RemoveFromCartCommand}" />
+                        </Grid.InputBindings>
+                        <Label Grid.Column="0"  Content="{Binding Product.Name}"/>
+
+                        <Label Grid.Column="2"  Content="{Binding TotalPrice}" HorizontalAlignment="Right"/>
+                        <Label Grid.Column="1" HorizontalContentAlignment="Center">
+                            <Label.Content>
+                                <MultiBinding Converter="{StaticResource PriceLabelConverter}">
+                                    <Binding Path="NumItemsInCart"/>
+                                    <Binding Path="Product.Price"/>
+                                </MultiBinding>
+                            </Label.Content>
+                        </Label>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+    </DockPanel>
+    
+</UserControl>

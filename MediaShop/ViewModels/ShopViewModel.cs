@@ -10,43 +10,15 @@ namespace MediaShop.ViewModels
     {
         public ProductList ProductList { get; set; }
         public ShoppingCart ShoppingCart { get; set; }
+
         public Product SelectedProduct { get; set; }
+        public CartItem SelectCartItem { get; set; }
         public ShopViewModel(ProductList productList)
         {
-            
             ProductList = productList;
             ShoppingCart = new ShoppingCart();
-
-
-            ProductListEditor editor = new ProductListEditor(productList);
-            /*
-            editor.AddProduct(new Product(1, "Funkar!", 23.90m, 32));
-            
-            
-            ShoppingCart.AddItem(ProductList.Products.ElementAt(0));
-            ShoppingCart.AddItem(ProductList.Products.ElementAt(0));
-            ShoppingCart.AddItem(productList.Products.ElementAt(1));
-            ShoppingCart.AddItem(productList.Products.ElementAt(1));
-            ShoppingCart.AddItem(ProductList.Products.ElementAt(2));
-            ShoppingCart.AddItem(ProductList.Products.ElementAt(2));
-            ShoppingCart.AddItem(ProductList.Products.ElementAt(3));
-            ShoppingCart.AddItem(ProductList.Products.ElementAt(3));
-            ShoppingCart.AddItem(ProductList.Products.ElementAt(4));
-            ShoppingCart.AddItem(productList.Products.ElementAt(5));
-            
-            Debug.WriteLine(ProductList);
-            Debug.WriteLine(ShoppingCart);
-
-            ShoppingCart.RemoveItem(productList.Products.ElementAt(1), false);
-            ShoppingCart.RemoveItem(ProductList.Products.ElementAt(2), true);
-            
-            Debug.WriteLine(ShoppingCart);
-
-            //ShoppingCart.Checkout();
-            
-            Debug.WriteLine(ShoppingCart);
-            */
         }
+
         public ICommand AddToCartCommand => new DelegateCommand(AddToCart);
 
         private void AddToCart()
@@ -56,6 +28,24 @@ namespace MediaShop.ViewModels
             {
                 ShoppingCart.AddItem(SelectedProduct);
             }
+        }
+
+        public ICommand RemoveFromCartCommand => new DelegateCommand(RemoveFromCart);
+
+        private void RemoveFromCart()
+        {
+            Debug.WriteLine("Renoe");
+            if (SelectCartItem != null)
+            {
+                ShoppingCart.RemoveItem(SelectCartItem.Product, false);
+            }
+        }
+
+        public ICommand CheckoutCommand => new DelegateCommand(Checkout);
+        private void Checkout()
+        {
+            ShoppingCart.Checkout();
+            ProductList.SaveProducts();
         }
     }
     
