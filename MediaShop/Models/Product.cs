@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using MediaShop.ViewModels;
+﻿using MediaShop.ViewModels;
 
 namespace MediaShop.Models
 {

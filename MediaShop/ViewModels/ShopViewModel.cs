@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
-using System.Linq;
 using System.Windows.Input;
+
 using MediaShop.Commands;
 using MediaShop.Models;
 

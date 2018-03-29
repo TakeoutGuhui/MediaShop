@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+
 using MediaShop.ViewModels;
 
 namespace MediaShop.Models

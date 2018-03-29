@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+
 using MediaShop.ViewModels;
 
 namespace MediaShop.Models

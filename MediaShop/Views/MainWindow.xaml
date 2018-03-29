@@ -14,7 +14,7 @@
                 <views:ShopView HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </TabItem>
             <TabItem Header="Stock">
-                <views:StockView />
+                <views:StockView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
             </TabItem>
         </TabControl>
     </Grid>

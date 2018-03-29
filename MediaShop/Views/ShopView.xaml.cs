@@ -12,7 +12,7 @@ namespace MediaShop.Views
         public ShopView()
         {
             InitializeComponent();
-            DataContext = new ShopViewModel(new ProductList(new ProductCsvLoader("../../Data/products.csv")));
+            DataContext = new ShopViewModel(ProductList.Instance);
         }
     }
 }

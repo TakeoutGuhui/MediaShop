@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Navigation;
+﻿using System.Windows.Input;
+
 using MediaShop.Commands;
 using MediaShop.Models;
 
@@ -13,11 +7,11 @@ namespace MediaShop.ViewModels
 {
     class StockViewModel : BaseViewModel
     {
-        public ProductListEditor ListEditor;
+        public ProductList ProductList { get; set;  }
 
-        public StockViewModel(ProductListEditor listEditor)
+        public StockViewModel(ProductList productList)
         {
-            ListEditor = listEditor;
+            ProductList = productList;
         }
 
         public ICommand AddProductCommand => new DelegateCommand(AddProduct);
