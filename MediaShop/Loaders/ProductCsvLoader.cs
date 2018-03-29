@@ -25,13 +25,26 @@ namespace MediaShop.Loaders
             while (!parser.EndOfData)
             {
                 string[] fields = parser.ReadFields();
-                if (fields != null && fields.Length == 4)
+                if (fields != null && fields.Length == 9)
                 {
                     int.TryParse(fields[0], out var productNumber);
                     string name = fields[1];
                     decimal.TryParse(fields[2], NumberStyles.Any, new CultureInfo("sv-SE"), out var price);
                     int.TryParse(fields[3], out var stock);
-                    Product product = new Product() { ProductNumber = productNumber, Name = name, Price = price, Stock = stock};
+                    string artist = fields[4];
+                    string publisher = fields[5];
+                    string genre = fields[6];
+                    int.TryParse(fields[7], out var year);
+                    string comment = fields[8];
+                    Product product = new Product() { ID = productNumber,
+                                                      Name = name,
+                                                      Price = price,
+                                                      Stock = stock,
+                                                      Artist = artist,
+                                                      Publisher = publisher,
+                                                      Genre = genre,
+                                                      Year = year,
+                                                      Comment = comment};
                     products.Add(product);
                 }
                 
@@ -41,7 +54,7 @@ namespace MediaShop.Loaders
 
         private static string ConvertToCsv(Product product)
         {
-            return $"{product.ProductNumber};{product.Name};{product.Price};{product.Stock}";
+            return $"{product.ID};{product.Name};{product.Price};{product.Stock};{product.Artist};{product.Publisher};{product.Genre};{product.Year};{product.Comment}";
         }
 
         public void SaveProducts(ObservableCollection<Product> products)

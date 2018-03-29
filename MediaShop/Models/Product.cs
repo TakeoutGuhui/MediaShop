@@ -1,20 +1,20 @@
-﻿using System.Runtime.InteropServices;
-using System.Runtime.Serialization.Formatters;
+﻿using System.ComponentModel;
 using MediaShop.ViewModels;
 
 namespace MediaShop.Models
 {
     internal class Product : BaseViewModel
     {
-        private int _productNumber;
-        public int ProductNumber
+        
+        private int _id;
+        public int ID
         {
-            get => _productNumber;
+            get => _id;
             set
             {
-                if (value == _productNumber) return;
-                _productNumber = value;
-                RaisePropertyChangedEvent("ProductNumber");
+                if (value == _id) return;
+                _id = value;
+                RaisePropertyChangedEvent("ID");
             }
         }
 
@@ -125,7 +125,7 @@ namespace MediaShop.Models
 
         public override string ToString()
         {
-            return $"{ProductNumber,-4} {Name,-15} {Price,-10} {Stock,-10}";
+            return $"{ID,-4} {Name,-15} {Price,-10} {Stock,-10}";
         }
     }
 }
