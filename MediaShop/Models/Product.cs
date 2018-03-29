@@ -1,12 +1,46 @@
-﻿using MediaShop.ViewModels;
+﻿using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters;
+using MediaShop.ViewModels;
 
 namespace MediaShop.Models
 {
     internal class Product : BaseViewModel
     {
-        public int ProductNumber { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
+        private int _productNumber;
+        public int ProductNumber
+        {
+            get => _productNumber;
+            set
+            {
+                if (value == _productNumber) return;
+                _productNumber = value;
+                RaisePropertyChangedEvent("ProductNumber");
+            }
+        }
+
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if(value == _name) return;
+                _name = value;
+                RaisePropertyChangedEvent("Name");
+            }
+        }
+
+        private decimal _price;
+        public decimal Price
+        {
+            get => _price;
+            set
+            {
+                if(value == _price) return;
+                _price = value;
+                RaisePropertyChangedEvent("Price");
+            }
+        }
 
         private int _stock;
         public int Stock
@@ -22,15 +56,67 @@ namespace MediaShop.Models
                     
             }
         }
-        /*
-        public Product(int productNumber, string name, decimal price, int stock)
+
+        private string _artist;
+        public string Artist
         {
-            ProductNumber = productNumber;
-            Name = name;
-            Price = price;
-            Stock = stock;
+            get => _artist;
+            set
+            {
+                if(value == _artist) return;
+                _artist = value;
+                RaisePropertyChangedEvent("Artist");
+            }
         }
-        */
+
+        private string _genre;
+        public string Genre
+        {
+            get => _genre;
+            set
+            {
+                if (value == _genre) return;
+                _genre = value;
+                RaisePropertyChangedEvent("Genre");
+            }
+        }
+
+        private string _comment;
+        public string Comment
+        {
+            get => _comment;
+            set
+            {
+                if (value == _comment) return;
+                _comment = value;
+                RaisePropertyChangedEvent("Comment");
+            }
+        }
+
+        private string _publisher;
+        public string Publisher
+        {
+            get => _publisher;
+            set
+            {
+                if(value == _publisher) return;
+                _publisher = value;
+                RaisePropertyChangedEvent("Publisher");
+            }
+        }
+
+        private int _year;
+
+        public int Year
+        {
+            get => _year;
+            set
+            {
+                if(value == _year) return;
+                _year = value;
+                RaisePropertyChangedEvent("Year");
+            }
+        }
 
         public bool InStock()
         {

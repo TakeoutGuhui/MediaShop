@@ -1,11 +1,10 @@
-﻿using System;
-using MediaShop.Models;
-using Microsoft.VisualBasic.FileIO;
-using System.Collections.Generic;
+﻿using Microsoft.VisualBasic.FileIO;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Text;
+
+using MediaShop.Models;
 
 namespace MediaShop.Loaders
 {
@@ -42,7 +41,6 @@ namespace MediaShop.Loaders
 
         private static string ConvertToCsv(Product product)
         {
-            //string price = product.Price.ToString(CultureInfo.InvariantCulture).Replace(",",".");
             return $"{product.ProductNumber};{product.Name};{product.Price};{product.Stock}";
         }
 

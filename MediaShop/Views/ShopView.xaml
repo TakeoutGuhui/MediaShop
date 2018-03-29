@@ -12,7 +12,7 @@
 
     <DockPanel LastChildFill="True">
         <local:ShoppingCartView DockPanel.Dock="Right" />
-        <ListView ItemsSource="{Binding ProductList.Products}" SelectedItem="{Binding SelectedProduct}" Background="LightBlue" >
+        <ListView ItemsSource="{Binding ProductList.Products}" SelectedItem="{Binding SelectedProduct}" Background="LightSlateGray" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid HorizontalAlignment="Stretch">
