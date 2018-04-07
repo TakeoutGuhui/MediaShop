@@ -10,11 +10,9 @@
              d:DataContext="{d:DesignInstance Type=viewModels:ShopViewModel}">
     
     <UserControl.Resources>
-        <converters:PriceLabelConverter x:Key="PriceLabelConverter" />
-        
+        <converters:PriceLabelConverter x:Key="PriceLabelConverter" /> 
     </UserControl.Resources>
-
-
+   
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" Background="Gray">
             <Label Content="{Binding ShoppingCart.TotalPrice}" ContentStringFormat="Total: {0}" HorizontalAlignment="Right" FontSize="24" FontWeight="Bold"/>
