@@ -1,11 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows.Input;
+using System.Windows.Data;
+using System.ComponentModel;
 
 using MediaShop.Commands;
 using MediaShop.Models;
-using System.Windows.Data;
-using System;
-using System.ComponentModel;
 
 namespace MediaShop.ViewModels
 {
@@ -19,7 +19,18 @@ namespace MediaShop.ViewModels
         public Product SelectedProduct { get; set; }
         public CartItem SelectCartItem { get; set; }
 
-
+        private bool _printReceipt;
+        public bool PrintReceipt 
+        { 
+            get { return _printReceipt; }
+            set
+            {
+                if (_printReceipt != value)
+                {
+                    _printReceipt = value;
+                }
+            }
+        }
         #region Filters
 
         private string _idFilter = "";
@@ -196,9 +207,12 @@ namespace MediaShop.ViewModels
         public ICommand CheckoutCommand { get { return new DelegateCommand(Checkout); } }
         private void Checkout()
         {
+            if (PrintReceipt)
+            {
+                new Printer().bla(ShoppingCart.ToString());
+            }
             ShoppingCart.Checkout();
             ProductList.SaveProducts();
         }
-    }
-    
+    }    
 }

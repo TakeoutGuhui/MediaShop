@@ -16,6 +16,7 @@
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" Background="Gray">
             <Label Content="{Binding ShoppingCart.TotalPrice}" ContentStringFormat="Total: {0}" HorizontalAlignment="Right" FontSize="24" FontWeight="Bold"/>
+            <CheckBox Content="Print receipt" IsChecked="{Binding PrintReceipt}"/>
             <Button Height="50" Content="Checkout" Command="{Binding CheckoutCommand}" Background="GreenYellow" FontSize="24" FontWeight="Bold" />
         </StackPanel>
         

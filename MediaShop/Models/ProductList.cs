@@ -89,6 +89,7 @@ namespace MediaShop.Models
                 stringBuilder.Append(product).AppendLine();
             }
             stringBuilder.AppendLine("----------------------------------------");
+            
             return stringBuilder.ToString();
         }
     }
