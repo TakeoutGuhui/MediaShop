@@ -5,6 +5,7 @@ using MediaShop.Commands;
 using MediaShop.Models;
 using System.Windows.Data;
 using System;
+using System.ComponentModel;
 
 namespace MediaShop.ViewModels
 {
@@ -13,13 +14,14 @@ namespace MediaShop.ViewModels
         public ProductList ProductList { get; set; }
         public ShoppingCart ShoppingCart { get; set; }
 
-        public CollectionViewSource ProductViewSource {get;set;}
+        public ICollectionView ProductView { get; set;}
 
         public Product SelectedProduct { get; set; }
         public CartItem SelectCartItem { get; set; }
 
 
-        //Filters
+        #region Filters
+
         private string _idFilter = "";
         public string IdFilter
         {
@@ -29,7 +31,7 @@ namespace MediaShop.ViewModels
                 if (value != _idFilter)
                 {
                     _idFilter = value;
-                    ProductViewSource.View.Refresh();
+                    ProductView.Refresh();
                 }
             }
         }
@@ -43,7 +45,7 @@ namespace MediaShop.ViewModels
                 if (value != _nameFilter)
                 {
                     _nameFilter = value;
-                    ProductViewSource.View.Refresh();
+                    ProductView.Refresh();
                 }
             }
         }
@@ -57,7 +59,7 @@ namespace MediaShop.ViewModels
                 if (value != _priceFilter)
                 {
                     _priceFilter = value;
-                    ProductViewSource.View.Refresh();
+                    ProductView.Refresh();
                 }
             }
         }
@@ -71,7 +73,7 @@ namespace MediaShop.ViewModels
                 if (value != _stockFilter)
                 {
                     _stockFilter = value;
-                    ProductViewSource.View.Refresh();
+                    ProductView.Refresh();
                 }
             }
         }
@@ -85,7 +87,7 @@ namespace MediaShop.ViewModels
                 if (value != _artistFilter)
                 {
                     _artistFilter = value;
-                    ProductViewSource.View.Refresh();
+                    ProductView.Refresh();
                 }
             }
         }
@@ -99,7 +101,7 @@ namespace MediaShop.ViewModels
                 if (value != _genreFilter)
                 {
                     _genreFilter = value;
-                    ProductViewSource.View.Refresh();
+                    ProductView.Refresh();
                 }
             }
         }
@@ -113,7 +115,7 @@ namespace MediaShop.ViewModels
                 if (value != _commentFilter)
                 {
                     _commentFilter = value;
-                    ProductViewSource.View.Refresh();
+                    ProductView.Refresh();
                 }
             }
         }
@@ -127,7 +129,7 @@ namespace MediaShop.ViewModels
                 if (value != _publisherFilter)
                 {
                     _publisherFilter = value;
-                    ProductViewSource.View.Refresh();
+                    ProductView.Refresh();
                 }
             }
         }
@@ -141,52 +143,50 @@ namespace MediaShop.ViewModels
                 if (value != _yearFilter)
                 {
                     _yearFilter = value;
-                    ProductViewSource.View.Refresh();
+                    ProductView.Refresh();
                 }
             }
         }
+
+        private bool FilterProducts(object obj)
+        {
+            Product item = (Product)obj;
+            if (item.ID.ToString().IndexOf(IdFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
+            if (item.Name != null && item.Name.IndexOf(NameFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
+            if (item.Price.ToString().IndexOf(PriceFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
+            if (item.Stock.ToString().IndexOf(StockFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
+            if (item.Artist != null && item.Artist.IndexOf(ArtistFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
+            if (item.Genre != null && item.Genre.IndexOf(GenreFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
+            if (item.Comment != null && item.Comment.IndexOf(CommentFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
+            if (item.Publisher != null && item.Publisher.IndexOf(PublisherFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
+            if (item.Year.ToString().IndexOf(YearFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
+            return true;
+        }
+
+        #endregion
 
         public ShopViewModel(ProductList productList)
         {
             ProductList = productList;
             ShoppingCart = new ShoppingCart();
-            ProductViewSource = new CollectionViewSource();
-            ProductViewSource.Source = ProductList.Products;
-            ProductViewSource.Filter += FilterProducts;
-        }
-
-        private void FilterProducts(object sender, FilterEventArgs e)
-        {
-            e.Accepted = true;
-            Product item = (Product)e.Item;
-            if (item.ID.ToString().IndexOf(IdFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
-            if (item.Name != null && item.Name.IndexOf(NameFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
-            if (item.Price.ToString().IndexOf(PriceFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
-            if (item.Stock.ToString().IndexOf(StockFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
-            if (item.Artist != null && item.Artist.IndexOf(ArtistFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
-            if (item.Genre != null && item.Genre.IndexOf(GenreFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
-            if (item.Comment != null && item.Comment.IndexOf(CommentFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
-            if (item.Publisher != null && item.Publisher.IndexOf(PublisherFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
-            if (item.Year.ToString().IndexOf(YearFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
+            ProductView = CollectionViewSource.GetDefaultView(ProductList.Products);
+            ProductView.Filter = FilterProducts;
         }
 
         public ICommand AddToCartCommand { get { return new DelegateCommand(AddToCart); } }
 
         private void AddToCart()
         {
-            Debug.WriteLine("DOUBLE CLICK!");
             if (SelectedProduct != null)
             {
                 ShoppingCart.AddItem(SelectedProduct);
             }
-            
         }
 
         public ICommand RemoveFromCartCommand { get { return new DelegateCommand(RemoveFromCart); } }
 
         private void RemoveFromCart()
         {
-            Debug.WriteLine("Renoe");
             if (SelectCartItem != null)
             {
                 ShoppingCart.RemoveItem(SelectCartItem.Product, false);
