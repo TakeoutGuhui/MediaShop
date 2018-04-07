@@ -204,6 +204,13 @@ namespace MediaShop.ViewModels
             }
         }
 
+        public ICommand ClearCartCommand { get { return new DelegateCommand(ClearCart); } }
+
+        private void ClearCart()
+        {
+            ShoppingCart.RemoveAllItems();
+        }
+
         public ICommand CheckoutCommand { get { return new DelegateCommand(Checkout); } }
         private void Checkout()
         {
