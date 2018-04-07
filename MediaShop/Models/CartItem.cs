@@ -11,7 +11,7 @@ namespace MediaShop.Models
         private int _numItemsInCart;
         public int NumItemsInCart
         {
-            get => _numItemsInCart;
+            get { return _numItemsInCart; }
             private set
             {
                 if (value != _numItemsInCart)
@@ -26,7 +26,7 @@ namespace MediaShop.Models
         private decimal _totalPrice;
         public decimal TotalPrice
         {
-            get => _totalPrice;
+            get { return _totalPrice; }
             set
             {
                 if (value != _totalPrice)
@@ -41,7 +41,7 @@ namespace MediaShop.Models
         {
             Product = product;
             NumItemsInCart = 1;
-            Product.Stock -= 1;
+            //Product.Stock -= 1;
         }
 
         public void AddAnother()
@@ -49,7 +49,7 @@ namespace MediaShop.Models
             if (Product.InStock())
             {
                 NumItemsInCart += 1;
-                Product.Stock -= 1;
+                //Product.Stock -= 1;
             }
         }
 
@@ -58,20 +58,27 @@ namespace MediaShop.Models
             if (NumItemsInCart > 1)
             {
                 NumItemsInCart -= 1;
-                Product.Stock += 1;
+                //Product.Stock += 1;
                 Debug.WriteLine("Removed one of the item \"" + Product.Name + "\" from the cart, " + NumItemsInCart + " left");
             }
         }
 
-        public void Checkout()
+        public bool InStock()
         {
-            //Product.Stock -= NumItemsInCart;
+            return NumItemsInCart < Product.Stock;
         }
 
+        public void Checkout()
+        {
+            Product.Stock -= NumItemsInCart;
+        }
+
+        /*
         public void RestoreStock()
         {
             Product.Stock += NumItemsInCart;
         }
+        */
 
         public decimal GetTotalPrice()
         {
@@ -81,7 +88,8 @@ namespace MediaShop.Models
         public override string ToString()
         {
             string products = NumItemsInCart + "st*" + Product.Price;
-            return $"{Product.Name,-15} {products, -13} {Product.Price * NumItemsInCart,10}";
+            //return $"{Product.Name,-15} {products, -13} {Product.Price * NumItemsInCart,10}";
+            return string.Format("{0,-15} {1,-13} {2,10}", Product.Name, products, Product.Price * NumItemsInCart);
         }
     }
 }

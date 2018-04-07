@@ -12,13 +12,22 @@ namespace MediaShop.Models
     {
         private static ProductList _instance;
 
-        public static ProductList Instance => _instance ?? (_instance = new ProductList(new ProductCsvLoader("../../Data/products.csv")));
+        //public static ProductList Instance => _instance ?? (_instance = new ProductList(new ProductCsvLoader("../../Data/products.csv")));
+        public static ProductList Instance { 
+            get 
+            {
+                if (_instance == null){
+                    _instance = new ProductList(new ProductCsvLoader("../../Data/products.csv"));
+                }
+                return _instance;
+            }
+        }
 
 
         public ObservableCollection<Product> Products { get; set; }
         private readonly IProductLoader _productLoader;
 
-        public ProductList(IProductLoader productLoader)
+        private ProductList(IProductLoader productLoader)
         {
             Products = new ObservableCollection<Product>();
             _productLoader = productLoader;
@@ -35,14 +44,14 @@ namespace MediaShop.Models
             if (eventArgs.Action == NotifyCollectionChangedAction.Add)
             {
                 Debug.WriteLine("New product!");
-                if (eventArgs.NewItems[0] is Product newProduct) newProduct.PropertyChanged += ProductChangedEvent;
+                if (eventArgs.NewItems[0] is Product) ((Product)eventArgs.NewItems[0]).PropertyChanged += ProductChangedEvent;
             }
             else if (eventArgs.Action == NotifyCollectionChangedAction.Remove)
             {
                 Debug.WriteLine("Delete product!");
-                if (eventArgs.OldItems[0] is Product oldProduct)
+                if (eventArgs.OldItems[0] is Product)
                 {
-                    oldProduct.PropertyChanged -= ProductChangedEvent;
+                    ((Product)eventArgs.OldItems[0]).PropertyChanged -= ProductChangedEvent;
                     SaveProducts();
                 }
                     
@@ -72,7 +81,8 @@ namespace MediaShop.Models
             stringBuilder.AppendLine("----------------------------------------");
             stringBuilder.AppendLine("Product list");
             stringBuilder.AppendLine("----------------------------------------");
-            stringBuilder.AppendLine($"{"ID",-4} {"Name",-15} {"Price",-10} {"Stock",-10}");
+            //stringBuilder.AppendLine($"{"ID",-4} {"Name",-15} {"Price",-10} {"Stock",-10}");
+            stringBuilder.AppendLine(string.Format("{0,-4} {1,-15} {2,-10} {3,-10}", "ID", "Name", "Price", "Stock"));
             stringBuilder.AppendLine("----------------------------------------");
             foreach (var product in Products)
             {

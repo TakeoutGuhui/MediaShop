@@ -12,7 +12,10 @@ namespace MediaShop.ViewModels
         /// <param name="propertyName"> The name of the property </param>
         protected void RaisePropertyChangedEvent(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
     }

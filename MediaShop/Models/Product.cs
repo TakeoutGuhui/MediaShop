@@ -8,7 +8,7 @@ namespace MediaShop.Models
         private int _id;
         public int ID
         {
-            get => _id;
+            get { return _id; }
             set
             {
                 if (value == _id) return;
@@ -20,7 +20,7 @@ namespace MediaShop.Models
         private string _name;
         public string Name
         {
-            get => _name;
+            get { return _name; }
             set
             {
                 if(value == _name) return;
@@ -32,7 +32,7 @@ namespace MediaShop.Models
         private decimal _price;
         public decimal Price
         {
-            get => _price;
+            get { return _price; }
             set
             {
                 if(value == _price) return;
@@ -44,7 +44,7 @@ namespace MediaShop.Models
         private int _stock;
         public int Stock
         {
-            get => _stock;
+            get { return _stock; }
             set
             {
                 if (value != _stock && value >= 0)
@@ -56,10 +56,12 @@ namespace MediaShop.Models
             }
         }
 
+       
+
         private string _artist;
         public string Artist
         {
-            get => _artist;
+            get { return _artist; }
             set
             {
                 if(value == _artist) return;
@@ -71,7 +73,7 @@ namespace MediaShop.Models
         private string _genre;
         public string Genre
         {
-            get => _genre;
+            get { return _genre; }
             set
             {
                 if (value == _genre) return;
@@ -83,7 +85,7 @@ namespace MediaShop.Models
         private string _comment;
         public string Comment
         {
-            get => _comment;
+            get { return _comment; }
             set
             {
                 if (value == _comment) return;
@@ -95,7 +97,7 @@ namespace MediaShop.Models
         private string _publisher;
         public string Publisher
         {
-            get => _publisher;
+            get { return _publisher; }
             set
             {
                 if(value == _publisher) return;
@@ -108,7 +110,7 @@ namespace MediaShop.Models
 
         public int Year
         {
-            get => _year;
+            get { return _year; }
             set
             {
                 if(value == _year) return;
@@ -124,7 +126,8 @@ namespace MediaShop.Models
 
         public override string ToString()
         {
-            return $"{ID,-4} {Name,-15} {Price,-10} {Stock,-10}";
+            //return $"{ID,-4} {Name,-15} {Price,-10} {Stock,-10}";
+            return string.Format("{0,-4} {1,-15} {2,-10} {3,-10}", ID, Name, Price, Stock);
         }
     }
 }

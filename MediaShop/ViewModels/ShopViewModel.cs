@@ -19,7 +19,7 @@ namespace MediaShop.ViewModels
             ShoppingCart = new ShoppingCart();
         }
 
-        public ICommand AddToCartCommand => new DelegateCommand(AddToCart);
+        public ICommand AddToCartCommand { get { return new DelegateCommand(AddToCart); } }
 
         private void AddToCart()
         {
@@ -28,9 +28,10 @@ namespace MediaShop.ViewModels
             {
                 ShoppingCart.AddItem(SelectedProduct);
             }
+            
         }
 
-        public ICommand RemoveFromCartCommand => new DelegateCommand(RemoveFromCart);
+        public ICommand RemoveFromCartCommand { get { return new DelegateCommand(RemoveFromCart); } }
 
         private void RemoveFromCart()
         {
@@ -41,7 +42,7 @@ namespace MediaShop.ViewModels
             }
         }
 
-        public ICommand CheckoutCommand => new DelegateCommand(Checkout);
+        public ICommand CheckoutCommand { get { return new DelegateCommand(Checkout); } }
         private void Checkout()
         {
             ShoppingCart.Checkout();

@@ -25,16 +25,18 @@ namespace MediaShop.Loaders
             while (!parser.EndOfData)
             {
                 string[] fields = parser.ReadFields();
+                int productNumber, stock, year;
+                decimal price;
                 if (fields != null && fields.Length == 9)
                 {
-                    int.TryParse(fields[0], out var productNumber);
+                    int.TryParse(fields[0], out productNumber);
                     string name = fields[1];
-                    decimal.TryParse(fields[2], NumberStyles.Any, new CultureInfo("sv-SE"), out var price);
-                    int.TryParse(fields[3], out var stock);
+                    decimal.TryParse(fields[2], NumberStyles.Any, new CultureInfo("sv-SE"), out price);
+                    int.TryParse(fields[3], out stock);
                     string artist = fields[4];
                     string publisher = fields[5];
                     string genre = fields[6];
-                    int.TryParse(fields[7], out var year);
+                    int.TryParse(fields[7], out year);
                     string comment = fields[8];
                     Product product = new Product() { ID = productNumber,
                                                       Name = name,
@@ -54,7 +56,9 @@ namespace MediaShop.Loaders
 
         private static string ConvertToCsv(Product product)
         {
-            return $"{product.ID};{product.Name};{product.Price};{product.Stock};{product.Artist};{product.Publisher};{product.Genre};{product.Year};{product.Comment}";
+            //return $"{product.ID};{product.Name};{product.Price};{product.Stock};{product.Artist};{product.Publisher};{product.Genre};{product.Year};{product.Comment}";
+            return string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}",
+                product.ID, product.Name, product.Price, product.Stock, product.Artist, product.Publisher, product.Genre, product.Year, product.Comment);
         }
 
         public void SaveProducts(ObservableCollection<Product> products)

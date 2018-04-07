@@ -14,7 +14,7 @@ namespace MediaShop.ViewModels
             ProductList = productList;
         }
 
-        public ICommand AddProductCommand => new DelegateCommand(AddProduct);
+        public ICommand AddProductCommand { get { return new DelegateCommand(AddProduct); } }
 
 
         private void AddProduct()
