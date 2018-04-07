@@ -28,13 +28,13 @@ namespace MediaShop.Views
             e.Accepted = true;
             Product item = (Product) e.Item;
             if (item.ID.ToString().IndexOf(IdSearch.Text, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
-            if (item.Name.IndexOf(NameSearch.Text, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
+            if (item.Name != null && item.Name.IndexOf(NameSearch.Text, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
             if (item.Price.ToString().IndexOf(PriceSearch.Text, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
             if (item.Stock.ToString().IndexOf(StockSearch.Text, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
-            if (item.Artist.IndexOf(ArtistSearch.Text, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
-            if (item.Genre.IndexOf(GenreSearch.Text, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
-            if (item.Comment.IndexOf(CommentSearch.Text, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
-            if (item.Publisher.IndexOf(PublisherSearch.Text, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
+            if (item.Artist != null && item.Artist.IndexOf(ArtistSearch.Text, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
+            if (item.Genre != null && item.Genre.IndexOf(GenreSearch.Text, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
+            if (item.Comment != null && item.Comment.IndexOf(CommentSearch.Text, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
+            if (item.Publisher != null && item.Publisher.IndexOf(PublisherSearch.Text, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
             if (item.Year.ToString().IndexOf(YearSearch.Text, StringComparison.CurrentCultureIgnoreCase) == -1) { e.Accepted = false; return; };
         } 
     }
