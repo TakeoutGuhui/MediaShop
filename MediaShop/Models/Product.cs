@@ -1,9 +1,12 @@
-﻿using MediaShop.ViewModels;
+﻿using System.Collections.Generic;
+using System.Linq;
+using MediaShop.ViewModels;
 
 namespace MediaShop.Models
 {
     internal class Product : BaseViewModel
     {
+        private static readonly HashSet<int> TakenIDs = new HashSet<int>();
         
         private int _id;
         public int ID
@@ -11,9 +14,24 @@ namespace MediaShop.Models
             get => _id;
             set
             {
+                
+
                 if (value == _id) return;
-                _id = value;
+                if (TakenIDs.Contains(value))
+                {
+                    _id = -1;
+                }
+                else
+                {
+                    if (TakenIDs.Contains(_id))
+                    {
+                        TakenIDs.Remove(_id);
+                    }
+                    _id = value;
+                    TakenIDs.Add(_id);
+                }
                 RaisePropertyChangedEvent("ID");
+
             }
         }
 
