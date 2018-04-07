@@ -3,6 +3,7 @@ using System.Windows.Input;
 
 using MediaShop.Commands;
 using MediaShop.Models;
+using System.Windows.Data;
 
 namespace MediaShop.ViewModels
 {
@@ -11,12 +12,16 @@ namespace MediaShop.ViewModels
         public ProductList ProductList { get; set; }
         public ShoppingCart ShoppingCart { get; set; }
 
+        public CollectionViewSource ProductViewSource {get;set;}
+
         public Product SelectedProduct { get; set; }
         public CartItem SelectCartItem { get; set; }
         public ShopViewModel(ProductList productList)
         {
             ProductList = productList;
             ShoppingCart = new ShoppingCart();
+            ProductViewSource = new CollectionViewSource();
+            ProductViewSource.Source = ProductList.Products;        
         }
 
         public ICommand AddToCartCommand { get { return new DelegateCommand(AddToCart); } }
