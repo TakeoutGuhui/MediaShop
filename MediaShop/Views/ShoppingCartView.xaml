@@ -21,7 +21,7 @@
         </StackPanel>
         <Button DockPanel.Dock="Top" Content="Clear" Command="{Binding ClearCartCommand}" />
 
-        <ListView Width="300" ItemsSource="{Binding ShoppingCart.CartItems}" SelectedItem="{Binding SelectCartItem}" Background="LightGray">
+        <ListView Width="300" ItemsSource="{Binding ShoppingCart.CartItems}" SelectedItem="{Binding SelectCartItem}" Background="AliceBlue">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>

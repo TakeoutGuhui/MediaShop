@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-using MediaShop.ViewModels;
+﻿using MediaShop.ViewModels;
 
 namespace MediaShop.Models
 {
@@ -41,7 +39,6 @@ namespace MediaShop.Models
         {
             Product = product;
             NumItemsInCart = 1;
-            //Product.Stock -= 1;
         }
 
         public void AddAnother()
@@ -49,7 +46,6 @@ namespace MediaShop.Models
             if (Product.InStock())
             {
                 NumItemsInCart += 1;
-                //Product.Stock -= 1;
             }
         }
 
@@ -58,8 +54,6 @@ namespace MediaShop.Models
             if (NumItemsInCart > 1)
             {
                 NumItemsInCart -= 1;
-                //Product.Stock += 1;
-                Debug.WriteLine("Removed one of the item \"" + Product.Name + "\" from the cart, " + NumItemsInCart + " left");
             }
         }
 
@@ -72,13 +66,6 @@ namespace MediaShop.Models
         {
             Product.Stock -= NumItemsInCart;
         }
-
-        /*
-        public void RestoreStock()
-        {
-            Product.Stock += NumItemsInCart;
-        }
-        */
 
         public decimal GetTotalPrice()
         {

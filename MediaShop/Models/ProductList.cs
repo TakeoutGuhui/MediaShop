@@ -17,7 +17,7 @@ namespace MediaShop.Models
             get 
             {
                 if (_instance == null){
-                    _instance = new ProductList(new ProductCsvLoader("../../Data/products.csv"));
+                    _instance = new ProductList(new ProductCsvLoader(Properties.Settings.Default.productFile));
                 }
                 return _instance;
             }

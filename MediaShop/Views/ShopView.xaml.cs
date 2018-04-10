@@ -1,8 +1,5 @@
-﻿using MediaShop.Loaders;
-using MediaShop.Models;
+﻿using MediaShop.Models;
 using MediaShop.ViewModels;
-using System;
-using System.Windows.Data;
 
 namespace MediaShop.Views
 {

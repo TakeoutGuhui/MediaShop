@@ -56,8 +56,6 @@ namespace MediaShop.Models
             }
         }
 
-       
-
         private string _artist;
         public string Artist
         {
@@ -79,18 +77,6 @@ namespace MediaShop.Models
                 if (value == _genre) return;
                 _genre = value;
                 RaisePropertyChangedEvent("Genre");
-            }
-        }
-
-        private string _comment;
-        public string Comment
-        {
-            get { return _comment; }
-            set
-            {
-                if (value == _comment) return;
-                _comment = value;
-                RaisePropertyChangedEvent("Comment");
             }
         }
 
@@ -119,6 +105,18 @@ namespace MediaShop.Models
             }
         }
 
+        private string _comment;
+        public string Comment
+        {
+            get { return _comment; }
+            set
+            {
+                if (value == _comment) return;
+                _comment = value;
+                RaisePropertyChangedEvent("Comment");
+            }
+        }
+
         public bool InStock()
         {
             return Stock > 0;
@@ -126,7 +124,6 @@ namespace MediaShop.Models
 
         public override string ToString()
         {
-            //return $"{ID,-4} {Name,-15} {Price,-10} {Stock,-10}";
             return string.Format("{0,-4} {1,-15} {2,-10} {3,-10}", ID, Name, Price, Stock);
         }
     }

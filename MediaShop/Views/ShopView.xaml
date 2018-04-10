@@ -32,7 +32,14 @@
         </StackPanel>
         <local:ShoppingCartView DockPanel.Dock="Right" />
         <Grid>
-            <DataGrid IsTextSearchEnabled="True" AutoGenerateColumns="True" ItemsSource="{Binding ProductView}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow"/>
+            <DataGrid IsTextSearchEnabled="True" AutoGenerateColumns="True" ItemsSource="{Binding ProductView}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" >
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                    </Style>
+                </DataGrid.Resources>
+            </DataGrid>
             <Grid.InputBindings>
                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.AddToCartCommand}" />
             </Grid.InputBindings>

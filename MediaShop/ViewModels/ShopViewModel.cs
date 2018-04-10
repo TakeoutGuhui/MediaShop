@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Windows.Input;
-using System.Windows.Data;
 using System.ComponentModel;
+using System.Windows.Data;
+using System.Windows.Input;
 
 using MediaShop.Commands;
 using MediaShop.Models;

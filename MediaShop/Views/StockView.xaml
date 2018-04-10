@@ -13,6 +13,7 @@
             <Button Content="Import"/>
         </StackPanel>
         <Grid >
+
             <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding ProductList.Products}" />
         </Grid>
     </DockPanel>
