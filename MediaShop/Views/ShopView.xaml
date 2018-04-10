@@ -10,6 +10,8 @@
              d:DataContext="{d:DesignInstance Type=datacontext:ShopViewModel}">
 
     <DockPanel LastChildFill="True">
+
+        <!-- Search Boxes -->
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
             <Label Content="ID:" />
             <TextBox Name="IdSearch" Width="30" Text="{Binding IdFilter, UpdateSourceTrigger=PropertyChanged}" />
@@ -30,7 +32,11 @@
             <Label Content="Year:" />
             <TextBox Name="YearSearch" Width="50" Text="{Binding YearFilter, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
+
+        <!-- Shopping Cart -->
         <local:ShoppingCartView DockPanel.Dock="Right" />
+        
+        <!-- Product List -->
         <Grid>
             <DataGrid IsTextSearchEnabled="True" AutoGenerateColumns="True" ItemsSource="{Binding ProductView}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" >
                 <DataGrid.Resources>

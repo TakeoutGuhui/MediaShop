@@ -46,7 +46,7 @@ namespace MediaShop.Loaders
                                                       Publisher = publisher,
                                                       Genre = genre,
                                                       Year = year,
-                                                      Comment = comment};
+                                                      Comment = comment };
                     products.Add(product);
                 }
                 
@@ -56,7 +56,6 @@ namespace MediaShop.Loaders
 
         private static string ConvertToCsv(Product product)
         {
-            //return $"{product.ID};{product.Name};{product.Price};{product.Stock};{product.Artist};{product.Publisher};{product.Genre};{product.Year};{product.Comment}";
             return string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}",
                 product.ID, product.Name, product.Price, product.Stock, product.Artist, product.Publisher, product.Genre, product.Year, product.Comment);
         }

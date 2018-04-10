@@ -61,7 +61,6 @@
     <Compile Include="Converters\PriceLabelConverter.cs" />
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Printer.cs" />
-    <Compile Include="Models\ProductListEditor.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ShopViewModel.cs" />
     <Compile Include="ViewModels\StockViewModel.cs" />

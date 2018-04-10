@@ -68,7 +68,7 @@ namespace MediaShop.Models
             if (cartItem != null)
             {
                 if(cartItem.InStock()) cartItem.AddAnother();
-                //Debug.WriteLine("Added one more of the item \"" + cartItem.Product.Name + "\" to the cart, there's now a total of " + cartItem.NumItemsInCart);
+                Debug.WriteLine("Added one more of the item \"" + cartItem.Product.Name + "\" to the cart, there's now a total of " + cartItem.NumItemsInCart);
             }
             else
             {
@@ -92,10 +92,6 @@ namespace MediaShop.Models
 
         public void RemoveAllItems()
         {
-            foreach (CartItem cartItem in CartItems)
-            {
-                //cartItem.RestoreStock();
-            }
             CartItems = new ObservableCollection<CartItem>();
             TotalPrice = GetTotalPrice();
             Debug.WriteLine("Removed all items from the shopping cart");

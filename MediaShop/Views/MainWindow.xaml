@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MediaShop"
         xmlns:views="clr-namespace:MediaShop.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1200"
+        Title="MediaShop" Height="800" Width="1200"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl>
