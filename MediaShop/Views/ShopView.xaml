@@ -10,45 +10,46 @@
              d:DataContext="{d:DesignInstance Type=datacontext:ShopViewModel}">
 
     <DockPanel LastChildFill="True">
-
-        <!-- Search Boxes -->
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-            <Label Content="ID:" />
-            <TextBox Name="IdSearch" Width="30" Text="{Binding IdFilter, UpdateSourceTrigger=PropertyChanged}" />
-            <Label Content="Name:" />
-            <TextBox Name="NameSearch" Width="50" Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}" />
-            <Label Content="Price:" />
-            <TextBox Name="PriceSearch" Width="50" Text="{Binding PriceFilter, UpdateSourceTrigger=PropertyChanged}" />
-            <Label Content="Stock:" />
-            <TextBox Name="StockSearch" Width="50" Text="{Binding StockFilter, UpdateSourceTrigger=PropertyChanged}" />
-            <Label Content="Artist:" />
-            <TextBox Name="ArtistSearch" Width="50" Text="{Binding ArtistFilter, UpdateSourceTrigger=PropertyChanged}" />
-            <Label Content="Genre:" />
-            <TextBox Name="GenreSearch" Width="50" Text="{Binding GenreFilter, UpdateSourceTrigger=PropertyChanged}" />
-            <Label Content="Comment:" />
-            <TextBox Name="CommentSearch" Width="50" Text="{Binding CommentFilter, UpdateSourceTrigger=PropertyChanged}" />
-            <Label Content="Publisher:" />
-            <TextBox Name="PublisherSearch" Width="50" Text="{Binding PublisherFilter, UpdateSourceTrigger=PropertyChanged}" />
-            <Label Content="Year:" />
-            <TextBox Name="YearSearch" Width="50" Text="{Binding YearFilter, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
-
         <!-- Shopping Cart -->
         <local:ShoppingCartView DockPanel.Dock="Right" />
         
         <!-- Product List -->
-        <Grid>
-            <DataGrid IsTextSearchEnabled="True" AutoGenerateColumns="True" ItemsSource="{Binding ProductView}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" >
-                <DataGrid.Resources>
-                    <Style TargetType="{x:Type DataGridCell}">
-                        <Setter Property="BorderThickness" Value="0" />
-                        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                    </Style>
-                </DataGrid.Resources>
-            </DataGrid>
-            <Grid.InputBindings>
-                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.AddToCartCommand}" />
-            </Grid.InputBindings>
-        </Grid>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="2">
+                <Label Content="ID:" />
+                <TextBox Name="IdSearch" Width="30" Text="{Binding IdFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Name:" />
+                <TextBox Name="NameSearch" Width="75" Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Price:" />
+                <TextBox Name="PriceSearch" Width="50" Text="{Binding PriceFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Stock:" />
+                <TextBox Name="StockSearch" Width="50" Text="{Binding StockFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Artist:" />
+                <TextBox Name="ArtistSearch" Width="75" Text="{Binding ArtistFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Genre:" />
+                <TextBox Name="GenreSearch" Width="50" Text="{Binding GenreFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Comment:" />
+                <TextBox Name="CommentSearch" Width="50" Text="{Binding CommentFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Publisher:" />
+                <TextBox Name="PublisherSearch" Width="50" Text="{Binding PublisherFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Year:" />
+                <TextBox Name="YearSearch" Width="50" Text="{Binding YearFilter, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <!-- Product List -->
+            <Grid>
+                <DataGrid IsTextSearchEnabled="True" AutoGenerateColumns="True" ItemsSource="{Binding ProductView}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" >
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="BorderThickness" Value="0" /> <!-- Removes the selection of individual cells -->
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                        </Style>
+                    </DataGrid.Resources>
+                </DataGrid>
+                <Grid.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.AddToCartCommand}" />
+                </Grid.InputBindings>
+            </Grid>
+        </StackPanel>
     </DockPanel>
 </UserControl>
