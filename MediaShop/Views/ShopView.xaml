@@ -28,12 +28,12 @@
                 <TextBox Name="ArtistSearch" Width="75" Text="{Binding ArtistFilter, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Content="Genre:" />
                 <TextBox Name="GenreSearch" Width="50" Text="{Binding GenreFilter, UpdateSourceTrigger=PropertyChanged}" />
-                <Label Content="Comment:" />
-                <TextBox Name="CommentSearch" Width="50" Text="{Binding CommentFilter, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Content="Publisher:" />
                 <TextBox Name="PublisherSearch" Width="50" Text="{Binding PublisherFilter, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Content="Year:" />
                 <TextBox Name="YearSearch" Width="50" Text="{Binding YearFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Comment:" />
+                <TextBox Name="CommentSearch" Width="50" Text="{Binding CommentFilter, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
 
             <!-- Product List -->

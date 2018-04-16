@@ -11,6 +11,7 @@ namespace MediaShop.Loaders
     class ProductCsvLoader : IProductLoader
     {
         private readonly string _filePath;
+        private readonly string _delimiter = ";";
         public ProductCsvLoader(string filePath)
         {
             _filePath = filePath;
@@ -21,7 +22,7 @@ namespace MediaShop.Loaders
             TextFieldParser parser = new TextFieldParser(_filePath);
             ObservableCollection<Product> products = new ObservableCollection<Product>();
             parser.TextFieldType = FieldType.Delimited;
-            parser.SetDelimiters(";");
+            parser.SetDelimiters(_delimiter);
             while (!parser.EndOfData)
             {
                 string[] fields = parser.ReadFields();
@@ -54,10 +55,28 @@ namespace MediaShop.Loaders
             return products;
         }
 
-        private static string ConvertToCsv(Product product)
+        private string EscapeDelimeter(string data)
+        {
+            if (data.Contains(_delimiter))
+            {
+                data = string.Format("\"{0}\"", data);
+            }
+
+            return data;
+        }
+
+        private string ConvertToCsv(Product product)
         {
             return string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}",
-                product.ID, product.Name, product.Price, product.Stock, product.Artist, product.Publisher, product.Genre, product.Year, product.Comment);
+                product.ID, 
+                EscapeDelimeter(product.Name), 
+                product.Price, 
+                product.Stock, 
+                EscapeDelimeter(product.Artist), 
+                EscapeDelimeter(product.Publisher), 
+                EscapeDelimeter(product.Genre), 
+                product.Year, 
+                EscapeDelimeter(product.Comment));
         }
 
         public void SaveProducts(ObservableCollection<Product> products)

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MediaShop.Commands;
+using MediaShop.Models;
+using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Input;
-
-using MediaShop.Commands;
-using MediaShop.Models;
 
 namespace MediaShop.ViewModels
 {
@@ -24,10 +24,9 @@ namespace MediaShop.ViewModels
             get { return _printReceipt; }
             set
             {
-                if (_printReceipt != value)
-                {
-                    _printReceipt = value;
-                }
+                if(_printReceipt == value) return;
+                _printReceipt = value;
+                
             }
         }
         #region Filters
@@ -158,18 +157,23 @@ namespace MediaShop.ViewModels
             }
         }
 
+        private static bool PartOf(string filter, string text)
+        {
+            return text.IndexOf(filter, StringComparison.CurrentCultureIgnoreCase) != -1;
+        }
+
         private bool FilterProducts(object obj)
         {
             Product item = (Product)obj;
-            if (IdFilter != "" && item.ID.ToString().IndexOf(IdFilter, StringComparison.OrdinalIgnoreCase) == -1) { return false; };
-            if (NameFilter != "" && item.Name != null && item.Name.IndexOf(NameFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
-            if (PriceFilter != "" && item.Price.ToString().IndexOf(PriceFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
-            if (StockFilter != "" && item.Stock.ToString().IndexOf(StockFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
-            if (ArtistFilter != "" && item.Artist != null && item.Artist.IndexOf(ArtistFilter, StringComparison.OrdinalIgnoreCase) == -1) { return false; };
-            if (GenreFilter != "" && item.Genre != null && item.Genre.IndexOf(GenreFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
-            if (CommentFilter != "" && item.Comment != null && item.Comment.IndexOf(CommentFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
-            if (PublisherFilter != "" && item.Publisher != null && item.Publisher.IndexOf(PublisherFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
-            if (YearFilter != "" && item.Year.ToString().IndexOf(YearFilter, StringComparison.CurrentCultureIgnoreCase) == -1) { return false; };
+            if (IdFilter != "" && !PartOf(IdFilter, item.ID.ToString())) { return false; };
+            if (NameFilter != "" && !PartOf(NameFilter, item.Name)) { return false; };
+            if (PriceFilter != "" && !PartOf(PriceFilter, item.Price.ToString(CultureInfo.CurrentCulture))) { return false; };
+            if (StockFilter != "" && !PartOf(StockFilter, item.Stock.ToString())) { return false; };
+            if (ArtistFilter != "" && !PartOf(ArtistFilter, item.Artist)) { return false; };
+            if (GenreFilter != "" && !PartOf(GenreFilter, item.Genre)) { return false; };
+            if (CommentFilter != "" && !PartOf(CommentFilter, item.Comment)) { return false; };
+            if (PublisherFilter != "" && !PartOf(PublisherFilter, item.Publisher)) { return false; };
+            if (YearFilter != "" && !PartOf(YearFilter, item.Year.ToString())) { return false; };
             return true;
         }
 
