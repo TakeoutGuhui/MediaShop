@@ -65,6 +65,7 @@ namespace MediaShop.Models
             {
                 Debug.WriteLine("Delete product!");
                 Product deletedProduct = (Product)eventArgs.OldItems[0];
+                deletedProduct.ProductSales.DeleteSales();
                 deletedProduct.PropertyChanged -= ProductChangedEvent;
                 TakenIDs.Remove(deletedProduct.ID);
                 TakenNames.Remove(deletedProduct.Name);                 

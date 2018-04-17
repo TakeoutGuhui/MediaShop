@@ -5,7 +5,13 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid>
-            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding}" CanUserAddRows="False" />
+            <DataGrid ItemsSource="{Binding}" CanUserAddRows="False" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Product.Name}" />
+                    <DataGridTextColumn Header="Sales" Binding="{Binding TotalItemsSold}" />
+                    <DataGridTextColumn Header="Money generated" Binding="{Binding TotalIncome}" />
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </Grid>
 </Window>

@@ -13,7 +13,7 @@ namespace MediaShop.Models
 {
     class ProductSales : BaseViewModel
     {
-        private Product _product;
+        public Product Product { get; set; }
         private List<ProductSale> _sales;
         public List<ProductSale> Sales
         {
@@ -28,8 +28,8 @@ namespace MediaShop.Models
         private string _filePath;
         public ProductSales(Product product)
         {
-            _product = product;
-            _filePath = Properties.Settings.Default.salesFolder + _product.ID;
+            Product = product;
+            _filePath = Properties.Settings.Default.salesFolder + Product.ID;
 
             if (File.Exists(_filePath))
             {

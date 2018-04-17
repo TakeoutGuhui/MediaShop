@@ -263,7 +263,7 @@ namespace MediaShop.ViewModels
             {
                 productSales.Add(product.ProductSales);
             }
-            var sorted = productSales.OrderBy(o => o.TotalItemsSold).ToList();
+            var sorted = productSales.OrderByDescending(o => o.TotalItemsSold).ToList().Take(10);
             TopTenWindow window = new TopTenWindow();
             window.DataContext = sorted;
             window.Show();
