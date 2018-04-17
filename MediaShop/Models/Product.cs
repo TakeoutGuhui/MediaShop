@@ -7,39 +7,17 @@ namespace MediaShop.Models
 {
     internal class Product : BaseViewModel
     {
-        private static readonly HashSet<int> TakenIDs = new HashSet<int>();
-        private static readonly HashSet<string> TakenNames = new HashSet<string>();
-
-
-        public static bool ValidId(string id){ return Regex.IsMatch(id, "[^0-9]+"); }
-        private int _id;
-        public int ID
+        private string _id;
+        public string ID
         {
             get { return _id; }
             set
             {
-
-
                 if (value == _id) return;
-                if (TakenIDs.Contains(value))
-                {
-                    _id = -1;
-                }
-                else
-                {
-                    if (TakenIDs.Contains(_id))
-                    {
-                        TakenIDs.Remove(_id);
-                    }
-                    _id = value;
-                    TakenIDs.Add(_id);
-                }
+                _id = value;
                 RaisePropertyChangedEvent("ID");
-
             }
         }
-
-        public static bool ValidName(string name) { return true; }
         private string _name = "";
         public string Name
         {
@@ -47,24 +25,11 @@ namespace MediaShop.Models
             set
             {
                 if(value == _name) return;
-                if (TakenNames.Contains(value))
-                {
-                    _name = "";
-                }
-                else
-                {
-                    if (TakenNames.Contains(_name))
-                    {
-                        TakenNames.Remove(_name);
-                    }
-                    _name = value;
-                    TakenNames.Add(_name);
-                }
+                _name = value;
                 RaisePropertyChangedEvent("Name");
             }
         }
 
-        public static bool ValidPrice(string price) { return true; }
         private decimal _price;
         public decimal Price
         {
@@ -77,7 +42,6 @@ namespace MediaShop.Models
             }
         }
 
-        public static bool ValidStock(string price) { return Regex.IsMatch(price, "[^0-9]+");  }
         private int _stock;
         public int Stock
         {
@@ -93,7 +57,6 @@ namespace MediaShop.Models
             }
         }
 
-        public static bool ValidArtist(string artist) { return true; }
         private string _artist = "";
         public string Artist
         {
@@ -106,7 +69,6 @@ namespace MediaShop.Models
             }
         }
 
-        public static bool ValidGenre(string genre){ return true; }
         private string _genre = "";
         public string Genre
         {
@@ -119,7 +81,6 @@ namespace MediaShop.Models
             }
         }
 
-        public static bool ValidPublisher(string publisher){ return true; }
         private string _publisher = "";
         public string Publisher
         {
@@ -132,7 +93,6 @@ namespace MediaShop.Models
             }
         }
 
-        public static bool ValidYear(string year) { return true; }
         private int _year;
         public int Year
         {
@@ -145,7 +105,6 @@ namespace MediaShop.Models
             }
         }
 
-        public static bool ValidComment(string comment) { return true; }
         private string _comment = "";
         public string Comment
         {
@@ -155,6 +114,18 @@ namespace MediaShop.Models
                 if (value == _comment) return;
                 _comment = value;
                 RaisePropertyChangedEvent("Comment");
+            }
+        }
+
+        private ProductSales _productSales;
+        public ProductSales ProductSales
+        {
+            get { return _productSales; }
+            set 
+            {
+                if (value == _productSales) return;
+                _productSales = value;
+                RaisePropertyChangedEvent("ProductSales");
             }
         }
 

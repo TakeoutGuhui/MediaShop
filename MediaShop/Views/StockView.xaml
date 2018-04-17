@@ -4,59 +4,63 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:MediaShop.ViewModels"
+             xmlns:converters="clr-namespace:MediaShop.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=viewModels:StockViewModel}">
     <DockPanel LastChildFill="True">
+        <DockPanel.Resources>
+            <converters:BoolToVisibleOrHidden x:Key="conv" />
+        </DockPanel.Resources>
         
         <!-- Buttons -->
-        <StackPanel Orientation="Vertical" DockPanel.Dock="Right" Width="200" Visibility="">
+        <StackPanel Orientation="Vertical" DockPanel.Dock="Right" Width="250" >
             <Button Content="New Product" Command="{Binding NewProductCommand}"/>
-            <DockPanel HorizontalAlignment="Stretch">
+            <DockPanel HorizontalAlignment="Stretch" >
                 <Label Content="ID:"/>
-                <TextBox Name="IdBox" HorizontalAlignment="Stretch" Text="{Binding SelectedProduct.ID}" PreviewTextInput="UIElement_OnPreviewTextInput" />
+                <TextBox x:Name="IdBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.ID}" />
             </DockPanel>
             <DockPanel>
                 <Label Content="Name:"/>
-                <TextBox Name="NameBox" HorizontalAlignment="Stretch" Text="{Binding SelectedProduct.Name}" PreviewTextInput="UIElement_OnPreviewTextInput" />
+                <TextBox Name="NameBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Name}" />
             </DockPanel>
             <DockPanel >
                 <Label Content="Price:"/>
-                <TextBox Name="PriceBox" HorizontalAlignment="Stretch" Text="{Binding SelectedProduct.Price}" PreviewTextInput="UIElement_OnPreviewTextInput" />
+                <TextBox Name="PriceBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Price, ValidatesOnExceptions=True}" />
             </DockPanel>
             <DockPanel >
                 <Label Content="Stock:"/>
-                <TextBox Name="StockBox" HorizontalAlignment="Stretch" Text="{Binding SelectedProduct.Stock}" PreviewTextInput="UIElement_OnPreviewTextInput"  />
+                <TextBox Name="StockBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Stock, ValidatesOnExceptions=True}" />
             </DockPanel>
             <DockPanel>
                 <Label Content="Artist:"/>
-                <TextBox Name="ArtistBox" HorizontalAlignment="Stretch" Text="{Binding SelectedProduct.Artist}" PreviewTextInput="UIElement_OnPreviewTextInput" />
+                <TextBox Name="ArtistBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Artist}"  />
             </DockPanel>
-            <DockPanel>
-                <Label Content="Genre:"/>
-                <TextBox Name="GenreBox" HorizontalAlignment="Stretch" Text="{Binding SelectedProduct.Genre}" PreviewTextInput="UIElement_OnPreviewTextInput" />
+            <DockPanel >
+                <Label Content="Genre:" DockPanel.Dock="Left"/>
+                <TextBox Name="GenreBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Genre}" />
             </DockPanel>
             <DockPanel >
                 <Label Content="Publisher:"/>
-                <TextBox Name="PublisherBox" HorizontalAlignment="Stretch" Text="{Binding SelectedProduct.Publisher, UpdateSourceTrigger=PropertyChanged}"  PreviewTextInput="UIElement_OnPreviewTextInput"/>
+                <TextBox Name="PublisherBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Publisher, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
             <DockPanel>
                 <Label Content="Year:"/>
-                <TextBox Name="YearBox" HorizontalAlignment="Stretch" Text="{Binding SelectedProduct.Year}" PreviewTextInput="UIElement_OnPreviewTextInput" />
+                <TextBox Name="YearBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Year}" />
             </DockPanel>
             <DockPanel >
                 <Label Content="Comment:"/>
-                <TextBox Name="CommentBox" HorizontalAlignment="Stretch" Text="{Binding SelectedProduct.Comment}" PreviewTextInput="UIElement_OnPreviewTextInput" />
+                <TextBox Name="CommentBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Comment}" />
             </DockPanel>
 
             <Button Content="Add product" Command="{Binding AddProductCommand}"/>
             <Button Content="Delete product" Command="{Binding DeleteProductCommand}"/>
         </StackPanel>
-        
+
         <!-- Product List -->
         <Grid >
-            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding ProductList.Products}" SelectedItem="{Binding SelectedProduct}" />
+            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding ProductList.Products}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" />
         </Grid>
     </DockPanel>
-    
+
 </UserControl>

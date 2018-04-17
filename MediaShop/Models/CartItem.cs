@@ -1,4 +1,5 @@
 ﻿using MediaShop.ViewModels;
+using System;
 
 namespace MediaShop.Models
 {
@@ -65,6 +66,7 @@ namespace MediaShop.Models
         public void Checkout()
         {
             Product.Stock -= NumItemsInCart;
+            Product.ProductSales.AddSale(new ProductSale { NumItems = NumItemsInCart, Price = Product.Price, SaleDate = DateTime.Now });
         }
 
         public decimal GetTotalPrice()

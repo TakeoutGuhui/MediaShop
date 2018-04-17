@@ -1,10 +1,14 @@
 ﻿using MediaShop.Commands;
 using MediaShop.Models;
+using MediaShop.Views;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Linq;
 
 namespace MediaShop.ViewModels
 {
@@ -221,8 +225,52 @@ namespace MediaShop.ViewModels
             {
                 new Printer().bla(ShoppingCart.ToString());
             }
+            
+
             ShoppingCart.Checkout();
             ProductList.SaveProducts();
         }
+
+        public ICommand ReturnProductCommand { get { return new DelegateCommand(ReturnProduct); } }
+        private void ReturnProduct()
+        {
+            if (SelectedProduct == null)
+            {
+                MessageBox.Show("Please select product that you want to return and try again", "Not selected");
+                return;
+            }
+            else
+            {
+                SelectedProduct.Stock++;
+                MessageBox.Show("1 item of the product \"" + SelectedProduct.Name + "\" has been returned");
+            }
+
+        }
+        public ICommand ShowInfoCommand { get { return new DelegateCommand(ShowInfo); } }
+        private void ShowInfo()
+        {
+            ProductInfo ProductInfo = new ProductInfo();
+            ProductInfo.DataContext = SelectedProduct.ProductSales;
+            ProductInfo.Show();
+
+        }
+
+        public ICommand ShowTopCommand { get { return new DelegateCommand(ShowTop); } }
+        private void ShowTop()
+        {
+            List<ProductSales> productSales = new List<ProductSales>();
+            foreach (Product product in ProductList.Products)
+            {
+                productSales.Add(product.ProductSales);
+            }
+            var sorted = productSales.OrderBy(o => o.TotalItemsSold).ToList();
+            TopTenWindow window = new TopTenWindow();
+            window.DataContext = sorted;
+            window.Show();
+
+
+        }
+
+        
     }    
 }

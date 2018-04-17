@@ -1,17 +1,15 @@
-﻿using System;
+﻿using MediaShop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
 
 namespace MediaShop.Converters
 {
-    using System;
-    using System.Windows.Data;
-    using System.Windows;
 
-    namespace TestBooleanToVisibilityConverter
-    {
         //Copied from https://www.rhyous.com/2011/02/22/binding-visibility-to-a-bool-value-in-wpf/
         class BoolToVisibleOrHidden : IValueConverter
         {
@@ -25,8 +23,8 @@ namespace MediaShop.Converters
             #region IValueConverter Members
             public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
             {
-                bool bValue = (bool)value;
-                if (bValue)
+                Product product = (Product)value;
+                if (product != null)
                     return Visibility.Visible;
                 else
                     return Visibility.Hidden;
@@ -37,11 +35,11 @@ namespace MediaShop.Converters
                 Visibility visibility = (Visibility)value;
 
                 if (visibility == Visibility.Visible)
-                    return true;
+                    return new Product();
                 else
-                    return false;
+                    return null;
             }
             #endregion
         }
-    }
+    
 }

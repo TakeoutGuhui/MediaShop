@@ -25,12 +25,30 @@ namespace MediaShop.ViewModels
         public StockViewModel(ProductList productList)
         {
             ProductList = productList;
+            SelectedProduct = productList.Products[0];
         }
 
         public ICommand AddProductCommand { get { return new DelegateCommand(AddProduct); } }
 
         private void AddProduct()
         {
+            bool error = false;
+            string errorMessage = "";
+            if (ProductList.IsIdTaken(_selectedProduct.ID))
+            {
+                error = true;
+                errorMessage += "The ID \"" + _selectedProduct.ID + "\" is already taken, please choose another one\n";
+            } 
+            if (ProductList.IsNameTaken(_selectedProduct.Name))
+            {
+                error = true;
+                errorMessage += "The name \"" + _selectedProduct.Name + "\" is already taken, please choose another one\n";
+            }
+            if (error)
+            {
+                MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK);
+                return;
+            }
             ProductList.Products.Add(_selectedProduct);
         }
 
@@ -40,11 +58,17 @@ namespace MediaShop.ViewModels
         {
             if (_selectedProduct.InStock())
             {
-                MessageBoxResult result = MessageBox.Show("There's still products left in stock, do you want to remove it anyways", "Bla", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("There's still " + _selectedProduct.Stock + " products left in stock, do you want to remove it anyway?",
+                    "Stock not empty", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
                     ProductList.Products.Remove(_selectedProduct);
+                    _selectedProduct = null;
                 }
+            }
+            else
+            {
+                ProductList.Products.Remove(_selectedProduct);
             }
         }
 

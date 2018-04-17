@@ -5,14 +5,13 @@ using System.Diagnostics;
 using System.Text;
 
 using MediaShop.Loaders;
+using System.Collections.Generic;
 
 namespace MediaShop.Models
 {
     internal class ProductList
     {
         private static ProductList _instance;
-
-        //public static ProductList Instance => _instance ?? (_instance = new ProductList(new ProductCsvLoader("../../Data/products.csv")));
         public static ProductList Instance { 
             get 
             {
@@ -23,6 +22,18 @@ namespace MediaShop.Models
             }
         }
 
+        private readonly HashSet<string> TakenIDs = new HashSet<string>();
+        private readonly HashSet<string> TakenNames = new HashSet<string>();
+
+        public bool IsIdTaken(string id)
+        {
+            return TakenIDs.Contains(id);
+        }
+
+        public bool IsNameTaken(string name)
+        {
+            return TakenNames.Contains(name);
+        } 
 
         public ObservableCollection<Product> Products { get; set; }
         private readonly IProductLoader _productLoader;
@@ -31,11 +42,13 @@ namespace MediaShop.Models
         {
             Products = new ObservableCollection<Product>();
             _productLoader = productLoader;
-            Products = _productLoader.LoadProducts();
             Products.CollectionChanged += ProductAddRemove;
-            foreach (Product product in Products)
+            ObservableCollection<Product> loadedProducts = _productLoader.LoadProducts();
+            
+            foreach (Product product in loadedProducts)
             {
                 product.PropertyChanged += ProductChangedEvent;
+                Products.Add(product);
             }
         }
 
@@ -43,24 +56,25 @@ namespace MediaShop.Models
         {
             if (eventArgs.Action == NotifyCollectionChangedAction.Add)
             {
-                Debug.WriteLine("New product!");
-                if (eventArgs.NewItems[0] is Product) ((Product)eventArgs.NewItems[0]).PropertyChanged += ProductChangedEvent;
+                Product newProduct = (Product)eventArgs.NewItems[0];
+                newProduct.PropertyChanged += ProductChangedEvent;
+                TakenIDs.Add(newProduct.ID);
+                TakenNames.Add(newProduct.Name);
             }
             else if (eventArgs.Action == NotifyCollectionChangedAction.Remove)
             {
                 Debug.WriteLine("Delete product!");
-                if (eventArgs.OldItems[0] is Product)
-                {
-                    ((Product)eventArgs.OldItems[0]).PropertyChanged -= ProductChangedEvent;
-                    SaveProducts();
-                }
-                    
+                Product deletedProduct = (Product)eventArgs.OldItems[0];
+                deletedProduct.PropertyChanged -= ProductChangedEvent;
+                TakenIDs.Remove(deletedProduct.ID);
+                TakenNames.Remove(deletedProduct.Name);                 
             }
         }
 
-        private void ProductChangedEvent(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        private void ProductChangedEvent(object sender, PropertyChangedEventArgs eventArgs)
         {
             Debug.WriteLine("Saving!");
+            Product changedProduct = (Product)sender;
             SaveProducts();
         }
 

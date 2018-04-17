@@ -34,8 +34,12 @@
                 <TextBox Name="YearSearch" Width="50" Text="{Binding YearFilter, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Content="Comment:" />
                 <TextBox Name="CommentSearch" Width="50" Text="{Binding CommentFilter, UpdateSourceTrigger=PropertyChanged}" />
+                
             </StackPanel>
-
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Info"  Command="{Binding ShowInfoCommand}"/>
+                <Button Content="Top Ten"  Command="{Binding ShowTopCommand}"/>
+            </StackPanel>
             <!-- Product List -->
             <Grid>
                 <DataGrid IsTextSearchEnabled="True" AutoGenerateColumns="True" ItemsSource="{Binding ProductView}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" >

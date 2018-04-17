@@ -1,0 +1,11 @@
+﻿<Window x:Class="MediaShop.Views.TopTenWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Top ten products" Height="300" Width="300"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid>
+            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding}" CanUserAddRows="False" />
+        </Grid>
+    </Grid>
+</Window>

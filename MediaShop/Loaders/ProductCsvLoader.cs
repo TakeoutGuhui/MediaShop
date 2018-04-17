@@ -26,11 +26,11 @@ namespace MediaShop.Loaders
             while (!parser.EndOfData)
             {
                 string[] fields = parser.ReadFields();
-                int productNumber, stock, year;
+                int stock, year;
                 decimal price;
                 if (fields != null && fields.Length == 9)
                 {
-                    int.TryParse(fields[0], out productNumber);
+                    string productNumber = fields[0];
                     string name = fields[1];
                     decimal.TryParse(fields[2], NumberStyles.Any, new CultureInfo("sv-SE"), out price);
                     int.TryParse(fields[3], out stock);
@@ -48,6 +48,7 @@ namespace MediaShop.Loaders
                                                       Genre = genre,
                                                       Year = year,
                                                       Comment = comment };
+                    product.ProductSales = new ProductSales(product);
                     products.Add(product);
                 }
                 
@@ -68,7 +69,7 @@ namespace MediaShop.Loaders
         private string ConvertToCsv(Product product)
         {
             return string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}",
-                product.ID, 
+                EscapeDelimeter(product.ID), 
                 EscapeDelimeter(product.Name), 
                 product.Price, 
                 product.Stock, 
