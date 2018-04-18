@@ -1,21 +1,39 @@
 ﻿<Window x:Class="MediaShop.Views.ProductInfo"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="{Binding Product.Name}" Height="300" Width="300"
+        Title="{Binding ProductName}" Height="300" Width="300"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize">
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
-            <Label Content="This month:" FontWeight="Bold" />
-            <Label Content="{Binding ThisMonth.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
-            <Label Content="{Binding ThisMonth.MoneyMade}" ContentStringFormat="Money made: {0}" />
-            <Label Content="This year:" FontWeight="Bold" />
-            <Label Content="{Binding ThisYear.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
-            <Label Content="{Binding ThisYear.MoneyMade}" ContentStringFormat="Money made: {0}" />
-            <Label Content="All time:" FontWeight="Bold" />
-            <Label Content="{Binding AllTime.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
-            <Label Content="{Binding AllTime.MoneyMade}" ContentStringFormat="Money made: {0}" />     
+            <Label Content="{Binding ProductID}" ContentStringFormat="ID: {0}" />
+            <Label Content="{Binding ProductName}" ContentStringFormat="Name: {0}" />
+            
+            <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1" Margin="3">
+                <StackPanel>
+                    <Label Content="This month:" FontWeight="Bold" />
+                    <Label Content="{Binding ThisMonth.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
+                    <Label Content="{Binding ThisMonth.MoneyMade}" ContentStringFormat="Money made: {0}" />
+                </StackPanel>
+            </Border>
+
+            <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1" Margin="3">
+                <StackPanel>
+                    <Label Content="This year:" FontWeight="Bold" />
+                    <Label Content="{Binding ThisYear.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
+                    <Label Content="{Binding ThisYear.MoneyMade}" ContentStringFormat="Money made: {0}" />
+                </StackPanel>
+            </Border>
+
+            <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1" Margin="3">
+                <StackPanel>
+                    <Label Content="All time:" FontWeight="Bold" />
+                    <Label Content="{Binding AllTime.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
+                    <Label Content="{Binding AllTime.MoneyMade}" ContentStringFormat="Money made: {0}" />
+                </StackPanel>
+            </Border>
+                 
         </StackPanel>
         
         <Grid>

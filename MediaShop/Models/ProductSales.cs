@@ -2,18 +2,15 @@
 using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MediaShop.Models
 {
     class ProductSales : BaseViewModel
     {
-        public Product Product { get; set; }
         private List<ProductSale> _sales;
         public List<ProductSale> Sales
         {
@@ -22,14 +19,41 @@ namespace MediaShop.Models
             {
                 if (value == _sales) return;
                 _sales = value;
-                RaisePropertyChangedEvent("ProductSales");
+                RaisePropertyChangedEvent("Sales");
             }
         }
-        private string _filePath;
-        public ProductSales(Product product)
+
+        private string _productID;
+        public string ProductID
         {
-            Product = product;
-            _filePath = Properties.Settings.Default.salesFolder + Product.ID + ".csv";
+            get { return _productID; }
+            set
+            {
+                if (value == _productID) return;
+                _productID = value;
+                RaisePropertyChangedEvent("ProductID");
+            }
+        }
+
+        private string _productName;
+        public string ProductName
+        {
+            get { return _productName; }
+            set
+            {
+                if (value == _productName) return;
+                _productName = value;
+                RaisePropertyChangedEvent("ProductName");
+            }
+        }
+
+
+        private string _filePath;
+        public ProductSales(string id, string name)
+        {
+            ProductID = id;
+            ProductName = name;
+            _filePath = Properties.Settings.Default.salesFolder + ProductID + ".csv";
 
             if (File.Exists(_filePath))
             {
@@ -41,31 +65,6 @@ namespace MediaShop.Models
             }
         }
 
-        public int TotalItemsSold
-        {
-            get
-            {
-                int totalSales = 0;
-                foreach  (ProductSale sale in _sales)
-                {
-                    totalSales += sale.NumItems;
-                }
-                return totalSales;
-            }
-        }
-
-        public decimal TotalIncome
-        {
-            get
-            {
-                decimal total = 0;
-                foreach (ProductSale sale in _sales)
-                {
-                    total += sale.Price * sale.NumItems;
-                }
-                return total;
-            }
-        }
         public struct SaleStruct
         {
             public int ItemsSold { get; set; }

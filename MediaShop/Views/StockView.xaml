@@ -59,7 +59,7 @@
 
         <!-- Product List -->
         <Grid >
-            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding ProductList.Products}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" >
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ProductList.Products}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding ID}" />
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" />

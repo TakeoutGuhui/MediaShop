@@ -42,16 +42,15 @@ namespace MediaShop.Models
         {
             Products = new ObservableCollection<Product>();
             _productLoader = productLoader;
-            Products.CollectionChanged += ProductAddRemove;
+            //Products.CollectionChanged += ProductAddRemove;
             ObservableCollection<Product> loadedProducts = _productLoader.LoadProducts();
             
             foreach (Product product in loadedProducts)
             {
-                product.PropertyChanged += ProductChangedEvent;
-                Products.Add(product);
+                AddProduct(product);
             }
         }
-
+        /*
         private void ProductAddRemove(object sender, NotifyCollectionChangedEventArgs eventArgs)
         {
             if (eventArgs.Action == NotifyCollectionChangedAction.Add)
@@ -70,6 +69,25 @@ namespace MediaShop.Models
                 TakenIDs.Remove(deletedProduct.ID);
                 TakenNames.Remove(deletedProduct.Name);                 
             }
+        }
+        */
+        public void AddProduct(Product product)
+        {
+            product.ProductSales = new ProductSales(product.ID, product.Name);
+            product.PropertyChanged += ProductChangedEvent;
+            TakenIDs.Add(product.ID);
+            TakenNames.Add(product.Name);
+            Products.Add(product);
+            
+        }
+
+        public void RemoveProduct(Product product)
+        {
+            product.ProductSales.DeleteSales();
+            product.PropertyChanged -= ProductChangedEvent;
+            TakenIDs.Remove(product.ID);
+            TakenNames.Remove(product.Name);
+            Products.Remove(product);
         }
 
         private void ProductChangedEvent(object sender, PropertyChangedEventArgs eventArgs)

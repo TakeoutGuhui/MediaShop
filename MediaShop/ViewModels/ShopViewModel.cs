@@ -268,9 +268,9 @@ namespace MediaShop.ViewModels
             {
                 productSales.Add(product.ProductSales);
             }
-            var sorted = productSales.OrderByDescending(s => s.TotalItemsSold).ToList()
+            var sorted = productSales.OrderByDescending(s => s.AllTime.ItemsSold).ToList()
                 .Take(10)
-                .Where(s => s.TotalItemsSold > 0);
+                .Where(s => s.AllTime.ItemsSold > 0);
             TopTenWindow window = new TopTenWindow();
             window.DataContext = sorted;
             window.Show();

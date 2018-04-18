@@ -48,7 +48,7 @@ namespace MediaShop.Loaders
                                                       Genre = genre,
                                                       Year = year,
                                                       Comment = comment };
-                    product.ProductSales = new ProductSales(product);
+                    //product.ProductSales = new ProductSales(product.ID, product.Name);
                     products.Add(product);
                 }
                 

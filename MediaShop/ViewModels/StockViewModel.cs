@@ -71,7 +71,7 @@ namespace MediaShop.ViewModels
                 MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK);
                 return;
             }
-            ProductList.Products.Add(_selectedProduct);
+            ProductList.AddProduct(_selectedProduct);
             NewProductMode = false;
         }
 
@@ -85,13 +85,13 @@ namespace MediaShop.ViewModels
                     "Stock not empty", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    ProductList.Products.Remove(_selectedProduct);
+                    ProductList.RemoveProduct(_selectedProduct);
                     _selectedProduct = null;
                 }
             }
             else
             {
-                ProductList.Products.Remove(_selectedProduct);
+                ProductList.RemoveProduct(_selectedProduct);
             }
         }
 
@@ -100,9 +100,6 @@ namespace MediaShop.ViewModels
         {
             SelectedProduct = new Product();
             NewProductMode = true;
-        }
-
-                
-        
+        }      
     }
 }

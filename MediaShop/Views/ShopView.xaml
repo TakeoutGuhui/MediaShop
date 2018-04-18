@@ -37,8 +37,7 @@
                 
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Content="Info"  Command="{Binding ShowInfoCommand}"/>
-                <Button Content="Top Ten"  Command="{Binding ShowTopCommand}"/>
+                <Button Content="Top 10"  Command="{Binding ShowTopCommand}"/>
             </StackPanel>
             <!-- Product List -->
             <Grid >
