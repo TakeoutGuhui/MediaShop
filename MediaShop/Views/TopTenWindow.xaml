@@ -5,7 +5,7 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid>
-            <DataGrid ItemsSource="{Binding}" CanUserAddRows="False" AutoGenerateColumns="False">
+            <DataGrid ItemsSource="{Binding}" CanUserAddRows="False" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Product.Name}" />
                     <DataGridTextColumn Header="Sales" Binding="{Binding TotalItemsSold}" />

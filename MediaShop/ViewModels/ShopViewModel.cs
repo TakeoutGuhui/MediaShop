@@ -189,6 +189,8 @@ namespace MediaShop.ViewModels
             ShoppingCart = new ShoppingCart();
             ProductView = CollectionViewSource.GetDefaultView(ProductList.Products);
             ProductView.Filter = FilterProducts;
+           
+            
         }
 
         public ICommand AddToCartCommand { get { return new DelegateCommand(AddToCart); } }
@@ -249,9 +251,12 @@ namespace MediaShop.ViewModels
         public ICommand ShowInfoCommand { get { return new DelegateCommand(ShowInfo); } }
         private void ShowInfo()
         {
-            ProductInfo ProductInfo = new ProductInfo();
-            ProductInfo.DataContext = SelectedProduct.ProductSales;
-            ProductInfo.Show();
+            if (SelectedProduct != null)
+            {
+                ProductInfo ProductInfo = new ProductInfo();
+                ProductInfo.DataContext = SelectedProduct.ProductSales;
+                ProductInfo.Show();
+            }
 
         }
 
@@ -263,7 +268,9 @@ namespace MediaShop.ViewModels
             {
                 productSales.Add(product.ProductSales);
             }
-            var sorted = productSales.OrderByDescending(o => o.TotalItemsSold).ToList().Take(10);
+            var sorted = productSales.OrderByDescending(s => s.TotalItemsSold).ToList()
+                .Take(10)
+                .Where(s => s.TotalItemsSold > 0);
             TopTenWindow window = new TopTenWindow();
             window.DataContext = sorted;
             window.Show();

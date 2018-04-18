@@ -29,7 +29,7 @@ namespace MediaShop.Models
         public ProductSales(Product product)
         {
             Product = product;
-            _filePath = Properties.Settings.Default.salesFolder + Product.ID;
+            _filePath = Properties.Settings.Default.salesFolder + Product.ID + ".csv";
 
             if (File.Exists(_filePath))
             {
@@ -64,6 +64,62 @@ namespace MediaShop.Models
                     total += sale.Price * sale.NumItems;
                 }
                 return total;
+            }
+        }
+        public struct SaleStruct
+        {
+            public int ItemsSold { get; set; }
+            public decimal MoneyMade { get; set; }
+        }
+
+        public SaleStruct AllTime
+        {
+            get
+            {
+                int itemsSold = 0;
+                decimal moneyMade = 0;
+                foreach (var sale in Sales)
+                {
+                    itemsSold += sale.NumItems;
+                    moneyMade += sale.Price * sale.NumItems;
+                }
+                return new SaleStruct() { ItemsSold = itemsSold, MoneyMade = moneyMade };
+            }
+        }
+
+        public SaleStruct ThisMonth
+        {
+            get
+            {
+                DateTime today = DateTime.Now;
+                int totalSold = 0;
+                decimal TotalMoney = 0;
+                
+                var salesThisMonth = Sales.Where(s => s.SaleDate.Month == today.Month && s.SaleDate.Year == today.Year);
+                foreach  (var sale in salesThisMonth)
+                {
+                    totalSold += sale.NumItems;
+                    TotalMoney += sale.Price * sale.NumItems;
+                }
+                return new SaleStruct() { ItemsSold = totalSold, MoneyMade = TotalMoney };
+            }
+        }
+
+        public SaleStruct ThisYear
+        {
+            get
+            {
+                DateTime today = DateTime.Now;
+                int totalSold = 0;
+                decimal TotalMoney = 0;
+
+                var salesThisMonth = Sales.Where(s => s.SaleDate.Year == today.Year);
+                foreach (ProductSale sale in salesThisMonth)
+                {
+                    totalSold += sale.NumItems;
+                    TotalMoney += sale.Price * sale.NumItems;
+                }
+                return new SaleStruct() { ItemsSold = totalSold, MoneyMade = TotalMoney };
             }
         }
 

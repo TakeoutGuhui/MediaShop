@@ -41,8 +41,28 @@
                 <Button Content="Top Ten"  Command="{Binding ShowTopCommand}"/>
             </StackPanel>
             <!-- Product List -->
-            <Grid>
-                <DataGrid IsTextSearchEnabled="True" AutoGenerateColumns="True" ItemsSource="{Binding ProductView}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" >
+            <Grid >
+                <DataGrid Name="ProductGrid" IsTextSearchEnabled="True" AutoGenerateColumns="False" ItemsSource="{Binding ProductView}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" >
+                    
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding ID}" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                        <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
+                        <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" />
+                        <DataGridTextColumn Header="Artist" Binding="{Binding Artist}" />
+                        <DataGridTextColumn Header="Genre" Binding="{Binding Genre}" />
+                        <DataGridTextColumn Header="Publisher" Binding="{Binding Publisher}" />
+                        <DataGridTextColumn Header="Year" Binding="{Binding Year}" />
+                        <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" />
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Info" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.ShowInfoCommand}" /> 
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                    
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type DataGridCell}">
                             <Setter Property="BorderThickness" Value="0" /> <!-- Removes the selection of individual cells -->

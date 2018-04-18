@@ -1,19 +1,31 @@
 ﻿<Window x:Class="MediaShop.Views.ProductInfo"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="{Binding Name}" Height="300" Width="300"
-        WindowStartupLocation="CenterScreen">
+        Title="{Binding Product.Name}" Height="300" Width="300"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
     <DockPanel>
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <Label Content="Total sold:" />
-            <Label Content="{Binding TotalItemsSold}" />
-            <Label Content="Total income:" />
-            <Label Content="{Binding TotalIncome}" />
-            
+        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+            <Label Content="This month:" FontWeight="Bold" />
+            <Label Content="{Binding ThisMonth.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
+            <Label Content="{Binding ThisMonth.MoneyMade}" ContentStringFormat="Money made: {0}" />
+            <Label Content="This year:" FontWeight="Bold" />
+            <Label Content="{Binding ThisYear.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
+            <Label Content="{Binding ThisYear.MoneyMade}" ContentStringFormat="Money made: {0}" />
+            <Label Content="All time:" FontWeight="Bold" />
+            <Label Content="{Binding AllTime.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
+            <Label Content="{Binding AllTime.MoneyMade}" ContentStringFormat="Money made: {0}" />     
         </StackPanel>
         
         <Grid>
-            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding Sales}" CanUserAddRows="False" />
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Sales}" CanUserAddRows="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Items sold" Binding="{Binding NumItems}" />
+                    <DataGridTextColumn Header="Price sold for" Binding="{Binding Price}" />
+                    <DataGridTextColumn Header="Date" Binding="{Binding SaleDate}" />
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </DockPanel>
 </Window>
