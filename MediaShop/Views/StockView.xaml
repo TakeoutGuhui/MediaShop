@@ -10,7 +10,7 @@
              d:DataContext="{d:DesignInstance Type=viewModels:StockViewModel}">
     <DockPanel LastChildFill="True">
         <DockPanel.Resources>
-            <converters:BoolToVisibleOrHidden x:Key="conv" />
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
         </DockPanel.Resources>
         
         <!-- Buttons -->
@@ -53,13 +53,25 @@
                 <TextBox Name="CommentBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Comment}" />
             </DockPanel>
 
-            <Button Content="Add product" Command="{Binding AddProductCommand}"/>
+            <Button Content="Add product" Command="{Binding AddProductCommand}" Visibility="{Binding NewProductMode, Converter={StaticResource BoolToVis}}"/>
             <Button Content="Delete product" Command="{Binding DeleteProductCommand}"/>
         </StackPanel>
 
         <!-- Product List -->
         <Grid >
-            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding ProductList.Products}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" />
+            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding ProductList.Products}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding ID}" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
+                    <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" />
+                    <DataGridTextColumn Header="Artist" Binding="{Binding Artist}" />
+                    <DataGridTextColumn Header="Genre" Binding="{Binding Genre}" />
+                    <DataGridTextColumn Header="Publisher" Binding="{Binding Publisher}" />
+                    <DataGridTextColumn Header="Year" Binding="{Binding Year}" />
+                    <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" />
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </DockPanel>
 

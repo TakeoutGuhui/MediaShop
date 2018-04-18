@@ -10,13 +10,32 @@ namespace MediaShop.ViewModels
     {
         public ProductList ProductList { get; set;  }
 
+        private bool _newProductMode;
+        public bool NewProductMode 
+        {
+            get { return _newProductMode; }
+            set
+            {
+                if (value == _newProductMode) return;
+                _newProductMode = value;
+                RaisePropertyChangedEvent("NewProductMode");
+            } 
+        }
+
         private Product _selectedProduct;
         public Product SelectedProduct
         {
             get { return _selectedProduct; }
             set
             {
+                
                 if (value == _selectedProduct) return;
+                if (NewProductMode)
+                {
+                    MessageBoxResult result =  MessageBox.Show("Do you want to cancel adding the new product?", "Save product", MessageBoxButton.YesNo);
+                    if (result == MessageBoxResult.No) return;
+                    else NewProductMode = false;
+                }
                 _selectedProduct = value;
                 RaisePropertyChangedEvent("SelectedProduct");
             }
@@ -26,12 +45,15 @@ namespace MediaShop.ViewModels
         {
             ProductList = productList;
             SelectedProduct = productList.Products[0];
+            NewProductMode = false;
+            
         }
 
         public ICommand AddProductCommand { get { return new DelegateCommand(AddProduct); } }
 
         private void AddProduct()
         {
+            if (!NewProductMode) return;
             bool error = false;
             string errorMessage = "";
             if (ProductList.IsIdTaken(_selectedProduct.ID))
@@ -50,6 +72,7 @@ namespace MediaShop.ViewModels
                 return;
             }
             ProductList.Products.Add(_selectedProduct);
+            NewProductMode = false;
         }
 
         public ICommand DeleteProductCommand { get { return new DelegateCommand(DeleteProduct);} }
@@ -76,6 +99,7 @@ namespace MediaShop.ViewModels
         private void NewProduct()
         {
             SelectedProduct = new Product();
+            NewProductMode = true;
         }
 
                 
