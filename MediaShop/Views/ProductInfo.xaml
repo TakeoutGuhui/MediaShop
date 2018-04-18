@@ -7,12 +7,16 @@
         ResizeMode="NoResize">
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
-            <Label Content="{Binding ProductID}" ContentStringFormat="ID: {0}" />
-            <Label Content="{Binding ProductName}" ContentStringFormat="Name: {0}" />
-            
+            <Border Background="LightGreen" BorderBrush="Gainsboro" BorderThickness="1">
+                <StackPanel>
+                    <Label Content="{Binding ProductID}" ContentStringFormat="ID: {0}" FontWeight="Bold" />
+                    <Label Content="{Binding ProductName}" ContentStringFormat="Name: {0}" FontWeight="Bold" />
+                </StackPanel>
+            </Border>
+            <Label Content="Sale info" FontSize="20" FontWeight="Bold"/>
             <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1" Margin="3">
                 <StackPanel>
-                    <Label Content="This month:" FontWeight="Bold" />
+                    <Label Content="This month" FontWeight="Bold" FontSize="16" />
                     <Label Content="{Binding ThisMonth.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
                     <Label Content="{Binding ThisMonth.MoneyMade}" ContentStringFormat="Money made: {0}" />
                 </StackPanel>
@@ -20,7 +24,7 @@
 
             <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1" Margin="3">
                 <StackPanel>
-                    <Label Content="This year:" FontWeight="Bold" />
+                    <Label Content="This year" FontWeight="Bold" FontSize="16"/>
                     <Label Content="{Binding ThisYear.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
                     <Label Content="{Binding ThisYear.MoneyMade}" ContentStringFormat="Money made: {0}" />
                 </StackPanel>
@@ -28,12 +32,12 @@
 
             <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1" Margin="3">
                 <StackPanel>
-                    <Label Content="All time:" FontWeight="Bold" />
+                    <Label Content="All time" FontWeight="Bold" FontSize="16"  />
                     <Label Content="{Binding AllTime.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
                     <Label Content="{Binding AllTime.MoneyMade}" ContentStringFormat="Money made: {0}" />
                 </StackPanel>
             </Border>
-                 
+            <Label  Content="Sales" FontSize="20" FontWeight="Bold" Margin="0,10,0,0"/>
         </StackPanel>
         
         <Grid>
