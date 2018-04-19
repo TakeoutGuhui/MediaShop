@@ -22,6 +22,7 @@ namespace MediaShop.Models
                 if (value == _id || ProductList.Instance.IsIdTaken(value)) return; // If the new ID is already taken, cancel
                 _id = value;
                 RaisePropertyChangedEvent("ID");
+
             }
         }
         private string _name = "";
