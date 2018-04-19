@@ -8,15 +8,22 @@ using MediaShop.Models;
 
 namespace MediaShop.Loaders
 {
+    /// <summary>
+    /// This class handles saving and loading products in csv-format to/from disk
+    /// </summary>
     class ProductCsvLoader : IProductLoader
     {
-        private readonly string _filePath;
-        private readonly string _delimiter = ";";
+        private readonly string _filePath; // The path to the file where the products are saved
+        private readonly string _delimiter = ";"; // The delimiter that should be used to separate the values in the file
         public ProductCsvLoader(string filePath)
         {
             _filePath = filePath;
         }
 
+        /// <summary>
+        /// Loads the products from the file that _filePath points to
+        /// </summary>
+        /// <returns></returns>
         public ObservableCollection<Product> LoadProducts()
         {
             TextFieldParser parser = new TextFieldParser(_filePath);
@@ -48,7 +55,6 @@ namespace MediaShop.Loaders
                                                       Genre = genre,
                                                       Year = year,
                                                       Comment = comment };
-                    //product.ProductSales = new ProductSales(product.ID, product.Name);
                     products.Add(product);
                 }
                 
@@ -56,6 +62,11 @@ namespace MediaShop.Loaders
             return products;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         private string EscapeDelimeter(string data)
         {
             if (data.Contains(_delimiter))
@@ -80,6 +91,10 @@ namespace MediaShop.Loaders
                 EscapeDelimeter(product.Comment));
         }
 
+        /// <summary>
+        /// Saves the products to file
+        /// </summary>
+        /// <param name="products"> The products that will be saved to file </param>
         public void SaveProducts(ObservableCollection<Product> products)
         {
             StringBuilder stringBuilder = new StringBuilder();

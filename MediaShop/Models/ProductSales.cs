@@ -85,6 +85,11 @@ namespace MediaShop.Models
             public decimal MoneyMade { get; set; }
         }
 
+        /// <summary>
+        /// Makes a SaleStruct with the sum of the sales in the theSales list
+        /// </summary>
+        /// <param name="theSales"> The list that will be summed </param>
+        /// <returns></returns>
         private SaleStruct MakeSaleStruct(List<ProductSale> theSales)
         {
             int itemsSold = 0;
@@ -114,18 +119,6 @@ namespace MediaShop.Models
             {
                 DateTime today = DateTime.Now;
                 return MakeSaleStruct(Sales.Where(s => s.SaleDate.Month == today.Month && s.SaleDate.Year == today.Year).ToList());
-                /*
-                int totalSold = 0;
-                decimal TotalMoney = 0;
-                
-                var salesThisMonth = Sales.Where(s => s.SaleDate.Month == today.Month && s.SaleDate.Year == today.Year);
-                foreach  (var sale in salesThisMonth)
-                {
-                    totalSold += sale.NumItems;
-                    TotalMoney += sale.Price * sale.NumItems;
-                }
-                return new SaleStruct() { ItemsSold = totalSold, MoneyMade = TotalMoney };
-                */
             }
         }
 
@@ -139,18 +132,6 @@ namespace MediaShop.Models
             {
                 DateTime today = DateTime.Now;
                 return MakeSaleStruct(Sales.Where(s => s.SaleDate.Year == today.Year).ToList());
-                /*
-                int totalSold = 0;
-                decimal TotalMoney = 0;
-
-                var salesThisMonth = Sales.Where(s => s.SaleDate.Year == today.Year);
-                foreach (ProductSale sale in salesThisMonth)
-                {
-                    totalSold += sale.NumItems;
-                    TotalMoney += sale.Price * sale.NumItems;
-                }
-                return new SaleStruct() { ItemsSold = totalSold, MoneyMade = TotalMoney };
-                */
             }
         }
 
@@ -211,32 +192,30 @@ namespace MediaShop.Models
         /// <summary>
         /// Converts the sale to csv-format
         /// </summary>
-        /// <param name="sale"></param>
+        /// <param name="saleToConvert"></param>
         /// <returns></returns>
-        private string ConvertToCsv(ProductSale sale)
+        private string ConvertToCsv(ProductSale saleToConvert)
         {
             return string.Format("{0};{1};{2}",
-                sale.NumItems.ToString(),
-                sale.Price.ToString(),
-                sale.SaleDate.ToString());
+                saleToConvert.NumItems.ToString(),
+                saleToConvert.Price.ToString(),
+                saleToConvert.SaleDate.ToString());
                 
         }
 
         /// <summary>
         /// Saves the sales to file
         /// </summary>
-        /// <param name="sales"> The sales that will be saved to the file </param>
-        public void SaveSales(List<ProductSale> sales)
+        /// <param name="salesToBeSaved"> The sales that will be saved to the file </param>
+        public void SaveSales(List<ProductSale> salesToBeSaved)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            foreach (ProductSale sale in sales)
+            foreach (ProductSale sale in salesToBeSaved)
             {
                 string saleLine = ConvertToCsv(sale);
                 stringBuilder.AppendLine(saleLine);
             }
             File.WriteAllText(_filePath, stringBuilder.ToString());
-        }
-
-        
+        }      
     }
 }

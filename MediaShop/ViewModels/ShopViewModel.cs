@@ -12,6 +12,9 @@ using System.Linq;
 
 namespace MediaShop.ViewModels
 {
+    /// <summary>
+    /// View Model for the Shopview
+    /// </summary>
     class ShopViewModel : BaseViewModel
     {
         /// <summary>

@@ -81,27 +81,6 @@ namespace MediaShop.Models
                 AddProduct(product);
             }
         }
-        /*
-        private void ProductAddRemove(object sender, NotifyCollectionChangedEventArgs eventArgs)
-        {
-            if (eventArgs.Action == NotifyCollectionChangedAction.Add)
-            {
-                Product newProduct = (Product)eventArgs.NewItems[0];
-                newProduct.PropertyChanged += ProductChangedEvent;
-                TakenIDs.Add(newProduct.ID);
-                TakenNames.Add(newProduct.Name);
-            }
-            else if (eventArgs.Action == NotifyCollectionChangedAction.Remove)
-            {
-                Debug.WriteLine("Delete product!");
-                Product deletedProduct = (Product)eventArgs.OldItems[0];
-                deletedProduct.ProductSales.DeleteSales();
-                deletedProduct.PropertyChanged -= ProductChangedEvent;
-                TakenIDs.Remove(deletedProduct.ID);
-                TakenNames.Remove(deletedProduct.Name);                 
-            }
-        }
-        */
 
         /// <summary>
         /// Adds a product to the list
@@ -147,6 +126,9 @@ namespace MediaShop.Models
             SaveProducts();
         }
 
+        /// <summary>
+        /// Saves the products to disk
+        /// </summary>
         public void SaveProducts()
         {
             _productLoader.SaveProducts(Products);
