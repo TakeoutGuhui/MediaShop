@@ -4,17 +4,75 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:MediaShop.ViewModels"
+             xmlns:converters="clr-namespace:MediaShop.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=viewModels:StockViewModel}">
     <DockPanel LastChildFill="True">
-        <StackPanel Width="200" Orientation="Vertical" DockPanel.Dock="Right">
-            <Button Content="Export"/>
-            <Button Content="Import"/>
+        <DockPanel.Resources>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        </DockPanel.Resources>
+        
+        <!-- Buttons -->
+        <StackPanel Orientation="Vertical" DockPanel.Dock="Right" Width="250" >
+            <Button Content="New Product" Command="{Binding NewProductCommand}"/>
+            <DockPanel HorizontalAlignment="Stretch" >
+                <Label Content="ID:"/>
+                <TextBox x:Name="IdBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.ID}" />
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Name:"/>
+                <TextBox Name="NameBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Name}" />
+            </DockPanel>
+            <DockPanel >
+                <Label Content="Price:"/>
+                <TextBox Name="PriceBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Price, ValidatesOnExceptions=True}" />
+            </DockPanel>
+            <DockPanel >
+                <Label Content="Stock:"/>
+                <TextBox Name="StockBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Stock, ValidatesOnExceptions=True}" />
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Artist:"/>
+                <TextBox Name="ArtistBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Artist}"  />
+            </DockPanel>
+            <DockPanel >
+                <Label Content="Genre:" DockPanel.Dock="Left"/>
+                <TextBox Name="GenreBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Genre}" />
+            </DockPanel>
+            <DockPanel >
+                <Label Content="Publisher:"/>
+                <TextBox Name="PublisherBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Publisher, UpdateSourceTrigger=PropertyChanged}"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Year:"/>
+                <TextBox Name="YearBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Year}" />
+            </DockPanel>
+            <DockPanel >
+                <Label Content="Comment:"/>
+                <TextBox Name="CommentBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Comment}" />
+            </DockPanel>
+
+            <Button Content="Add product" Command="{Binding AddProductCommand}" Visibility="{Binding NewProductMode, Converter={StaticResource BoolToVis}}"/>
+            <Button Content="Delete product" Command="{Binding DeleteProductCommand}"/>
         </StackPanel>
+
+        <!-- Product List -->
         <Grid >
-            <DataGrid  AutoGenerateColumns="True" ItemsSource="{Binding ProductList.Products}" />
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ProductList.Products}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding ID}" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
+                    <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" />
+                    <DataGridTextColumn Header="Artist" Binding="{Binding Artist}" />
+                    <DataGridTextColumn Header="Genre" Binding="{Binding Genre}" />
+                    <DataGridTextColumn Header="Publisher" Binding="{Binding Publisher}" />
+                    <DataGridTextColumn Header="Year" Binding="{Binding Year}" />
+                    <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" />
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </DockPanel>
-    
+
 </UserControl>

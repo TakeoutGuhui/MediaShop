@@ -5,7 +5,9 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Drawing.Printing;
 using MediaShop.Models;
+using System.Windows.Controls;
 
 namespace MediaShop
 {
@@ -14,6 +16,10 @@ namespace MediaShop
     /// </summary>
     public partial class App : Application
     {
-        
+        public App()
+        {
+            ProductList prod = ProductList.Instance;
+            prod.LoadProducts();// Init
+        }
     }
 }

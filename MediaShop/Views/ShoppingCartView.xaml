@@ -16,10 +16,12 @@
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" Background="Gray">
             <Label Content="{Binding ShoppingCart.TotalPrice}" ContentStringFormat="Total: {0}" HorizontalAlignment="Right" FontSize="24" FontWeight="Bold"/>
+            <CheckBox Content="Print receipt" IsChecked="{Binding PrintReceipt}"/>
             <Button Height="50" Content="Checkout" Command="{Binding CheckoutCommand}" Background="GreenYellow" FontSize="24" FontWeight="Bold" />
         </StackPanel>
-        
-        <ListView Width="300" ItemsSource="{Binding ShoppingCart.CartItems}" SelectedItem="{Binding SelectCartItem}" Background="LightGray">
+        <Button DockPanel.Dock="Top" Content="Clear" Command="{Binding ClearCartCommand}" />
+
+        <ListView Width="300" ItemsSource="{Binding ShoppingCart.CartItems}" SelectedItem="{Binding SelectCartItem}" Background="AliceBlue">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -31,8 +33,8 @@
                         <Grid.InputBindings>
                             <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.RemoveFromCartCommand}" />
                         </Grid.InputBindings>
-                        <Label Grid.Column="0"  Content="{Binding Product.Name}"/>
 
+                        <Label Grid.Column="0"  Content="{Binding Product.Name}"/>
                         <Label Grid.Column="2"  Content="{Binding TotalPrice}" HorizontalAlignment="Right"/>
                         <Label Grid.Column="1" HorizontalContentAlignment="Center">
                             <Label.Content>
@@ -42,6 +44,7 @@
                                 </MultiBinding>
                             </Label.Content>
                         </Label>
+
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

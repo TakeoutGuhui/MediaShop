@@ -1,0 +1,53 @@
+﻿<Window x:Class="MediaShop.Views.ProductInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding ProductName}" Height="300" Width="300"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+            <Border Background="LightGreen" BorderBrush="Gainsboro" BorderThickness="1">
+                <StackPanel>
+                    <Label Content="{Binding ProductID}" ContentStringFormat="ID: {0}" FontWeight="Bold" />
+                    <Label Content="{Binding ProductName}" ContentStringFormat="Name: {0}" FontWeight="Bold" />
+                </StackPanel>
+            </Border>
+            <Label Content="Sale info" FontSize="20" FontWeight="Bold"/>
+            <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1" Margin="3">
+                <StackPanel>
+                    <Label Content="This month" FontWeight="Bold" FontSize="16" />
+                    <Label Content="{Binding ThisMonth.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
+                    <Label Content="{Binding ThisMonth.MoneyMade}" ContentStringFormat="Money made: {0}" />
+                </StackPanel>
+            </Border>
+
+            <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1" Margin="3">
+                <StackPanel>
+                    <Label Content="This year" FontWeight="Bold" FontSize="16"/>
+                    <Label Content="{Binding ThisYear.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
+                    <Label Content="{Binding ThisYear.MoneyMade}" ContentStringFormat="Money made: {0}" />
+                </StackPanel>
+            </Border>
+
+            <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1" Margin="3">
+                <StackPanel>
+                    <Label Content="All time" FontWeight="Bold" FontSize="16"  />
+                    <Label Content="{Binding AllTime.ItemsSold}" ContentStringFormat="Items sold: {0}"/>
+                    <Label Content="{Binding AllTime.MoneyMade}" ContentStringFormat="Money made: {0}" />
+                </StackPanel>
+            </Border>
+            <Label  Content="Sales" FontSize="20" FontWeight="Bold" Margin="0,10,0,0"/>
+        </StackPanel>
+        
+        <Grid>
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Sales}" CanUserAddRows="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Items sold" Binding="{Binding NumItems}" />
+                    <DataGridTextColumn Header="Price sold for" Binding="{Binding Price}" />
+                    <DataGridTextColumn Header="Date" Binding="{Binding SaleDate}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </DockPanel>
+</Window>

@@ -1,4 +1,6 @@
-﻿using MediaShop.Models;
+﻿using System.Windows.Controls;
+using System.Windows.Input;
+using MediaShop.Models;
 using MediaShop.ViewModels;
 
 namespace MediaShop.Views

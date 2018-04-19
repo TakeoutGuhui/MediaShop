@@ -12,7 +12,7 @@ namespace MediaShop.Models
 
         public ObservableCollection<CartItem> CartItems
         {
-            get => _cartItems;
+            get { return _cartItems; }
             set
             {
                 if(value == _cartItems) return;
@@ -25,7 +25,7 @@ namespace MediaShop.Models
 
         public decimal TotalPrice
         {
-            get => _totalPrice;
+            get { return _totalPrice; }
             set
             {
                 if (value == _totalPrice) return;
@@ -62,22 +62,22 @@ namespace MediaShop.Models
 
         public void AddItem(Product product)
         {
-            if (product.InStock())
+            if (!product.InStock()) return;
+            CartItem cartItem = AlreadyInCart(product);
+
+            if (cartItem != null)
             {
-                CartItem cartItem = AlreadyInCart(product);
-                if (cartItem != null && cartItem.Product.InStock())
-                {
-                    cartItem.AddAnother();
-                    TotalPrice = GetTotalPrice();
-                    Debug.WriteLine("Added one more of the item \"" + cartItem.Product.Name + "\" to the cart, there's now a total of " + cartItem.NumItemsInCart);
-                }
-                else
-                {
-                    CartItems.Add(new CartItem(product));
-                    TotalPrice = GetTotalPrice();
-                    Debug.WriteLine(product.Name + " was added to the shopping cart");
-                }   
-            }       
+                if(cartItem.InStock()) cartItem.AddAnother();
+                Debug.WriteLine("Added one more of the item \"" + cartItem.Product.Name + "\" to the cart, there's now a total of " + cartItem.NumItemsInCart);
+            }
+            else
+            {
+                CartItems.Add(new CartItem(product));
+                Debug.WriteLine(product.Name + " was added to the shopping cart");
+            }
+
+            TotalPrice = GetTotalPrice();
+                 
         }
 
         public decimal GetTotalPrice()
@@ -92,10 +92,6 @@ namespace MediaShop.Models
 
         public void RemoveAllItems()
         {
-            foreach (CartItem cartItem in CartItems)
-            {
-                cartItem.RestoreStock();
-            }
             CartItems = new ObservableCollection<CartItem>();
             TotalPrice = GetTotalPrice();
             Debug.WriteLine("Removed all items from the shopping cart");
@@ -107,7 +103,7 @@ namespace MediaShop.Models
             if(cartItem == null) return;
             if (removeAll || cartItem.NumItemsInCart < 2)
             {
-                cartItem.RestoreStock();
+                //cartItem.RestoreStock();
                 CartItems.Remove(cartItem);
                 Debug.WriteLine("Removed all " + cartItem.NumItemsInCart + " \"" + cartItem.Product.Name + "\" items from the shopping cart");
             } else 
@@ -128,7 +124,8 @@ namespace MediaShop.Models
                 stringBuilder.AppendLine(product.ToString());
             }
             stringBuilder.AppendLine("----------------------------------------");
-            stringBuilder.AppendLine($"Total {TotalPrice, 34}");
+            //stringBuilder.AppendLine($"Total {TotalPrice, 34}");
+            stringBuilder.AppendLine(string.Format("Total {0,34}", TotalPrice));
             stringBuilder.AppendLine("----------------------------------------");
 
             return stringBuilder.ToString();

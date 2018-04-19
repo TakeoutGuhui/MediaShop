@@ -10,12 +10,76 @@
              d:DataContext="{d:DesignInstance Type=datacontext:ShopViewModel}">
 
     <DockPanel LastChildFill="True">
+        <!-- Shopping Cart -->
         <local:ShoppingCartView DockPanel.Dock="Right" />
-        <Grid>
-            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding ProductList.Products}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow"/>
-            <Grid.InputBindings>
-                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.AddToCartCommand}" />
-            </Grid.InputBindings>
-        </Grid>
+        
+        <!-- Product List -->
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="2">
+                <Label Content="ID:" />
+                <TextBox Name="IdSearch" Width="30" Text="{Binding IdFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Name:" />
+                <TextBox Name="NameSearch" Width="75" Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Price:" />
+                <TextBox Name="PriceSearch" Width="50" Text="{Binding PriceFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Stock:" />
+                <TextBox Name="StockSearch" Width="50" Text="{Binding StockFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Artist:" />
+                <TextBox Name="ArtistSearch" Width="75" Text="{Binding ArtistFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Genre:" />
+                <TextBox Name="GenreSearch" Width="50" Text="{Binding GenreFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Publisher:" />
+                <TextBox Name="PublisherSearch" Width="50" Text="{Binding PublisherFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Year:" />
+                <TextBox Name="YearSearch" Width="50" Text="{Binding YearFilter, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Comment:" />
+                <TextBox Name="CommentSearch" Width="50" Text="{Binding CommentFilter, UpdateSourceTrigger=PropertyChanged}" />
+                
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Top 10"  Command="{Binding ShowTopCommand}"/>
+            </StackPanel>
+            <!-- Product List -->
+            <Grid >
+                <DataGrid Name="ProductGrid" IsTextSearchEnabled="True" AutoGenerateColumns="False" ItemsSource="{Binding ProductView}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" >
+                    
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding ID}" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                        <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
+                        <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" />
+                        <DataGridTextColumn Header="Artist" Binding="{Binding Artist}" />
+                        <DataGridTextColumn Header="Genre" Binding="{Binding Genre}" />
+                        <DataGridTextColumn Header="Publisher" Binding="{Binding Publisher}" />
+                        <DataGridTextColumn Header="Year" Binding="{Binding Year}" />
+                        <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" />
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Info" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.ShowInfoCommand}" /> 
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Make return" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.ReturnProductCommand}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                    
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="BorderThickness" Value="0" /> <!-- Removes the selection of individual cells -->
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                        </Style>
+                    </DataGrid.Resources>
+                </DataGrid>
+                <Grid.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.AddToCartCommand}" />
+                </Grid.InputBindings>
+            </Grid>
+        </StackPanel>
     </DockPanel>
 </UserControl>

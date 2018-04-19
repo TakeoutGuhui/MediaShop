@@ -1,47 +1,37 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.Text.RegularExpressions;
+using System.Windows;
 using MediaShop.ViewModels;
 
 namespace MediaShop.Models
 {
+    /// <summary>
+    /// Class that represents a product
+    /// </summary>
     internal class Product : BaseViewModel
     {
-        private static readonly HashSet<int> TakenIDs = new HashSet<int>();
-        
-        private int _id;
-        public int ID
+        /// <summary>
+        /// The properties below represents the properties of a product
+        /// </summary>
+        private string _id;
+        public string ID
         {
-            get => _id;
+            get { return _id; }
             set
             {
-                
-
-                if (value == _id) return;
-                if (TakenIDs.Contains(value))
-                {
-                    _id = -1;
-                }
-                else
-                {
-                    if (TakenIDs.Contains(_id))
-                    {
-                        TakenIDs.Remove(_id);
-                    }
-                    _id = value;
-                    TakenIDs.Add(_id);
-                }
+                if (value == _id || ProductList.Instance.IsIdTaken(value)) return; // If the new ID is already taken, cancel
+                _id = value;
                 RaisePropertyChangedEvent("ID");
 
             }
         }
-
-        private string _name;
+        private string _name = "";
         public string Name
         {
-            get => _name;
+            get { return _name; }
             set
             {
-                if(value == _name) return;
+                if(value == _name || ProductList.Instance.IsNameTaken(value)) return; // if the new Name is already taken, cancel
                 _name = value;
                 RaisePropertyChangedEvent("Name");
             }
@@ -50,7 +40,7 @@ namespace MediaShop.Models
         private decimal _price;
         public decimal Price
         {
-            get => _price;
+            get { return _price; }
             set
             {
                 if(value == _price) return;
@@ -62,7 +52,7 @@ namespace MediaShop.Models
         private int _stock;
         public int Stock
         {
-            get => _stock;
+            get { return _stock; }
             set
             {
                 if (value != _stock && value >= 0)
@@ -74,10 +64,10 @@ namespace MediaShop.Models
             }
         }
 
-        private string _artist;
+        private string _artist = "";
         public string Artist
         {
-            get => _artist;
+            get { return _artist; }
             set
             {
                 if(value == _artist) return;
@@ -86,10 +76,10 @@ namespace MediaShop.Models
             }
         }
 
-        private string _genre;
+        private string _genre = "";
         public string Genre
         {
-            get => _genre;
+            get { return _genre; }
             set
             {
                 if (value == _genre) return;
@@ -98,22 +88,10 @@ namespace MediaShop.Models
             }
         }
 
-        private string _comment;
-        public string Comment
-        {
-            get => _comment;
-            set
-            {
-                if (value == _comment) return;
-                _comment = value;
-                RaisePropertyChangedEvent("Comment");
-            }
-        }
-
-        private string _publisher;
+        private string _publisher = "";
         public string Publisher
         {
-            get => _publisher;
+            get { return _publisher; }
             set
             {
                 if(value == _publisher) return;
@@ -123,10 +101,9 @@ namespace MediaShop.Models
         }
 
         private int _year;
-
         public int Year
         {
-            get => _year;
+            get { return _year; }
             set
             {
                 if(value == _year) return;
@@ -135,6 +112,34 @@ namespace MediaShop.Models
             }
         }
 
+        private string _comment = "";
+        public string Comment
+        {
+            get { return _comment; }
+            set
+            {
+                if (value == _comment) return;
+                _comment = value;
+                RaisePropertyChangedEvent("Comment");
+            }
+        }
+
+        private ProductSales _productSales;
+        public ProductSales ProductSales
+        {
+            get { return _productSales; }
+            set 
+            {
+                if (value == _productSales) return;
+                _productSales = value;
+                RaisePropertyChangedEvent("ProductSales");
+            }
+        }
+
+        /// <summary>
+        /// Checks if the product is in stock
+        /// </summary>
+        /// <returns> True if the product is in stock </returns>
         public bool InStock()
         {
             return Stock > 0;
@@ -142,7 +147,7 @@ namespace MediaShop.Models
 
         public override string ToString()
         {
-            return $"{ID,-4} {Name,-15} {Price,-10} {Stock,-10}";
+            return string.Format("{0,-4} {1,-15} {2,-10} {3,-10}", ID, Name, Price, Stock);
         }
     }
 }
