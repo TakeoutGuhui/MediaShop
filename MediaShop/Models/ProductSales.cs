@@ -85,22 +85,24 @@ namespace MediaShop.Models
             public decimal MoneyMade { get; set; }
         }
 
+        private SaleStruct MakeSaleStruct(List<ProductSale> theSales)
+        {
+            int itemsSold = 0;
+            decimal moneyMade = 0;
+            foreach (var sale in theSales)
+            {
+                itemsSold += sale.NumItems;
+                moneyMade += sale.Price * sale.NumItems;
+            }
+            return new SaleStruct() { ItemsSold = itemsSold, MoneyMade = moneyMade };
+        }
+
         /// <summary>
         /// Returns a SaleStruct with the properties set to all time stats
         /// </summary>
         public SaleStruct AllTime
         {
-            get
-            {
-                int itemsSold = 0;
-                decimal moneyMade = 0;
-                foreach (var sale in Sales)
-                {
-                    itemsSold += sale.NumItems;
-                    moneyMade += sale.Price * sale.NumItems;
-                }
-                return new SaleStruct() { ItemsSold = itemsSold, MoneyMade = moneyMade };
-            }
+            get { return MakeSaleStruct(Sales); }
         }
 
         /// <summary>
@@ -111,6 +113,8 @@ namespace MediaShop.Models
             get
             {
                 DateTime today = DateTime.Now;
+                return MakeSaleStruct(Sales.Where(s => s.SaleDate.Month == today.Month && s.SaleDate.Year == today.Year).ToList());
+                /*
                 int totalSold = 0;
                 decimal TotalMoney = 0;
                 
@@ -121,6 +125,7 @@ namespace MediaShop.Models
                     TotalMoney += sale.Price * sale.NumItems;
                 }
                 return new SaleStruct() { ItemsSold = totalSold, MoneyMade = TotalMoney };
+                */
             }
         }
 
@@ -133,6 +138,8 @@ namespace MediaShop.Models
             get
             {
                 DateTime today = DateTime.Now;
+                return MakeSaleStruct(Sales.Where(s => s.SaleDate.Year == today.Year).ToList());
+                /*
                 int totalSold = 0;
                 decimal TotalMoney = 0;
 
@@ -143,6 +150,7 @@ namespace MediaShop.Models
                     TotalMoney += sale.Price * sale.NumItems;
                 }
                 return new SaleStruct() { ItemsSold = totalSold, MoneyMade = TotalMoney };
+                */
             }
         }
 
