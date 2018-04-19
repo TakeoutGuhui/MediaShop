@@ -9,6 +9,9 @@ using System.Text;
 
 namespace MediaShop.Models
 {
+    /// <summary>
+    /// Represents a product's sales
+    /// </summary>
     class ProductSales : BaseViewModel
     {
         private List<ProductSale> _sales;
@@ -23,6 +26,9 @@ namespace MediaShop.Models
             }
         }
 
+        /// <summary>
+        /// The id of the product
+        /// </summary>
         private string _productID;
         public string ProductID
         {
@@ -35,6 +41,9 @@ namespace MediaShop.Models
             }
         }
 
+        /// <summary>
+        /// The name of the product
+        /// </summary>
         private string _productName;
         public string ProductName
         {
@@ -47,7 +56,9 @@ namespace MediaShop.Models
             }
         }
 
-
+        /// <summary>
+        /// Path to the file where the sales are saved
+        /// </summary>
         private string _filePath;
         public ProductSales(string id, string name)
         {
@@ -55,7 +66,7 @@ namespace MediaShop.Models
             ProductName = name;
             _filePath = Properties.Settings.Default.salesFolder + ProductID + ".csv";
 
-            if (File.Exists(_filePath))
+            if (File.Exists(_filePath)) // If there alreade exists a file for this product, load it. Else make a empty list
             {
                 _sales = LoadSales();
             }
@@ -65,12 +76,18 @@ namespace MediaShop.Models
             }
         }
 
+        /// <summary>
+        /// Used to make it easy to return stats for a time period
+        /// </summary>
         public struct SaleStruct
         {
             public int ItemsSold { get; set; }
             public decimal MoneyMade { get; set; }
         }
 
+        /// <summary>
+        /// Returns a SaleStruct with the properties set to all time stats
+        /// </summary>
         public SaleStruct AllTime
         {
             get
@@ -86,6 +103,9 @@ namespace MediaShop.Models
             }
         }
 
+        /// <summary>
+        /// Returns a SaleStruct with the properties set to this month's stats
+        /// </summary>
         public SaleStruct ThisMonth
         {
             get
@@ -104,6 +124,10 @@ namespace MediaShop.Models
             }
         }
 
+
+        /// <summary>
+        /// Returns a SaleStruct with the properties set to this year's stats
+        /// </summary>
         public SaleStruct ThisYear
         {
             get
@@ -123,17 +147,28 @@ namespace MediaShop.Models
         }
 
 
+        /// <summary>
+        /// Adds a sale and then saves the sales to the file
+        /// </summary>
+        /// <param name="sale"></param>
         public void AddSale(ProductSale sale)
         {
             _sales.Add(sale);
             SaveSales(_sales);
         }
 
+        /// <summary>
+        /// Deletes the sale file for this product
+        /// </summary>
         public void DeleteSales()
         {
             File.Delete(_filePath);
         }
 
+        /// <summary>
+        /// Loads sales from the file that _filePath points to
+        /// </summary>
+        /// <returns> A list of sales </returns>
         private List<ProductSale> LoadSales()
         {
             TextFieldParser parser = new TextFieldParser(_filePath);
@@ -165,6 +200,11 @@ namespace MediaShop.Models
             return productSales;
         }
 
+        /// <summary>
+        /// Converts the sale to csv-format
+        /// </summary>
+        /// <param name="sale"></param>
+        /// <returns></returns>
         private string ConvertToCsv(ProductSale sale)
         {
             return string.Format("{0};{1};{2}",
@@ -174,6 +214,10 @@ namespace MediaShop.Models
                 
         }
 
+        /// <summary>
+        /// Saves the sales to file
+        /// </summary>
+        /// <param name="sales"> The sales that will be saved to the file </param>
         public void SaveSales(List<ProductSale> sales)
         {
             StringBuilder stringBuilder = new StringBuilder();
