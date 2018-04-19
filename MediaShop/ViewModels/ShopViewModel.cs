@@ -14,14 +14,35 @@ namespace MediaShop.ViewModels
 {
     class ShopViewModel : BaseViewModel
     {
+        /// <summary>
+        /// The list of products in the store
+        /// </summary>
         public ProductList ProductList { get; set; }
+        
+        /// <summary>
+        /// The shopping cart
+        /// </summary>
         public ShoppingCart ShoppingCart { get; set; }
 
+        /// <summary>
+        /// The products in the store (used to be able to search the products)
+        /// </summary>
         public ICollectionView ProductView { get; set;}
 
+        /// <summary>
+        /// The product that is selected in the list
+        /// </summary>
         public Product SelectedProduct { get; set; }
+
+        /// <summary>
+        /// The item that is selected in the shopping cart
+        /// </summary>
         public CartItem SelectCartItem { get; set; }
 
+
+        /// <summary>
+        /// Bool that binds to the checkbox in the shopping cart. Indicates if the receipt should be printed when checking out the cart
+        /// </summary>
         private bool _printReceipt;
         public bool PrintReceipt 
         { 
@@ -33,7 +54,12 @@ namespace MediaShop.ViewModels
                 
             }
         }
+
         #region Filters
+
+        /// <summary>
+        /// Used to filter the product list. The search boxes in the view i bound to these and everytime the text changes in one of them the ProductView is refreshed
+        /// </summary>
 
         private string _idFilter = "";
         public string IdFilter
@@ -161,11 +187,22 @@ namespace MediaShop.ViewModels
             }
         }
 
+        /// <summary>
+        /// Checks if filter is part of text in some way. Not case sensitive
+        /// </summary>
+        /// <param name="filter"> The filter </param>
+        /// <param name="text"> The text </param>
+        /// <returns> True if filter is part of text, else false</returns>
         private static bool PartOf(string filter, string text)
         {
             return text.IndexOf(filter, StringComparison.CurrentCultureIgnoreCase) != -1;
         }
 
+        /// <summary>
+        /// Filters the products in the product list based on the strings above. Is called everytime one of the strings above is changed
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         private bool FilterProducts(object obj)
         {
             Product item = (Product)obj;
@@ -183,6 +220,10 @@ namespace MediaShop.ViewModels
 
         #endregion
 
+        /// <summary>
+        /// Constructor for this class. 
+        /// </summary>
+        /// <param name="productList"> The productlist that this class should use</param>
         public ShopViewModel(ProductList productList)
         {
             ProductList = productList;
@@ -193,8 +234,10 @@ namespace MediaShop.ViewModels
             
         }
 
+        /// <summary>
+        /// Method for adding the currently selected product to the cart
+        /// </summary>
         public ICommand AddToCartCommand { get { return new DelegateCommand(AddToCart); } }
-
         private void AddToCart()
         {
             if (SelectedProduct != null)
@@ -203,6 +246,9 @@ namespace MediaShop.ViewModels
             }
         }
 
+        /// <summary>
+        /// Method to removing the currently selected cart item from the cart
+        /// </summary>
         public ICommand RemoveFromCartCommand { get { return new DelegateCommand(RemoveFromCart); } }
 
         private void RemoveFromCart()
@@ -213,13 +259,20 @@ namespace MediaShop.ViewModels
             }
         }
 
-        public ICommand ClearCartCommand { get { return new DelegateCommand(ClearCart); } }
 
+        /// <summary>
+        /// Command for clearing the shopping cart
+        /// </summary>
+        public ICommand ClearCartCommand { get { return new DelegateCommand(ClearCart); } }
         private void ClearCart()
         {
             ShoppingCart.RemoveAllItems();
         }
 
+
+        /// <summary>
+        /// Command for checking out the cart
+        /// </summary>
         public ICommand CheckoutCommand { get { return new DelegateCommand(Checkout); } }
         private void Checkout()
         {
@@ -233,6 +286,9 @@ namespace MediaShop.ViewModels
             ProductList.SaveProducts();
         }
 
+        /// <summary>
+        /// Command for making a return on the product that is currently selected
+        /// </summary>
         public ICommand ReturnProductCommand { get { return new DelegateCommand(ReturnProduct); } }
         private void ReturnProduct()
         {
@@ -246,8 +302,11 @@ namespace MediaShop.ViewModels
                 SelectedProduct.Stock++;
                 MessageBox.Show("1 item of the product \"" + SelectedProduct.Name + "\" has been returned");
             }
-
         }
+
+        /// <summary>
+        /// Shows the info for the currently selected product
+        /// </summary>
         public ICommand ShowInfoCommand { get { return new DelegateCommand(ShowInfo); } }
         private void ShowInfo()
         {
@@ -260,6 +319,9 @@ namespace MediaShop.ViewModels
 
         }
 
+        /// <summary>
+        /// Command that shows the top 10 list
+        /// </summary>
         public ICommand ShowTopCommand { get { return new DelegateCommand(ShowTop); } }
         private void ShowTop()
         {
@@ -268,12 +330,12 @@ namespace MediaShop.ViewModels
             {
                 productSales.Add(product.ProductSales);
             }
-            var sorted = productSales.OrderByDescending(s => s.AllTime.ItemsSold).ToList()
-                .Take(10)
-                .Where(s => s.AllTime.ItemsSold > 0);
-            TopTenWindow window = new TopTenWindow();
-            window.DataContext = sorted;
-            window.Show();
+            var topTenList = productSales.OrderByDescending(s => s.AllTime.ItemsSold).ToList() // The list is ordered by most items sold
+                .Take(10) // Extracts the 10 most sold
+                .Where(s => s.AllTime.ItemsSold > 0); // If there are products with 0 sales they are removed
+            TopTenWindow window = new TopTenWindow(); 
+            window.DataContext = topTenList; // The DataContext is set to the top 10 list
+            window.Show(); // The windows is set to appear
 
 
         }

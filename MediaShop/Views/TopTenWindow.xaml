@@ -7,7 +7,7 @@
         ResizeMode="NoResize"
         >
     <DockPanel>
-        <Label DockPanel.Dock="Top" Content="TOP 10 PRODUCTS" HorizontalAlignment="Center" FontWeight="Bold" FontSize="20"/>
+        <Label DockPanel.Dock="Top" Content="TOP 10 SOLD PRODUCTS" HorizontalAlignment="Center" FontWeight="Bold" FontSize="20"/>
         <Grid>
             <DataGrid ItemsSource="{Binding}" CanUserAddRows="False" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>

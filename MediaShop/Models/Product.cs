@@ -5,15 +5,21 @@ using MediaShop.ViewModels;
 
 namespace MediaShop.Models
 {
+    /// <summary>
+    /// Class that represents a product
+    /// </summary>
     internal class Product : BaseViewModel
     {
+        /// <summary>
+        /// The properties below represents the properties of a product
+        /// </summary>
         private string _id;
         public string ID
         {
             get { return _id; }
             set
             {
-                if (value == _id) return;
+                if (value == _id || ProductList.Instance.IsIdTaken(value)) return; // If the new ID is already taken, cancel
                 _id = value;
                 RaisePropertyChangedEvent("ID");
             }
@@ -24,7 +30,7 @@ namespace MediaShop.Models
             get { return _name; }
             set
             {
-                if(value == _name) return;
+                if(value == _name || ProductList.Instance.IsNameTaken(value)) return; // if the new Name is already taken, cancel
                 _name = value;
                 RaisePropertyChangedEvent("Name");
             }
@@ -129,6 +135,10 @@ namespace MediaShop.Models
             }
         }
 
+        /// <summary>
+        /// Checks if the product is in stock
+        /// </summary>
+        /// <returns> True if the product is in stock </returns>
         public bool InStock()
         {
             return Stock > 0;

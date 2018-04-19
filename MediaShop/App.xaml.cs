@@ -18,6 +18,8 @@ namespace MediaShop
     {
         public App()
         {
+            ProductList prod = ProductList.Instance;
+            prod.LoadProducts();// Init
         }
     }
 }
