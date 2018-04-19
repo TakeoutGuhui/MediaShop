@@ -279,6 +279,7 @@ namespace MediaShop.ViewModels
         public ICommand CheckoutCommand { get { return new DelegateCommand(Checkout); } }
         private void Checkout()
         {
+            if (ShoppingCart.Empty()) return;
             if (PrintReceipt)
             {
                 new Printer().bla(ShoppingCart.ToString());

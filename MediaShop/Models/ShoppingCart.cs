@@ -75,6 +75,11 @@ namespace MediaShop.Models
             Debug.WriteLine("Cart was checked out");
         }
 
+        public bool Empty()
+        {
+            return CartItems.Count == 0;
+        }
+
         /// <summary>
         /// Adds a product to the cart
         /// </summary>
