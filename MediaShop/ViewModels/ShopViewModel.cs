@@ -313,7 +313,7 @@ namespace MediaShop.ViewModels
         public ICommand ShowInfoCommand { get { return new DelegateCommand(ShowInfo); } }
         private void ShowInfo()
         {
-            if (SelectedProduct != null)
+            if (SelectedProduct != null) // If a product is selected
             {
                 ProductInfo ProductInfo = new ProductInfo();
                 ProductInfo.DataContext = SelectedProduct.ProductSales;
@@ -331,7 +331,7 @@ namespace MediaShop.ViewModels
             List<ProductSales> productSales = new List<ProductSales>();
             foreach (Product product in ProductList.Products)
             {
-                productSales.Add(product.ProductSales);
+                productSales.Add(product.ProductSales); // All product's productsales are added to the list
             }
             var topTenList = productSales.OrderByDescending(s => s.AllTime.ItemsSold).ToList() // The list is ordered by most items sold
                 .Take(10) // Extracts the 10 most sold
