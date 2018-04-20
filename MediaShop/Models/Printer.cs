@@ -49,9 +49,6 @@ namespace MediaShop.Models
         public void Print(String printText) {
             string[] delim = { Environment.NewLine, "\n" }; // "\n" added in case you manually appended a newline
             linesToPrint = printText.Split(delim, StringSplitOptions.None);
-
-
-
             PrintDialog dialog = new PrintDialog();
             printFont = new Font("Arial", 10);
             PrintDocument document = new PrintDocument();

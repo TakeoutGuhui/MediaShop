@@ -77,6 +77,11 @@ namespace MediaShop.Loaders
             return data;
         }
 
+        /// <summary>
+        /// Converts the product to csv-format
+        /// </summary>
+        /// <param name="product"> The product that will be converted </param>
+        /// <returns></returns>
         private string ConvertToCsv(Product product)
         {
             return string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}",

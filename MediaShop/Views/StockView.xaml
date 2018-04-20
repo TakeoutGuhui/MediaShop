@@ -42,11 +42,11 @@
             </DockPanel>
             <DockPanel >
                 <Label Content="Publisher:"/>
-                <TextBox Name="PublisherBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Publisher, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Name="PublisherBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Publisher}"/>
             </DockPanel>
             <DockPanel>
                 <Label Content="Year:"/>
-                <TextBox Name="YearBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Year}" />
+                <TextBox Name="YearBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Year, ValidatesOnExceptions=True}" />
             </DockPanel>
             <DockPanel >
                 <Label Content="Comment:"/>

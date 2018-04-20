@@ -4,6 +4,9 @@ using System.Windows.Data;
 
 namespace MediaShop.Converters
 {
+    /// <summary>
+    /// Used in the Shopping cart
+    /// </summary>
     class PriceLabelConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
