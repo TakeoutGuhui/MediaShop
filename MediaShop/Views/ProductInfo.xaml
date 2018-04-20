@@ -41,7 +41,7 @@
         </StackPanel>
         
         <Grid>
-            <DataGrid AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Sales}" CanUserAddRows="False" >
+            <DataGrid ItemsSource="{Binding Sales}" AutoGenerateColumns="False" IsReadOnly="True" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Items sold" Binding="{Binding NumItems}" />
                     <DataGridTextColumn Header="Price sold for" Binding="{Binding Price}" />

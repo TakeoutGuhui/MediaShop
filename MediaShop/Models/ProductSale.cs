@@ -11,5 +11,6 @@ namespace MediaShop.Models
         public int NumItems { get; set; }
         public decimal Price { get; set; }
         public DateTime SaleDate { get; set; }
+        public decimal TotalPrice { get { return Price * NumItems; } } 
     }
 }

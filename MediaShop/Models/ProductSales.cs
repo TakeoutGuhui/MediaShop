@@ -65,21 +65,17 @@ namespace MediaShop.Models
             ProductID = id;
             ProductName = name;
             _filePath = Properties.Settings.Default.salesFolder + ProductID + ".csv";
-
+            Sales = new List<ProductSale>();
             if (File.Exists(_filePath)) // If there alreade exists a file for this product, load it. Else make a empty list
             {
-                _sales = LoadSales();
-            }
-            else
-            {
-                _sales = new List<ProductSale>();
+                LoadSales();
             }
         }
 
         /// <summary>
         /// Used to make it easy to return stats for a time period
         /// </summary>
-        public struct SaleStruct
+        public struct ProductInfo
         {
             public int ItemsSold { get; set; }
             public decimal MoneyMade { get; set; }
@@ -90,35 +86,35 @@ namespace MediaShop.Models
         /// </summary>
         /// <param name="theSales"> The list that will be summed </param>
         /// <returns></returns>
-        private SaleStruct MakeSaleStruct(List<ProductSale> theSales)
+        private ProductInfo MakeProductInfo(List<ProductSale> theSales)
         {
             int itemsSold = 0;
             decimal moneyMade = 0;
             foreach (var sale in theSales)
             {
                 itemsSold += sale.NumItems;
-                moneyMade += sale.Price * sale.NumItems;
+                moneyMade += sale.TotalPrice;
             }
-            return new SaleStruct() { ItemsSold = itemsSold, MoneyMade = moneyMade };
+            return new ProductInfo() { ItemsSold = itemsSold, MoneyMade = moneyMade };
         }
 
         /// <summary>
         /// Returns a SaleStruct with the properties set to all time stats
         /// </summary>
-        public SaleStruct AllTime
+        public ProductInfo AllTime
         {
-            get { return MakeSaleStruct(Sales); }
+            get { return MakeProductInfo(Sales); }
         }
 
         /// <summary>
         /// Returns a SaleStruct with the properties set to this month's stats
         /// </summary>
-        public SaleStruct ThisMonth
+        public ProductInfo ThisMonth
         {
             get
             {
                 DateTime today = DateTime.Now;
-                return MakeSaleStruct(Sales.Where(s => s.SaleDate.Month == today.Month && s.SaleDate.Year == today.Year).ToList());
+                return MakeProductInfo(Sales.Where(s => s.SaleDate.Month == today.Month && s.SaleDate.Year == today.Year).ToList());
             }
         }
 
@@ -126,12 +122,12 @@ namespace MediaShop.Models
         /// <summary>
         /// Returns a SaleStruct with the properties set to this year's stats
         /// </summary>
-        public SaleStruct ThisYear
+        public ProductInfo ThisYear
         {
             get
             {
                 DateTime today = DateTime.Now;
-                return MakeSaleStruct(Sales.Where(s => s.SaleDate.Year == today.Year).ToList());
+                return MakeProductInfo(Sales.Where(s => s.SaleDate.Year == today.Year).ToList());
             }
         }
 
@@ -142,7 +138,8 @@ namespace MediaShop.Models
         /// <param name="sale"></param>
         public void AddSale(ProductSale sale)
         {
-            _sales.Add(sale);
+            Sales.Add(sale);
+            Sales = Sales.OrderByDescending(x => x.SaleDate).ToList();
             SaveSales(_sales);
         }
 
@@ -158,7 +155,7 @@ namespace MediaShop.Models
         /// Loads sales from the file that _filePath points to
         /// </summary>
         /// <returns> A list of sales </returns>
-        private List<ProductSale> LoadSales()
+        private void LoadSales()
         {
             TextFieldParser parser = new TextFieldParser(_filePath);
             List<ProductSale> productSales = new List<ProductSale>();
@@ -183,10 +180,9 @@ namespace MediaShop.Models
                         Price = price,
                         SaleDate = dateTime
                     };
-                    productSales.Add(productSale);
+                    AddSale(productSale);
                 }
             }
-            return productSales;
         }
 
         /// <summary>
