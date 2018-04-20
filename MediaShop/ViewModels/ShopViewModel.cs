@@ -282,7 +282,7 @@ namespace MediaShop.ViewModels
             if (ShoppingCart.Empty()) return;
             if (PrintReceipt)
             {
-                new Printer().bla(ShoppingCart.ToString());
+                new Printer().Print(ShoppingCart.ToString());
             }
             
 

@@ -5,6 +5,8 @@ using System.Windows.Controls;
 
 namespace MediaShop.Models
 {
+    // The code in this file is mostly copied from the internet because I don't own a printer so I haven't been able to test this functionality. 
+    // I forgot where I copied it from though and I have tried to find it but I haven't been able to.
     class Printer
     {
         private string[] linesToPrint;
@@ -44,7 +46,7 @@ namespace MediaShop.Models
                 e.HasMorePages = false;
         }
 
-        public void bla(String printText) {
+        public void Print(String printText) {
             string[] delim = { Environment.NewLine, "\n" }; // "\n" added in case you manually appended a newline
             linesToPrint = printText.Split(delim, StringSplitOptions.None);
 
