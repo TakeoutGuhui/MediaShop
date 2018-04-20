@@ -86,7 +86,7 @@ namespace MediaShop.Models
         /// <param name="product"> The product that will be added to the cart </param>
         public void AddItem(Product product)
         {
-            if (!product.InStock()) return; // If the product isn't in stoct, canceö
+            if (!product.InStock()) return; // If the product isn't in stoct, cancel
             CartItem cartItem = AlreadyInCart(product); // Checks if the Product already is in the cart
 
             if (cartItem != null) // If the product already is in the cart increase the CartItem with one
@@ -146,20 +146,22 @@ namespace MediaShop.Models
             TotalPrice = GetTotalPrice();
         }
 
+        /// <summary>
+        /// Used for printing the receipt
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             if (CartItems.Count == 0) return "Cart is empty \n";
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine();
             stringBuilder.AppendLine("----------------------------------------");
-            stringBuilder.AppendLine("Shopping cart");
+            stringBuilder.AppendLine("Receipt");
             stringBuilder.AppendLine("----------------------------------------");
             foreach (var product in CartItems)
             {
                 stringBuilder.AppendLine(product.ToString());
             }
             stringBuilder.AppendLine("----------------------------------------");
-            //stringBuilder.AppendLine($"Total {TotalPrice, 34}");
             stringBuilder.AppendLine(string.Format("Total {0,34}", TotalPrice));
             stringBuilder.AppendLine("----------------------------------------");
 

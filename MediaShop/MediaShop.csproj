@@ -58,7 +58,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\DelegateCommand.cs" />
-    <Compile Include="Converters\BoolToVisibleOrHidden.cs" />
     <Compile Include="Converters\PriceLabelConverter.cs" />
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Printer.cs" />
