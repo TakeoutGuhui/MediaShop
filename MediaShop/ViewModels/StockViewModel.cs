@@ -3,6 +3,7 @@ using System.Windows.Input;
 
 using MediaShop.Commands;
 using MediaShop.Models;
+using MediaShop.Views;
 
 namespace MediaShop.ViewModels
 {
@@ -15,6 +16,8 @@ namespace MediaShop.ViewModels
         /// The list of products
         /// </summary>
         public ProductList ProductList { get; set;  }
+
+        public uint StockToAdd { get; set; }
 
         /// <summary>
         /// A boolean which indicates if a new product i currently being added
@@ -119,6 +122,22 @@ namespace MediaShop.ViewModels
         {
             SelectedProduct = new Product(); // SelectedProduct is set to a new, empty one
             NewProductMode = true; // NewProductMode is turned on 
-        }      
+        }
+
+        /// <summary>
+        /// Command for adding stock to a product
+        /// </summary>
+        public ICommand AddStockCommand { get { return new DelegateCommand(AddStock); } }
+        private void AddStock()
+        {
+            AddStockView addView = new AddStockView();
+            addView.DataContext = this;
+            if ((bool)addView.ShowDialog()) 
+            {
+                SelectedProduct.AddStock(StockToAdd);
+                StockToAdd = 0;
+            }
+           
+        } 
     }
 }

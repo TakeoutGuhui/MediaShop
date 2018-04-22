@@ -77,7 +77,7 @@ namespace MediaShop.Models
         /// </summary>
         public struct ProductInfo
         {
-            public int ItemsSold { get; set; }
+            public uint ItemsSold { get; set; }
             public decimal MoneyMade { get; set; }
         }
 
@@ -88,7 +88,7 @@ namespace MediaShop.Models
         /// <returns></returns>
         private ProductInfo MakeProductInfo(List<ProductSale> theSales)
         {
-            int itemsSold = 0;
+            uint itemsSold = 0;
             decimal moneyMade = 0;
             foreach (var sale in theSales)
             {
@@ -165,12 +165,12 @@ namespace MediaShop.Models
             while (!parser.EndOfData)
             {
                 string[] fields = parser.ReadFields();
-                int numItems;
+                uint numItems;
                 decimal price;
                 DateTime dateTime;
                 if (fields != null && fields.Length == 3)
                 {
-                    int.TryParse(fields[0], out numItems);
+                    uint.TryParse(fields[0], out numItems);
                     decimal.TryParse(fields[1], NumberStyles.Any, new CultureInfo("sv-SE"), out price);
                     DateTime.TryParse(fields[2], out dateTime);
 

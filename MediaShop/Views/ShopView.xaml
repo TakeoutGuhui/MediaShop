@@ -13,7 +13,7 @@
         <!-- Shopping Cart -->
         <local:ShoppingCartView DockPanel.Dock="Right" />
         
-        <!-- Product List -->
+        <!-- Search boxes -->
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="2">
                 <Label Content="ID:" />

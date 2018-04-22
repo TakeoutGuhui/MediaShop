@@ -66,6 +66,9 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ShopViewModel.cs" />
     <Compile Include="ViewModels\StockViewModel.cs" />
+    <Compile Include="Views\AddStockView.xaml.cs">
+      <DependentUpon>AddStockView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProductInfo.xaml.cs">
       <DependentUpon>ProductInfo.xaml</DependentUpon>
     </Compile>
@@ -81,6 +84,10 @@
     <Compile Include="Views\TopTenWindow.xaml.cs">
       <DependentUpon>TopTenWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\AddStockView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

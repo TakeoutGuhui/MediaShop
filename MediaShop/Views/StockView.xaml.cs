@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using MediaShop.Models;
 using MediaShop.ViewModels;
+using System.Text.RegularExpressions;
 
 namespace MediaShop.Views
 {
@@ -14,6 +15,12 @@ namespace MediaShop.Views
         {
             InitializeComponent();
             DataContext = new StockViewModel((ProductList.Instance));
+        }
+
+        private void YearAndStock_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

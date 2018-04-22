@@ -13,7 +13,7 @@
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
         </DockPanel.Resources>
         
-        <!-- Buttons -->
+        <!-- Edit boxes -->
         <StackPanel Orientation="Vertical" DockPanel.Dock="Right" Width="250" >
             <Button Content="New Product" Command="{Binding NewProductCommand}"/>
             <DockPanel HorizontalAlignment="Stretch" >
@@ -30,7 +30,7 @@
             </DockPanel>
             <DockPanel >
                 <Label Content="Stock:"/>
-                <TextBox Name="StockBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Stock, ValidatesOnExceptions=True}" />
+                <TextBox Name="StockBox" PreviewTextInput="YearAndStock_PreviewTextInput" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Stock, ValidatesOnExceptions=True}" />
             </DockPanel>
             <DockPanel>
                 <Label Content="Artist:"/>
@@ -46,7 +46,7 @@
             </DockPanel>
             <DockPanel>
                 <Label Content="Year:"/>
-                <TextBox Name="YearBox" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Year, ValidatesOnExceptions=True}" />
+                <TextBox Name="YearBox" PreviewTextInput="YearAndStock_PreviewTextInput" Width="175" HorizontalAlignment="Right" Text="{Binding SelectedProduct.Year, ValidatesOnExceptions=True}" />
             </DockPanel>
             <DockPanel >
                 <Label Content="Comment:"/>
@@ -70,6 +70,13 @@
                     <DataGridTextColumn Header="Publisher" Binding="{Binding Publisher}" />
                     <DataGridTextColumn Header="Year" Binding="{Binding Year}" />
                     <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" />
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Add stock" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.AddStockCommand}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

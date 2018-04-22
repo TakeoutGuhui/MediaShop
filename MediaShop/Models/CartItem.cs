@@ -16,8 +16,8 @@ namespace MediaShop.Models
         /// <summary>
         /// Number of items of the product in the cart
         /// </summary>
-        private int _numItemsInCart;
-        public int NumItemsInCart
+        private uint _numItemsInCart;
+        public uint NumItemsInCart
         {
             get { return _numItemsInCart; }
             private set

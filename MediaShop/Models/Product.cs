@@ -43,19 +43,19 @@ namespace MediaShop.Models
             get { return _price; }
             set
             {
-                if(value == _price) return;
+                if(value == _price || value < 0) return;
                 _price = value;
                 RaisePropertyChangedEvent("Price");
             }
         }
 
-        private int _stock;
-        public int Stock
+        private uint _stock;
+        public uint Stock
         {
             get { return _stock; }
             set
             {
-                if (value != _stock && value >= 0)
+                if (value != _stock)
                 {
                     _stock = value;
                     RaisePropertyChangedEvent("Stock");
@@ -100,8 +100,8 @@ namespace MediaShop.Models
             }
         }
 
-        private int _year;
-        public int Year
+        private uint _year;
+        public uint Year
         {
             get { return _year; }
             set
@@ -143,6 +143,15 @@ namespace MediaShop.Models
         public bool InStock()
         {
             return Stock > 0;
+        }
+
+        /// <summary>
+        /// Adds the parameter stock to this product's stock
+        /// </summary>
+        /// <param name="stock"> stock to be added</param>
+        public void AddStock(uint stock)
+        {
+            Stock += stock;
         }
 
         public override string ToString()

@@ -33,18 +33,18 @@ namespace MediaShop.Loaders
             while (!parser.EndOfData)
             {
                 string[] fields = parser.ReadFields();
-                int stock, year;
+                uint stock, year;
                 decimal price;
                 if (fields != null && fields.Length == 9)
                 {
                     string productNumber = fields[0];
                     string name = fields[1];
                     decimal.TryParse(fields[2], NumberStyles.Any, new CultureInfo("sv-SE"), out price);
-                    int.TryParse(fields[3], out stock);
+                    uint.TryParse(fields[3], out stock);
                     string artist = fields[4];
                     string publisher = fields[5];
                     string genre = fields[6];
-                    int.TryParse(fields[7], out year);
+                    uint.TryParse(fields[7], out year);
                     string comment = fields[8];
                     Product product = new Product() { ID = productNumber,
                                                       Name = name,
