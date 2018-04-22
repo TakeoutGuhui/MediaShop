@@ -73,22 +73,30 @@ namespace MediaShop.ViewModels
             if (!NewProductMode) return; // If not in the NewProductMode, return
             bool error = false;
             string errorMessage = "";
-            if (ProductList.IsIdTaken(_selectedProduct.ID)) // If the ID already is taken, ask the user to enter a different one
+            if (SelectedProduct.ID == "" || SelectedProduct.Name == "")
             {
-                error = true;
-                errorMessage += "The ID \"" + _selectedProduct.ID + "\" is already taken, please choose another one\n";
+                // Ugly last minute fix
+                errorMessage += "The ID or Name can't be empty \n";
+                MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK);
+                return; 
             } 
-            if (ProductList.IsNameTaken(_selectedProduct.Name)) // If the name already is taken, ask the user to enter a different one
+
+            if (ProductList.IsIdTaken(SelectedProduct.ID)) // If the ID already is taken, ask the user to enter a different one
             {
                 error = true;
-                errorMessage += "The name \"" + _selectedProduct.Name + "\" is already taken, please choose another one\n";
+                errorMessage += "The ID \"" + SelectedProduct.ID + "\" is already taken, please choose another one\n";
+            } 
+            if (ProductList.IsNameTaken(SelectedProduct.Name)) // If the name already is taken, ask the user to enter a different one
+            {
+                error = true;
+                errorMessage += "The name \"" + SelectedProduct.Name + "\" is already taken, please choose another one\n";
             }
             if (error) // If error, show message and cancel the adding so the user can correct the problem
             {
                 MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK);
                 return;
             }
-            ProductList.AddProduct(_selectedProduct);
+            ProductList.AddProduct(SelectedProduct);
             NewProductMode = false; // Turn off NewProductMode
         }
 
@@ -98,6 +106,12 @@ namespace MediaShop.ViewModels
         public ICommand DeleteProductCommand { get { return new DelegateCommand(DeleteProduct);} }
         private void DeleteProduct()
         {
+            if (NewProductMode)
+            {
+                SelectedProduct = new Product();
+                return;
+            }
+
             if (_selectedProduct.InStock()) // If the product still is in stock, ask if the user really wants to remove it
             {
                 MessageBoxResult result = MessageBox.Show("There's still " + _selectedProduct.Stock + " products left in stock, do you want to remove it anyway?",
@@ -110,6 +124,7 @@ namespace MediaShop.ViewModels
             }
             else // If not in stock, remove it
             {
+
                 ProductList.RemoveProduct(_selectedProduct);
             }
         }

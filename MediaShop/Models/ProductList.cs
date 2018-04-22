@@ -141,7 +141,6 @@ namespace MediaShop.Models
             stringBuilder.AppendLine("----------------------------------------");
             stringBuilder.AppendLine("Product list");
             stringBuilder.AppendLine("----------------------------------------");
-            //stringBuilder.AppendLine($"{"ID",-4} {"Name",-15} {"Price",-10} {"Stock",-10}");
             stringBuilder.AppendLine(string.Format("{0,-4} {1,-15} {2,-10} {3,-10}", "ID", "Name", "Price", "Stock"));
             stringBuilder.AppendLine("----------------------------------------");
             foreach (var product in Products)
