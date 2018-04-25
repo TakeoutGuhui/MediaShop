@@ -4,6 +4,7 @@ using System.Windows.Input;
 using MediaShop.Commands;
 using MediaShop.Models;
 using MediaShop.Views;
+using MediaShop.Loaders;
 
 namespace MediaShop.ViewModels
 {
@@ -153,6 +154,16 @@ namespace MediaShop.ViewModels
                 StockToAdd = 0;
             }
            
-        } 
+        }
+
+        private const string _exportPath = "../../../../MediaIntegrator/MediaIntegrator/bin/Debug/fromMediaShop/exported.csv";
+
+        public ICommand ExportCommand { get { return new DelegateCommand(Export); } }
+        private void Export()
+        {
+
+            ProductCsvLoader loader = new ProductCsvLoader(_exportPath);
+            loader.SaveProducts(ProductList.Products);
+        }
     }
 }
