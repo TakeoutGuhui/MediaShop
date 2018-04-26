@@ -166,10 +166,12 @@ namespace MediaShop.ViewModels
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "CSV File (.csv)|*.csv";
             dialog.DefaultExt = ".csv";
+            dialog.FileName = "exported";
             dialog.InitialDirectory = Path.GetFullPath(_exportPath);
             if (dialog.ShowDialog() == true)
             {
-                ProductCsvLoader loader = new ProductCsvLoader(_exportPath);
+
+                ProductCsvLoader loader = new ProductCsvLoader(Path.GetFullPath(dialog.FileName));
                 loader.SaveProducts(ProductList.Products);
             }
         }
