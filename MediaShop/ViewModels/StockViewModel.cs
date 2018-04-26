@@ -5,6 +5,8 @@ using MediaShop.Commands;
 using MediaShop.Models;
 using MediaShop.Views;
 using MediaShop.Loaders;
+using Microsoft.Win32;
+using System.IO;
 
 namespace MediaShop.ViewModels
 {
@@ -156,14 +158,20 @@ namespace MediaShop.ViewModels
            
         }
 
-        private const string _exportPath = "../../../../MediaIntegrator/MediaIntegrator/bin/Debug/fromMediaShop/exported.csv";
+        private const string _exportPath = "../../../../MediaIntegrator/MediaIntegrator/bin/Debug/fromMediaShop";
 
         public ICommand ExportCommand { get { return new DelegateCommand(Export); } }
         private void Export()
         {
-
-            ProductCsvLoader loader = new ProductCsvLoader(_exportPath);
-            loader.SaveProducts(ProductList.Products);
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "CSV File (.csv)|*.csv";
+            dialog.DefaultExt = ".csv";
+            dialog.InitialDirectory = Path.GetFullPath(_exportPath);
+            if (dialog.ShowDialog() == true)
+            {
+                ProductCsvLoader loader = new ProductCsvLoader(_exportPath);
+                loader.SaveProducts(ProductList.Products);
+            }
         }
     }
 }
