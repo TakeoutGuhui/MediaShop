@@ -14,7 +14,7 @@
         <local:ShoppingCartView DockPanel.Dock="Right" />
         
         <!-- Search boxes -->
-        <StackPanel Orientation="Vertical">
+        <DockPanel >
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="2">
                 <Label Content="ID:" />
                 <TextBox Name="IdSearch" Width="30" Text="{Binding IdFilter, UpdateSourceTrigger=PropertyChanged}" />
@@ -36,7 +36,7 @@
                 <TextBox Name="CommentSearch" Width="50" Text="{Binding CommentFilter, UpdateSourceTrigger=PropertyChanged}" />
                 
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
                 <Button Content="Top 10"  Command="{Binding ShowTopCommand}"/>
             </StackPanel>
             <!-- Product List -->
@@ -80,6 +80,6 @@
                     <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.AddToCartCommand}" />
                 </Grid.InputBindings>
             </Grid>
-        </StackPanel>
+        </DockPanel>
     </DockPanel>
 </UserControl>
