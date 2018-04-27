@@ -64,7 +64,7 @@ namespace MediaShop.Models
         {
             ProductID = id;
             ProductName = name;
-            _filePath = Properties.Settings.Default.salesFolder + ProductID + ".csv";
+            _filePath = Properties.Settings.Default.SalesFolder + ProductID + ".csv";
             Sales = new List<ProductSale>();
             if (File.Exists(_filePath)) // If there alreade exists a file for this product, load it. Else make a empty list
             {

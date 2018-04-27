@@ -2,11 +2,17 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MediaShop.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="productFile" Type="System.String" Scope="Application">
+    <Setting Name="ProductFile" Type="System.String" Scope="Application">
       <Value Profile="(Default)">../../Data/products.csv</Value>
     </Setting>
-    <Setting Name="salesFolder" Type="System.String" Scope="Application">
+    <Setting Name="SalesFolder" Type="System.String" Scope="Application">
       <Value Profile="(Default)">../../Data/Sales/</Value>
+    </Setting>
+    <Setting Name="DefaultExportFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">../../../../MediaIntegrator/MediaIntegrator/bin/Debug/fromMediaShop</Value>
+    </Setting>
+    <Setting Name="DefaultImportFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">../../../../MediaIntegrator/MediaIntegrator/bin/Debug/toMediaShop</Value>
     </Setting>
   </Settings>
 </SettingsFile>

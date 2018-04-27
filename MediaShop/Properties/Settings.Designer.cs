@@ -26,18 +26,42 @@ namespace MediaShop.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("../../Data/products.csv")]
-        public string productFile {
+        public string ProductFile {
             get {
-                return ((string)(this["productFile"]));
+                return ((string)(this["ProductFile"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("../../Data/Sales/")]
-        public string salesFolder {
+        public string SalesFolder {
             get {
-                return ((string)(this["salesFolder"]));
+                return ((string)(this["SalesFolder"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("../../../../MediaIntegrator/MediaIntegrator/bin/Debug/fromMediaShop")]
+        public string DefaultExportFolder {
+            get {
+                return ((string)(this["DefaultExportFolder"]));
+            }
+            set {
+                this["DefaultExportFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("../../../../MediaIntegrator/MediaIntegrator/bin/Debug/toMediaShop")]
+        public string DefaultImportFolder {
+            get {
+                return ((string)(this["DefaultImportFolder"]));
+            }
+            set {
+                this["DefaultImportFolder"] = value;
             }
         }
     }

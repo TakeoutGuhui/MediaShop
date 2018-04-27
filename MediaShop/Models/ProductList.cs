@@ -22,7 +22,7 @@ namespace MediaShop.Models
             get 
             {
                 if (_instance == null){
-                    _instance = new ProductList(new ProductCsvLoader(Properties.Settings.Default.productFile));
+                    _instance = new ProductList(new ProductCsvLoader(Properties.Settings.Default.ProductFile));
                 }
                 return _instance;
             }

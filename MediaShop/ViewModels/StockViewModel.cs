@@ -159,40 +159,34 @@ namespace MediaShop.ViewModels
            
         }
 
-        private const string _importPath = "../../../../MediaIntegrator/MediaIntegrator/bin/Debug/toMediaShop";
-
         public ICommand ImportCommand { get { return new DelegateCommand(Import); } }
         private void Import()
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "CSV File (.csv)|*.csv";
+            dialog.Filter = "CSV File (.csv)|*.csv"; // Only CSV files can be opened
             dialog.DefaultExt = ".csv";
-            dialog.InitialDirectory = Path.GetFullPath(_importPath);
+            dialog.InitialDirectory = Path.GetFullPath(Properties.Settings.Default.DefaultImportFolder); // Set the default path to mediashops import directory in MediaIntegrator
             if (dialog.ShowDialog() == true)
             {
-
                 ProductCsvLoader loader = new ProductCsvLoader(Path.GetFullPath(dialog.FileName));
-                ICollection<Product> importedProducts = loader.LoadProducts();
+                ICollection<Product> importedProducts = loader.LoadProducts(); 
                 foreach (Product importedProduct in importedProducts)
                 {
-                    ProductList.AddProduct(importedProduct);
+                    ProductList.AddProduct(importedProduct); // The AddProduct function in ProductList will not add the product if the name or ID already is taken.
                 }
             }
         }
-
-        private const string _exportPath = "../../../../MediaIntegrator/MediaIntegrator/bin/Debug/fromMediaShop";
 
         public ICommand ExportCommand { get { return new DelegateCommand(Export); } }
         private void Export()
         {
             SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "CSV File (.csv)|*.csv";
+            dialog.Filter = "CSV File (.csv)|*.csv"; 
             dialog.DefaultExt = ".csv";
             dialog.FileName = "exported";
-            dialog.InitialDirectory = Path.GetFullPath(_exportPath);
+            dialog.InitialDirectory = Path.GetFullPath(Properties.Settings.Default.DefaultExportFolder);
             if (dialog.ShowDialog() == true)
             {
-
                 ProductCsvLoader loader = new ProductCsvLoader(Path.GetFullPath(dialog.FileName));
                 loader.SaveProducts(ProductList.Products);
             }
