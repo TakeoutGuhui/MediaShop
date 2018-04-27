@@ -55,6 +55,7 @@
 
             <Button Content="Add product" Command="{Binding AddProductCommand}" Visibility="{Binding NewProductMode, Converter={StaticResource BoolToVis}}"/>
             <Button Content="Delete product" Command="{Binding DeleteProductCommand}"/>
+            <Button Content="Import products" Command="{Binding ImportCommand}"/>
             <Button Content="Export products" Command="{Binding ExportCommand}"/>
         </StackPanel>
 

@@ -7,6 +7,7 @@ using MediaShop.Views;
 using MediaShop.Loaders;
 using Microsoft.Win32;
 using System.IO;
+using System.Collections.Generic;
 
 namespace MediaShop.ViewModels
 {
@@ -156,6 +157,27 @@ namespace MediaShop.ViewModels
                 StockToAdd = 0;
             }
            
+        }
+
+        private const string _importPath = "../../../../MediaIntegrator/MediaIntegrator/bin/Debug/toMediaShop";
+
+        public ICommand ImportCommand { get { return new DelegateCommand(Import); } }
+        private void Import()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "CSV File (.csv)|*.csv";
+            dialog.DefaultExt = ".csv";
+            dialog.InitialDirectory = Path.GetFullPath(_importPath);
+            if (dialog.ShowDialog() == true)
+            {
+
+                ProductCsvLoader loader = new ProductCsvLoader(Path.GetFullPath(dialog.FileName));
+                ICollection<Product> importedProducts = loader.LoadProducts();
+                foreach (Product importedProduct in importedProducts)
+                {
+                    ProductList.AddProduct(importedProduct);
+                }
+            }
         }
 
         private const string _exportPath = "../../../../MediaIntegrator/MediaIntegrator/bin/Debug/fromMediaShop";
