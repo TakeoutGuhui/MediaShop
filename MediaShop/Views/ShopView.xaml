@@ -41,7 +41,7 @@
             </StackPanel>
             <!-- Product List -->
             <Grid >
-                <DataGrid Name="ProductGrid" IsTextSearchEnabled="True" AutoGenerateColumns="False" ItemsSource="{Binding ProductView}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" >
+                <DataGrid Name="ProductGrid" AutoGenerateColumns="False" ItemsSource="{Binding ProductView}" SelectedItem="{Binding SelectedProduct}" IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" >
                     
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID" Binding="{Binding ID}" />

@@ -89,6 +89,7 @@ namespace MediaShop.Models
         public void AddProduct(Product product)
         {
             if (IsIdTaken(product.ID) || IsNameTaken(product.Name)) return; // If the ID or name is already cancel the add
+            if (product.ID == string.Empty || product.Name == "") return;
             product.ProductSales = new ProductSales(product.ID, product.Name); // Set the sales of the product
             product.PropertyChanged += ProductChangedEvent; // Adds ProductChangedEvent to the PropertyChanged event of the product (so the product is saved when changed)
             TakenIDs.Add(product.ID); // Adds the product's ID to the taken ID's
