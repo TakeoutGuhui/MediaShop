@@ -8,6 +8,7 @@ using MediaShop.Loaders;
 using Microsoft.Win32;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MediaShop.ViewModels
 {
@@ -38,6 +39,18 @@ namespace MediaShop.ViewModels
             } 
         }
 
+        private bool _updateProducts;
+        public bool UpdateProducts
+        {
+            get { return _updateProducts; }
+            set
+            {
+                if (value == _updateProducts) return;
+                _updateProducts = value;
+                RaisePropertyChangedEvent("UpdateProducts");
+            }
+        }
+
         /// <summary>
         /// The product that is currently selected in the list
         /// </summary>
@@ -63,7 +76,7 @@ namespace MediaShop.ViewModels
         public StockViewModel(ProductList productList)
         {
             ProductList = productList;
-            SelectedProduct = productList.Products[0];
+            if(productList.Products.Count != 0) SelectedProduct = productList.Products[0];
             NewProductMode = false;
             
         }
@@ -115,6 +128,7 @@ namespace MediaShop.ViewModels
                 SelectedProduct = new Product();
                 return;
             }
+            if(SelectedProduct == null) return;
 
             if (_selectedProduct.InStock()) // If the product still is in stock, ask if the user really wants to remove it
             {
@@ -162,18 +176,32 @@ namespace MediaShop.ViewModels
         public ICommand ImportCommand { get { return new DelegateCommand(Import); } }
         private void Import()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "CSV File (.csv)|*.csv"; // Only CSV files can be opened
-            dialog.DefaultExt = ".csv";
-            dialog.InitialDirectory = Path.GetFullPath(Properties.Settings.Default.DefaultImportFolder); // Set the default path to mediashops import directory in MediaIntegrator
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "CSV File (.csv)|*.csv", // Only CSV files can be opened
+                DefaultExt = ".csv",
+                InitialDirectory = Path.GetFullPath(Properties.Settings.Default.DefaultImportFolder) // Set the default path to mediashops import directory in MediaIntegrator
+            };
             if (dialog.ShowDialog() == true)
             {
                 ProductCsvLoader loader = new ProductCsvLoader(Path.GetFullPath(dialog.FileName));
                 ICollection<Product> importedProducts = loader.LoadProducts(); 
                 foreach (Product importedProduct in importedProducts)
                 {
-                    ProductList.AddProduct(importedProduct); // The AddProduct function in ProductList will not add the product if the name or ID already is taken.
+                    // If the ID and Name is already taken we assume that the imported product already exists in the shop.
+                    // And if the Update box is checked we update the product with the properties of the imported product
+                    if ( UpdateProducts && ProductList.IsIdTaken(importedProduct.ID) && ProductList.IsNameTaken(importedProduct.Name))
+                    {
+                        Product product = ProductList.Products.First(p => p.ID == importedProduct.ID);
+                        product.Update(importedProduct);
+                    }
+                    else
+                    {
+                        ProductList.AddProduct(importedProduct); // The AddProduct function in ProductList will not add the product if the name or ID already is taken.
+                    }
+                    
                 }
+                
             }
         }
 

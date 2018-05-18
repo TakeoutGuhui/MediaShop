@@ -19,7 +19,8 @@ namespace MediaShop.Models
             get { return _id; }
             set
             {
-                if (value == _id || ProductList.Instance.IsIdTaken(value)) return; // If the new ID is already taken, cancel
+                if (ProductList.Instance.Products.Contains(this) && ProductList.Instance.IsIdTaken(value)) return;
+                if (value == _id) return; // If the new ID is already taken, cancel
                 _id = value;
                 RaisePropertyChangedEvent("ID");
 
@@ -31,7 +32,8 @@ namespace MediaShop.Models
             get { return _name; }
             set
             {
-                if(value == _name || ProductList.Instance.IsNameTaken(value)) return; // if the new Name is already taken, cancel
+                if (ProductList.Instance.Products.Contains(this) && ProductList.Instance.IsNameTaken(value)) return;
+                if (value == _name) return; // if the new Name is already taken, cancel
                 _name = value;
                 RaisePropertyChangedEvent("Name");
             }
@@ -152,6 +154,17 @@ namespace MediaShop.Models
         public void AddStock(uint stock)
         {
             Stock += stock;
+        }
+
+        public void Update(Product p)
+        {
+            Price = p.Price;
+            Year = p.Year;
+            Artist = p.Artist;
+            Comment = p.Comment;
+            Publisher = p.Publisher;
+            Genre = p.Genre;
+            Stock = p.Stock;
         }
 
         public override string ToString()

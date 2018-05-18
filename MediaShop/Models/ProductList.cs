@@ -95,7 +95,7 @@ namespace MediaShop.Models
             TakenIDs.Add(product.ID); // Adds the product's ID to the taken ID's
             TakenNames.Add(product.Name); // Adds the product's name to the taken names
             Products.Add(product); // Adds the product to the Product list
-            
+            SaveProducts();
         }
 
         /// <summary>
@@ -109,6 +109,25 @@ namespace MediaShop.Models
             TakenIDs.Remove(product.ID); // Removes the ID from the taken IDs
             TakenNames.Remove(product.Name); // Removes the name from the taken names
             Products.Remove(product); // The product is removed from the Product list
+            SaveProducts();
+        }
+
+        /// <summary>
+        /// Removes all the products
+        /// </summary>
+        public void RemoveAllProducts()
+        {
+            List<Product> prod = new List<Product>();
+            for(int i = 0; i < Products.Count; i++)
+            {
+                prod.Add(Products[i]);
+            }
+
+            foreach (Product product in prod)
+            {
+                RemoveProduct(product);
+            }
+            SaveProducts();
         }
 
         /// <summary>

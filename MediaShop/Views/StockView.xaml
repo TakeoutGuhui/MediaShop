@@ -55,7 +55,8 @@
 
             <Button Content="Add product" Command="{Binding AddProductCommand}" Visibility="{Binding NewProductMode, Converter={StaticResource BoolToVis}}"/>
             <Button Content="Delete product" Command="{Binding DeleteProductCommand}"/>
-            <Button Content="Import products" Command="{Binding ImportCommand}" Margin="0,15,0,0"/>
+            <CheckBox Content="Update current products" IsChecked="{Binding UpdateProducts}" Margin="0,15,0,0"/>
+            <Button Content="Import products" Command="{Binding ImportCommand}" />
             <Button Content="Export products" Command="{Binding ExportCommand}"/>
         </StackPanel>
 
