@@ -30,7 +30,7 @@ namespace MediaShop.ViewModels
         private bool _newProductMode;
         public bool NewProductMode 
         {
-            get { return _newProductMode; }
+            get => _newProductMode;
             set
             {
                 if (value == _newProductMode) return;
@@ -42,7 +42,7 @@ namespace MediaShop.ViewModels
         private bool _updateProducts;
         public bool UpdateProducts
         {
-            get { return _updateProducts; }
+            get => _updateProducts;
             set
             {
                 if (value == _updateProducts) return;
@@ -57,7 +57,7 @@ namespace MediaShop.ViewModels
         private Product _selectedProduct;
         public Product SelectedProduct
         {
-            get { return _selectedProduct; }
+            get => _selectedProduct;
             set
             {
                 
@@ -66,7 +66,7 @@ namespace MediaShop.ViewModels
                 {
                     MessageBoxResult result =  MessageBox.Show("Do you want to cancel adding the new product?", "Save product", MessageBoxButton.YesNo);
                     if (result == MessageBoxResult.No) return;
-                    else NewProductMode = false;
+                    NewProductMode = false;
                 }
                 _selectedProduct = value;
                 RaisePropertyChangedEvent("SelectedProduct");
@@ -84,13 +84,14 @@ namespace MediaShop.ViewModels
         /// <summary>
         /// Command for adding a new product to the ProductList
         /// </summary>
-        public ICommand AddProductCommand { get { return new DelegateCommand(AddProduct); } }
+        public ICommand AddProductCommand => new DelegateCommand(AddProduct);
+
         private void AddProduct()
         {
             if (!NewProductMode) return; // If not in the NewProductMode, return
             bool error = false;
             string errorMessage = "";
-            if (SelectedProduct.ID == "" || SelectedProduct.Name == "")
+            if (SelectedProduct.Id == "" || SelectedProduct.Name == "")
             {
                 // Ugly last minute fix
                 errorMessage += "The ID or Name can't be empty \n";
@@ -98,10 +99,10 @@ namespace MediaShop.ViewModels
                 return; 
             } 
 
-            if (ProductList.IsIdTaken(SelectedProduct.ID)) // If the ID already is taken, ask the user to enter a different one
+            if (ProductList.IsIdTaken(SelectedProduct.Id)) // If the ID already is taken, ask the user to enter a different one
             {
                 error = true;
-                errorMessage += "The ID \"" + SelectedProduct.ID + "\" is already taken, please choose another one\n";
+                errorMessage += "The ID \"" + SelectedProduct.Id + "\" is already taken, please choose another one\n";
             } 
             if (ProductList.IsNameTaken(SelectedProduct.Name)) // If the name already is taken, ask the user to enter a different one
             {
@@ -120,7 +121,8 @@ namespace MediaShop.ViewModels
         /// <summary>
         /// Command for deleting a product from the ProductList
         /// </summary>
-        public ICommand DeleteProductCommand { get { return new DelegateCommand(DeleteProduct);} }
+        public ICommand DeleteProductCommand => new DelegateCommand(DeleteProduct);
+
         private void DeleteProduct()
         {
             if (NewProductMode)
@@ -150,7 +152,8 @@ namespace MediaShop.ViewModels
         /// <summary>
         /// Command for making a new product
         /// </summary>
-        public ICommand NewProductCommand { get { return new DelegateCommand(NewProduct); } }
+        public ICommand NewProductCommand => new DelegateCommand(NewProduct);
+
         private void NewProduct()
         {
             SelectedProduct = new Product(); // SelectedProduct is set to a new, empty one
@@ -160,11 +163,11 @@ namespace MediaShop.ViewModels
         /// <summary>
         /// Command for adding stock to a product
         /// </summary>
-        public ICommand AddStockCommand { get { return new DelegateCommand(AddStock); } }
+        public ICommand AddStockCommand => new DelegateCommand(AddStock);
+
         private void AddStock()
         {
-            AddStockView addView = new AddStockView();
-            addView.DataContext = this;
+            AddStockView addView = new AddStockView {DataContext = this};
             if ((bool)addView.ShowDialog()) 
             {
                 SelectedProduct.AddStock(StockToAdd);
@@ -173,7 +176,8 @@ namespace MediaShop.ViewModels
            
         }
 
-        public ICommand ImportCommand { get { return new DelegateCommand(Import); } }
+        public ICommand ImportCommand => new DelegateCommand(Import);
+
         private void Import()
         {
             OpenFileDialog dialog = new OpenFileDialog
@@ -190,9 +194,9 @@ namespace MediaShop.ViewModels
                 {
                     // If the ID and Name is already taken we assume that the imported product already exists in the shop.
                     // And if the Update box is checked we update the product with the properties of the imported product
-                    if ( UpdateProducts && ProductList.IsIdTaken(importedProduct.ID) && ProductList.IsNameTaken(importedProduct.Name))
+                    if ( UpdateProducts && ProductList.IsIdTaken(importedProduct.Id) && ProductList.IsNameTaken(importedProduct.Name))
                     {
-                        Product product = ProductList.Products.First(p => p.ID == importedProduct.ID);
+                        Product product = ProductList.Products.First(p => p.Id == importedProduct.Id);
                         product.Update(importedProduct);
                     }
                     else
@@ -205,7 +209,8 @@ namespace MediaShop.ViewModels
             }
         }
 
-        public ICommand ExportCommand { get { return new DelegateCommand(Export); } }
+        public ICommand ExportCommand => new DelegateCommand(Export);
+
         private void Export()
         {
             SaveFileDialog dialog = new SaveFileDialog();
@@ -213,11 +218,9 @@ namespace MediaShop.ViewModels
             dialog.DefaultExt = ".csv";
             dialog.FileName = "exported";
             dialog.InitialDirectory = Path.GetFullPath(Properties.Settings.Default.DefaultExportFolder);
-            if (dialog.ShowDialog() == true)
-            {
-                ProductCsvLoader loader = new ProductCsvLoader(Path.GetFullPath(dialog.FileName));
-                loader.SaveProducts(ProductList.Products);
-            }
+            if (dialog.ShowDialog() != true) return;
+            ProductCsvLoader loader = new ProductCsvLoader(Path.GetFullPath(dialog.FileName));
+            loader.SaveProducts(ProductList.Products);
         }
     }
 }

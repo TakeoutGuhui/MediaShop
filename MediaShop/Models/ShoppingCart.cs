@@ -17,7 +17,7 @@ namespace MediaShop.Models
         private ObservableCollection<CartItem> _cartItems;
         public ObservableCollection<CartItem> CartItems
         {
-            get { return _cartItems; }
+            get => _cartItems;
             set
             {
                 if(value == _cartItems) return;
@@ -32,7 +32,7 @@ namespace MediaShop.Models
         private decimal _totalPrice;
         public decimal TotalPrice
         {
-            get { return _totalPrice; }
+            get => _totalPrice;
             set
             {
                 if (value == _totalPrice) return;
@@ -162,7 +162,7 @@ namespace MediaShop.Models
                 stringBuilder.AppendLine(product.ToString());
             }
             stringBuilder.AppendLine("----------------------------------------");
-            stringBuilder.AppendLine(string.Format("Total {0,34}", TotalPrice));
+            stringBuilder.AppendLine($"Total {TotalPrice,34}");
             stringBuilder.AppendLine("----------------------------------------");
 
             return stringBuilder.ToString();

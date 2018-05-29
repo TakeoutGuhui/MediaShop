@@ -49,7 +49,7 @@ namespace MediaShop.ViewModels
         private bool _printReceipt;
         public bool PrintReceipt 
         { 
-            get { return _printReceipt; }
+            get => _printReceipt;
             set
             {
                 if(_printReceipt == value) return;
@@ -67,7 +67,7 @@ namespace MediaShop.ViewModels
         private string _idFilter = "";
         public string IdFilter
         {
-            get { return _idFilter;  }
+            get => _idFilter;
             set
             {
                 if (value != _idFilter)
@@ -81,7 +81,7 @@ namespace MediaShop.ViewModels
         private string _nameFilter = "";
         public string NameFilter
         {
-            get { return _nameFilter; }
+            get => _nameFilter;
             set
             {
                 if (value != _nameFilter)
@@ -95,7 +95,7 @@ namespace MediaShop.ViewModels
         private string _priceFilter = "";
         public string PriceFilter
         {
-            get { return _priceFilter; }
+            get => _priceFilter;
             set
             {
                 if (value != _priceFilter)
@@ -109,7 +109,7 @@ namespace MediaShop.ViewModels
         private string _stockFilter = ""; 
         public string StockFilter
         {
-            get { return _stockFilter; }
+            get => _stockFilter;
             set
             {
                 if (value != _stockFilter)
@@ -123,7 +123,7 @@ namespace MediaShop.ViewModels
         private string _artistFilter = "";
         public string ArtistFilter
         {
-            get { return _artistFilter; }
+            get => _artistFilter;
             set
             {
                 if (value != _artistFilter)
@@ -137,7 +137,7 @@ namespace MediaShop.ViewModels
         private string _genreFilter = "";
         public string GenreFilter
         {
-            get { return _genreFilter; }
+            get => _genreFilter;
             set
             {
                 if (value != _genreFilter)
@@ -151,7 +151,7 @@ namespace MediaShop.ViewModels
         private string _commentFilter = "";
         public string CommentFilter
         {
-            get { return _commentFilter; }
+            get => _commentFilter;
             set
             {
                 if (value != _commentFilter)
@@ -165,7 +165,7 @@ namespace MediaShop.ViewModels
         private string _publisherFilter = "";
         public string PublisherFilter
         {
-            get { return _publisherFilter; }
+            get => _publisherFilter;
             set
             {
                 if (value != _publisherFilter)
@@ -179,7 +179,7 @@ namespace MediaShop.ViewModels
         private string _yearFilter = "";
         public string YearFilter
         {
-            get { return _yearFilter; }
+            get => _yearFilter;
             set
             {
                 if (value != _yearFilter)
@@ -209,7 +209,7 @@ namespace MediaShop.ViewModels
         private bool FilterProducts(object obj)
         {
             Product item = (Product)obj;
-            if (IdFilter != "" && !PartOf(IdFilter, item.ID.ToString())) { return false; };
+            if (IdFilter != "" && !PartOf(IdFilter, item.Id.ToString())) { return false; };
             if (NameFilter != "" && !PartOf(NameFilter, item.Name)) { return false; };
             if (PriceFilter != "" && !PartOf(PriceFilter, item.Price.ToString(CultureInfo.CurrentCulture))) { return false; };
             if (StockFilter != "" && !PartOf(StockFilter, item.Stock.ToString())) { return false; };
@@ -240,7 +240,8 @@ namespace MediaShop.ViewModels
         /// <summary>
         /// Method for adding the currently selected product to the cart
         /// </summary>
-        public ICommand AddToCartCommand { get { return new DelegateCommand(AddToCart); } }
+        public ICommand AddToCartCommand => new DelegateCommand(AddToCart);
+
         private void AddToCart()
         {
             if (SelectedProduct != null)
@@ -252,7 +253,7 @@ namespace MediaShop.ViewModels
         /// <summary>
         /// Method to removing the currently selected cart item from the cart
         /// </summary>
-        public ICommand RemoveFromCartCommand { get { return new DelegateCommand(RemoveFromCart); } }
+        public ICommand RemoveFromCartCommand => new DelegateCommand(RemoveFromCart);
 
         private void RemoveFromCart()
         {
@@ -266,7 +267,8 @@ namespace MediaShop.ViewModels
         /// <summary>
         /// Command for clearing the shopping cart
         /// </summary>
-        public ICommand ClearCartCommand { get { return new DelegateCommand(ClearCart); } }
+        public ICommand ClearCartCommand => new DelegateCommand(ClearCart);
+
         private void ClearCart()
         {
             ShoppingCart.RemoveAllItems();
@@ -276,7 +278,8 @@ namespace MediaShop.ViewModels
         /// <summary>
         /// Command for checking out the cart
         /// </summary>
-        public ICommand CheckoutCommand { get { return new DelegateCommand(Checkout); } }
+        public ICommand CheckoutCommand => new DelegateCommand(Checkout);
+
         private void Checkout()
         {
             if (ShoppingCart.Empty()) return;
@@ -293,13 +296,13 @@ namespace MediaShop.ViewModels
         /// <summary>
         /// Command for making a return on the product that is currently selected
         /// </summary>
-        public ICommand ReturnProductCommand { get { return new DelegateCommand(ReturnProduct); } }
+        public ICommand ReturnProductCommand => new DelegateCommand(ReturnProduct);
+
         private void ReturnProduct()
         {
             if (SelectedProduct == null)
             {
                 MessageBox.Show("Please select product that you want to return and try again", "Not selected");
-                return;
             }
             else
             {
@@ -311,14 +314,15 @@ namespace MediaShop.ViewModels
         /// <summary>
         /// Shows the info for the currently selected product
         /// </summary>
-        public ICommand ShowInfoCommand { get { return new DelegateCommand(ShowInfo); } }
+        public ICommand ShowInfoCommand => new DelegateCommand(ShowInfo);
+
         private void ShowInfo()
         {
             if (SelectedProduct != null) // If a product is selected
             {
-                ProductInfo ProductInfo = new ProductInfo();
-                ProductInfo.DataContext = SelectedProduct.ProductSales;
-                ProductInfo.Show();
+                ProductInfo productInfo = new ProductInfo();
+                productInfo.DataContext = SelectedProduct.ProductSales;
+                productInfo.Show();
             }
 
         }
@@ -326,7 +330,8 @@ namespace MediaShop.ViewModels
         /// <summary>
         /// Command that shows the top 10 list
         /// </summary>
-        public ICommand ShowTopCommand { get { return new DelegateCommand(ShowTop); } }
+        public ICommand ShowTopCommand => new DelegateCommand(ShowTop);
+
         private void ShowTop()
         {
             List<ProductSales> productSales = new List<ProductSales>();

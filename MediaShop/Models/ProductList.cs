@@ -88,11 +88,11 @@ namespace MediaShop.Models
         /// <param name="product"> The product that should be added </param>
         public void AddProduct(Product product)
         {
-            if (IsIdTaken(product.ID) || IsNameTaken(product.Name)) return; // If the ID or name is already cancel the add
-            if (product.ID == string.Empty || product.Name == "") return;
-            product.ProductSales = new ProductSales(product.ID, product.Name); // Set the sales of the product
+            if (IsIdTaken(product.Id) || IsNameTaken(product.Name)) return; // If the ID or name is already cancel the add
+            if (product.Id == string.Empty || product.Name == "") return;
+            product.ProductSales = new ProductSales(product.Id, product.Name); // Set the sales of the product
             product.PropertyChanged += ProductChangedEvent; // Adds ProductChangedEvent to the PropertyChanged event of the product (so the product is saved when changed)
-            TakenIDs.Add(product.ID); // Adds the product's ID to the taken ID's
+            TakenIDs.Add(product.Id); // Adds the product's ID to the taken ID's
             TakenNames.Add(product.Name); // Adds the product's name to the taken names
             Products.Add(product); // Adds the product to the Product list
             SaveProducts();
@@ -106,7 +106,7 @@ namespace MediaShop.Models
         {
             product.ProductSales.DeleteSales(); // Delete the sales of the product
             product.PropertyChanged -= ProductChangedEvent; // Removes the ProductChangedEvent from the products PropertyChanged event
-            TakenIDs.Remove(product.ID); // Removes the ID from the taken IDs
+            TakenIDs.Remove(product.Id); // Removes the ID from the taken IDs
             TakenNames.Remove(product.Name); // Removes the name from the taken names
             Products.Remove(product); // The product is removed from the Product list
             SaveProducts();
@@ -135,16 +135,7 @@ namespace MediaShop.Models
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="eventArgs"></param>
-        private void ProductChangedEvent(object sender, PropertyChangedEventArgs eventArgs)
-        {
-            Debug.WriteLine("Saving!");
-            Product changedProduct = (Product)sender;
-            if (eventArgs.PropertyName == "ID" || eventArgs.PropertyName == "Name")
-            {
-
-            }
-            SaveProducts();
-        }
+        private void ProductChangedEvent(object sender, PropertyChangedEventArgs eventArgs){  SaveProducts(); }
 
         /// <summary>
         /// Saves the products to disk
@@ -161,7 +152,7 @@ namespace MediaShop.Models
             stringBuilder.AppendLine("----------------------------------------");
             stringBuilder.AppendLine("Product list");
             stringBuilder.AppendLine("----------------------------------------");
-            stringBuilder.AppendLine(string.Format("{0,-4} {1,-15} {2,-10} {3,-10}", "ID", "Name", "Price", "Stock"));
+            stringBuilder.AppendLine($"{"ID",-4} {"Name",-15} {"Price",-10} {"Stock",-10}");
             stringBuilder.AppendLine("----------------------------------------");
             foreach (var product in Products)
             {

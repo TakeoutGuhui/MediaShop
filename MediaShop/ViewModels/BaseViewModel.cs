@@ -14,8 +14,7 @@ namespace MediaShop.ViewModels
         {
             //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             var handler = PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
+            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
     }

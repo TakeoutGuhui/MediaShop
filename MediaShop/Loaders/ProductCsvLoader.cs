@@ -46,7 +46,7 @@ namespace MediaShop.Loaders
                     string genre = fields[6];
                     uint.TryParse(fields[7], out year);
                     string comment = fields[8];
-                    Product product = new Product() { ID = productNumber,
+                    Product product = new Product() { Id = productNumber,
                                                       Name = name,
                                                       Price = price,
                                                       Stock = stock,
@@ -71,7 +71,7 @@ namespace MediaShop.Loaders
         {
             if (data.Contains(_delimiter))
             {
-                data = string.Format("\"{0}\"", data);
+                data = $"\"{data}\"";
             }
 
             return data;
@@ -84,16 +84,8 @@ namespace MediaShop.Loaders
         /// <returns></returns>
         private string ConvertToCsv(Product product)
         {
-            return string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}",
-                EscapeDelimeter(product.ID), 
-                EscapeDelimeter(product.Name), 
-                product.Price, 
-                product.Stock, 
-                EscapeDelimeter(product.Artist), 
-                EscapeDelimeter(product.Publisher), 
-                EscapeDelimeter(product.Genre), 
-                product.Year, 
-                EscapeDelimeter(product.Comment));
+            return $"{EscapeDelimeter(product.Id)};{EscapeDelimeter(product.Name)};{product.Price};{product.Stock};{EscapeDelimeter(product.Artist)};" +
+                   $"{EscapeDelimeter(product.Publisher)};{EscapeDelimeter(product.Genre)};{product.Year};{EscapeDelimeter(product.Comment)}";
         }
 
         /// <summary>

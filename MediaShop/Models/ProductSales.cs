@@ -1,11 +1,12 @@
-﻿using MediaShop.ViewModels;
-using Microsoft.VisualBasic.FileIO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using MediaShop.Properties;
+using MediaShop.ViewModels;
+using Microsoft.VisualBasic.FileIO;
 
 namespace MediaShop.Models
 {
@@ -17,7 +18,7 @@ namespace MediaShop.Models
         private List<ProductSale> _sales;
         public List<ProductSale> Sales
         {
-            get { return _sales; }
+            get => _sales;
             set
             {
                 if (value == _sales) return;
@@ -29,14 +30,14 @@ namespace MediaShop.Models
         /// <summary>
         /// The id of the product
         /// </summary>
-        private string _productID;
-        public string ProductID
+        private string _productId;
+        public string ProductId
         {
-            get { return _productID; }
+            get => _productId;
             set
             {
-                if (value == _productID) return;
-                _productID = value;
+                if (value == _productId) return;
+                _productId = value;
                 RaisePropertyChangedEvent("ProductID");
             }
         }
@@ -47,7 +48,7 @@ namespace MediaShop.Models
         private string _productName;
         public string ProductName
         {
-            get { return _productName; }
+            get => _productName;
             set
             {
                 if (value == _productName) return;
@@ -59,12 +60,12 @@ namespace MediaShop.Models
         /// <summary>
         /// Path to the file where the sales are saved
         /// </summary>
-        private string _filePath;
+        private readonly string _filePath;
         public ProductSales(string id, string name)
         {
-            ProductID = id;
+            ProductId = id;
             ProductName = name;
-            _filePath = Properties.Settings.Default.SalesFolder + ProductID + ".csv";
+            _filePath = Settings.Default.SalesFolder + ProductId + ".csv";
             Sales = new List<ProductSale>();
             if (File.Exists(_filePath)) // If there alreade exists a file for this product, load it. Else make a empty list
             {
@@ -95,16 +96,13 @@ namespace MediaShop.Models
                 itemsSold += sale.NumItems;
                 moneyMade += sale.TotalPrice;
             }
-            return new ProductInfo() { ItemsSold = itemsSold, MoneyMade = moneyMade };
+            return new ProductInfo { ItemsSold = itemsSold, MoneyMade = moneyMade };
         }
 
         /// <summary>
         /// Returns a SaleStruct with the properties set to all time stats
         /// </summary>
-        public ProductInfo AllTime
-        {
-            get { return MakeProductInfo(Sales); }
-        }
+        public ProductInfo AllTime => MakeProductInfo(Sales);
 
         /// <summary>
         /// Returns a SaleStruct with the properties set to this month's stats
@@ -157,22 +155,17 @@ namespace MediaShop.Models
         /// <returns> A list of sales </returns>
         private void LoadSales()
         {
-            TextFieldParser parser = new TextFieldParser(_filePath);
-            List<ProductSale> productSales = new List<ProductSale>();
-            parser.TextFieldType = FieldType.Delimited;
+            TextFieldParser parser = new TextFieldParser(_filePath) {TextFieldType = FieldType.Delimited};
             parser.SetDelimiters(";");
 
             while (!parser.EndOfData)
             {
                 string[] fields = parser.ReadFields();
-                uint numItems;
-                decimal price;
-                DateTime dateTime;
                 if (fields != null && fields.Length == 3)
                 {
-                    uint.TryParse(fields[0], out numItems);
-                    decimal.TryParse(fields[1], NumberStyles.Any, new CultureInfo("sv-SE"), out price);
-                    DateTime.TryParse(fields[2], out dateTime);
+                    uint.TryParse(fields[0], out var numItems);
+                    decimal.TryParse(fields[1], NumberStyles.Any, new CultureInfo("sv-SE"), out var price);
+                    DateTime.TryParse(fields[2], out var dateTime);
 
                     ProductSale productSale = new ProductSale
                     {
@@ -190,13 +183,9 @@ namespace MediaShop.Models
         /// </summary>
         /// <param name="saleToConvert"></param>
         /// <returns></returns>
-        private string ConvertToCsv(ProductSale saleToConvert)
+        private static string ConvertToCsv(ProductSale saleToConvert)
         {
-            return string.Format("{0};{1};{2}",
-                saleToConvert.NumItems.ToString(),
-                saleToConvert.Price.ToString(),
-                saleToConvert.SaleDate.ToString());
-                
+            return $"{saleToConvert.NumItems};{saleToConvert.Price};{saleToConvert.SaleDate}";
         }
 
         /// <summary>

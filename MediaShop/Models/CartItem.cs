@@ -19,15 +19,13 @@ namespace MediaShop.Models
         private uint _numItemsInCart;
         public uint NumItemsInCart
         {
-            get { return _numItemsInCart; }
+            get => _numItemsInCart;
             private set
             {
-                if (value != _numItemsInCart)
-                {
-                    _numItemsInCart = value;
-                    TotalPrice = GetTotalPrice(); // The total price is updated
-                    RaisePropertyChangedEvent("NumItemsInCart");
-                }
+                if (value == _numItemsInCart) return;
+                _numItemsInCart = value;
+                TotalPrice = GetTotalPrice(); // The total price is updated
+                RaisePropertyChangedEvent("NumItemsInCart");
             }
         }
 
@@ -37,14 +35,12 @@ namespace MediaShop.Models
         private decimal _totalPrice;
         public decimal TotalPrice
         {
-            get { return _totalPrice; }
+            get => _totalPrice;
             set
             {
-                if (value != _totalPrice)
-                {
-                    _totalPrice = value;
-                    RaisePropertyChangedEvent("TotalPrice");
-                }
+                if (value == _totalPrice) return;
+                _totalPrice = value;
+                RaisePropertyChangedEvent("TotalPrice");
             }
         }
 
@@ -110,8 +106,7 @@ namespace MediaShop.Models
         public override string ToString()
         {
             string products = NumItemsInCart + "st*" + Product.Price;
-            //return $"{Product.Name,-15} {products, -13} {Product.Price * NumItemsInCart,10}";
-            return string.Format("{0,-15} {1,-13} {2,10}", Product.Name, products, Product.Price * NumItemsInCart);
+            return $"{Product.Name,-15} {products,-13} {Product.Price * NumItemsInCart,10}";
         }
     }
 }
