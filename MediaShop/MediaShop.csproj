@@ -60,6 +60,7 @@
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Converters\PriceLabelConverter.cs" />
     <Compile Include="Models\CartItem.cs" />
+    <Compile Include="Models\CurrencyRateFetcher.cs" />
     <Compile Include="Models\Printer.cs" />
     <Compile Include="Models\ProductSale.cs" />
     <Compile Include="Models\ProductSales.cs" />

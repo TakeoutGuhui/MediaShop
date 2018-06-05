@@ -52,7 +52,7 @@ namespace MediaShop.ViewModels
             get => _printReceipt;
             set
             {
-                if(_printReceipt == value) return;
+                if(Equals(_printReceipt, value)) return;
                 _printReceipt = value;
                 
             }

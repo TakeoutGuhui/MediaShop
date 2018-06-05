@@ -67,7 +67,7 @@ namespace MediaShop.Models
             ProductName = name;
             _filePath = Settings.Default.SalesFolder + ProductId + ".csv";
             Sales = new List<ProductSale>();
-            if (File.Exists(_filePath)) // If there alreade exists a file for this product, load it. Else make a empty list
+            if (File.Exists(_filePath)) // If there alreade exists a file for this product, load it. Else keep the empty list
             {
                 LoadSales();
             }
@@ -107,28 +107,12 @@ namespace MediaShop.Models
         /// <summary>
         /// Returns a SaleStruct with the properties set to this month's stats
         /// </summary>
-        public ProductInfo ThisMonth
-        {
-            get
-            {
-                DateTime today = DateTime.Now;
-                return MakeProductInfo(Sales.Where(s => s.SaleDate.Month == today.Month && s.SaleDate.Year == today.Year).ToList());
-            }
-        }
-
+        public ProductInfo ThisMonth => MakeProductInfo(Sales.Where(s => s.SaleDate.Month == DateTime.Now.Month && s.SaleDate.Year == DateTime.Now.Year).ToList());
 
         /// <summary>
         /// Returns a SaleStruct with the properties set to this year's stats
         /// </summary>
-        public ProductInfo ThisYear
-        {
-            get
-            {
-                DateTime today = DateTime.Now;
-                return MakeProductInfo(Sales.Where(s => s.SaleDate.Year == today.Year).ToList());
-            }
-        }
-
+        public ProductInfo ThisYear => MakeProductInfo(Sales.Where(s => s.SaleDate.Year == DateTime.Now.Year).ToList());
 
         /// <summary>
         /// Adds a sale and then saves the sales to the file
