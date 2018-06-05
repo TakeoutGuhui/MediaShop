@@ -78,7 +78,6 @@ namespace MediaShop.ViewModels
             ProductList = productList;
             if(productList.Products.Count != 0) SelectedProduct = productList.Products[0];
             NewProductMode = false;
-            
         }
 
         /// <summary>
@@ -144,7 +143,6 @@ namespace MediaShop.ViewModels
             }
             else // If not in stock, remove it
             {
-
                 ProductList.RemoveProduct(_selectedProduct);
             }
         }

@@ -19,7 +19,7 @@ namespace MediaShop.Models
             get => _id;
             set
             {
-                if (ProductList.Instance.Products.Contains(this) && ProductList.Instance.IsIdTaken(value)) return;
+                if (ProductList.Instance.Products.Contains(this) && ProductList.Instance.IsIdTaken(value)) return; // If the productlist contains this product and the ID is already taken, return
                 if (value == _id) return; // If the new ID is already taken, cancel
                 _id = value;
                 RaisePropertyChangedEvent("ID");
@@ -32,7 +32,7 @@ namespace MediaShop.Models
             get => _name;
             set
             {
-                if (ProductList.Instance.Products.Contains(this) && ProductList.Instance.IsNameTaken(value)) return;
+                if (ProductList.Instance.Products.Contains(this) && ProductList.Instance.IsNameTaken(value)) return; // If the productlist contains this product and the Name is already taken, return
                 if (value == _name) return; // if the new Name is already taken, cancel
                 _name = value;
                 RaisePropertyChangedEvent("Name");
@@ -142,10 +142,7 @@ namespace MediaShop.Models
         /// Checks if the product is in stock
         /// </summary>
         /// <returns> True if the product is in stock </returns>
-        public bool InStock()
-        {
-            return Stock > 0;
-        }
+        public bool InStock() => Stock > 0;
 
         /// <summary>
         /// Adds the parameter stock to this product's stock
@@ -167,9 +164,6 @@ namespace MediaShop.Models
             Stock = p.Stock;
         }
 
-        public override string ToString()
-        {
-            return string.Format("{0,-4} {1,-15} {2,-10} {3,-10}", Id, Name, Price, Stock);
-        }
+        public override string ToString() => $"{Id,-4} {Name,-15} {Price,-10} {Stock,-10}";
     }
 }

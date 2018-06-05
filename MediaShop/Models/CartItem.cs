@@ -80,10 +80,7 @@ namespace MediaShop.Models
         /// Checks if the product is in stock
         /// </summary>
         /// <returns> Returns True if the product is still in stock </returns>
-        public bool InStock()
-        {
-            return NumItemsInCart < Product.Stock;
-        }
+        public bool InStock() => NumItemsInCart < Product.Stock;
 
         /// <summary>
         /// Checks out the cart item. The number of items is substracted from the products stock and a sale is added to the products sales
@@ -98,10 +95,7 @@ namespace MediaShop.Models
         /// The total price of the items 
         /// </summary>
         /// <returns> The price </returns>
-        public decimal GetTotalPrice()
-        {
-            return Product.Price * NumItemsInCart;
-        }
+        public decimal GetTotalPrice() => Product.Price * NumItemsInCart;
 
         public override string ToString()
         {

@@ -128,10 +128,7 @@ namespace MediaShop.Models
         /// <summary>
         /// Deletes the sale file for this product
         /// </summary>
-        public void DeleteSales()
-        {
-            File.Delete(_filePath);
-        }
+        public void DeleteSales() => File.Delete(_filePath);
 
         /// <summary>
         /// Loads sales from the file that _filePath points to
@@ -145,20 +142,18 @@ namespace MediaShop.Models
             while (!parser.EndOfData)
             {
                 string[] fields = parser.ReadFields();
-                if (fields != null && fields.Length == 3)
-                {
-                    uint.TryParse(fields[0], out var numItems);
-                    decimal.TryParse(fields[1], NumberStyles.Any, new CultureInfo("sv-SE"), out var price);
-                    DateTime.TryParse(fields[2], out var dateTime);
+                if (fields == null || fields.Length != 3) continue;
+                uint.TryParse(fields[0], out var numItems);
+                decimal.TryParse(fields[1], NumberStyles.Any, new CultureInfo("sv-SE"), out var price);
+                DateTime.TryParse(fields[2], out var dateTime);
 
-                    ProductSale productSale = new ProductSale
-                    {
-                        NumItems = numItems,
-                        Price = price,
-                        SaleDate = dateTime
-                    };
-                    AddSale(productSale);
-                }
+                ProductSale productSale = new ProductSale
+                {
+                    NumItems = numItems,
+                    Price = price,
+                    SaleDate = dateTime
+                };
+                AddSale(productSale);
             }
         }
 
@@ -167,10 +162,8 @@ namespace MediaShop.Models
         /// </summary>
         /// <param name="saleToConvert"></param>
         /// <returns></returns>
-        private static string ConvertToCsv(ProductSale saleToConvert)
-        {
-            return $"{saleToConvert.NumItems};{saleToConvert.Price};{saleToConvert.SaleDate}";
-        }
+        private static string ConvertToCsv(ProductSale saleToConvert) =>
+            $"{saleToConvert.NumItems};{saleToConvert.Price};{saleToConvert.SaleDate}";
 
         /// <summary>
         /// Saves the sales to file

@@ -233,8 +233,6 @@ namespace MediaShop.ViewModels
             ShoppingCart = new ShoppingCart();
             ProductView = CollectionViewSource.GetDefaultView(ProductList.Products);
             ProductView.Filter = FilterProducts;
-           
-            
         }
 
         /// <summary>
@@ -269,12 +267,8 @@ namespace MediaShop.ViewModels
         /// </summary>
         public ICommand ClearCartCommand => new DelegateCommand(ClearCart);
 
-        private void ClearCart()
-        {
-            ShoppingCart.RemoveAllItems();
-        }
-
-
+        private void ClearCart() => ShoppingCart.RemoveAllItems();
+        
         /// <summary>
         /// Command for checking out the cart
         /// </summary>

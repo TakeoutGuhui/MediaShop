@@ -18,46 +18,33 @@ namespace MediaShop.Models
         /// There should only be one list of products in the program so I made it a Singleton
         /// </summary>
         private static ProductList _instance;
-        public static ProductList Instance { 
-            get 
-            {
-                if (_instance == null){
-                    _instance = new ProductList(new ProductCsvLoader(Properties.Settings.Default.ProductFile));
-                }
-                return _instance;
-            }
-        }
+        public static ProductList Instance => _instance ?? (_instance = new ProductList(new ProductCsvLoader(Properties.Settings.Default.ProductFile)));
 
         /// <summary>
         /// The taken ID's
         /// </summary>
-        private readonly HashSet<string> TakenIDs = new HashSet<string>();
+        private readonly HashSet<string> _takenIDs = new HashSet<string>();
 
         /// <summary>
         /// The taken names
         /// </summary>
-        private readonly HashSet<string> TakenNames = new HashSet<string>();
+        private readonly HashSet<string> _takenNames = new HashSet<string>();
 
         /// <summary>
         /// Checks if the parameter id is already taken
         /// </summary>
         /// <param name="id"> the id </param>
         /// <returns> Returns True if the id is already taken </returns>
-        public bool IsIdTaken(string id)
-        {
-            return TakenIDs.Contains(id);
-        }
+        public bool IsIdTaken(string id) => _takenIDs.Contains(id);
+        
 
         /// <summary>
         /// Checks if the name is already taken
         /// </summary>
         /// <param name="name"> the name </param>
         /// <returns> Returns True if the name is already taken </returns>
-        public bool IsNameTaken(string name)
-        {
-            return TakenNames.Contains(name);
-        } 
-
+        public bool IsNameTaken(string name) => _takenNames.Contains(name);
+        
         public ObservableCollection<Product> Products { get; set; }
 
         /// <summary>
@@ -92,8 +79,8 @@ namespace MediaShop.Models
             if (product.Id == string.Empty || product.Name == "") return;
             product.ProductSales = new ProductSales(product.Id, product.Name); // Set the sales of the product
             product.PropertyChanged += ProductChangedEvent; // Adds ProductChangedEvent to the PropertyChanged event of the product (so the product is saved when changed)
-            TakenIDs.Add(product.Id); // Adds the product's ID to the taken ID's
-            TakenNames.Add(product.Name); // Adds the product's name to the taken names
+            _takenIDs.Add(product.Id); // Adds the product's ID to the taken ID's
+            _takenNames.Add(product.Name); // Adds the product's name to the taken names
             Products.Add(product); // Adds the product to the Product list
             SaveProducts();
         }
@@ -106,8 +93,8 @@ namespace MediaShop.Models
         {
             product.ProductSales.DeleteSales(); // Delete the sales of the product
             product.PropertyChanged -= ProductChangedEvent; // Removes the ProductChangedEvent from the products PropertyChanged event
-            TakenIDs.Remove(product.Id); // Removes the ID from the taken IDs
-            TakenNames.Remove(product.Name); // Removes the name from the taken names
+            _takenIDs.Remove(product.Id); // Removes the ID from the taken IDs
+            _takenNames.Remove(product.Name); // Removes the name from the taken names
             Products.Remove(product); // The product is removed from the Product list
             SaveProducts();
         }
@@ -140,11 +127,8 @@ namespace MediaShop.Models
         /// <summary>
         /// Saves the products to disk
         /// </summary>
-        public void SaveProducts()
-        {
-            _productLoader.SaveProducts(Products);
-        }
-
+        public void SaveProducts() => _productLoader.SaveProducts(Products);
+        
         public override string ToString()
         {   
             StringBuilder stringBuilder = new StringBuilder();
